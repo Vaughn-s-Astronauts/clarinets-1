@@ -1,20 +1,27 @@
 # clarinets
 
 ### Git Workflow:
-Start with the main branch:<br>
-git checkout main<br>
-git fetch origin<br>
-git reset --hard origin/main<br>
+Start with the main branch:
+```
+git checkout main
+git fetch origin
+git reset --hard origin/main
+```
 
-Create a new-branch:<br>
-git checkout -b new-feature<br>
+Create a new-branch:
+```
+git checkout -b new-feature
+```
+Update, add, commit, and push changes:
+```
+git status
+git add <some-file>
+git commit
+```
 
-Update, add, commit, and push changes:<br>
-git status<br>
-git add <some-file><br>
-git commit<br>
-
-Push feature branch to remote:<br>
-git push -u origin new-feature<br>
+Push feature branch to remote:
+```
+git push -u origin new-feature
+```
 
 Merge your pull request
