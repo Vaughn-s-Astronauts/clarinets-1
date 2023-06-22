@@ -1,7 +1,7 @@
 import React from 'react';
 
 let RelatedProducts = ({product}) => {
-    return <h1>I am the related products modules. This was just edited</h1>;
+    return <h1>I have edited this prompt to test our git.</h1>;
 };
 
 export default RelatedProducts;
