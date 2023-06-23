@@ -1,5 +1,6 @@
 import React from 'react';
 import Question from './Question.jsx';
+import Answer from './Answer.jsx';
 
 let Questions = ({product, questions}) => {
     console.log(questions);

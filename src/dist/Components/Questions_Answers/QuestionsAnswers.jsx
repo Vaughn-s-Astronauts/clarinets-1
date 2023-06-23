@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Search from './subcomponents/Search.jsx';
 import Questions from './subcomponents/Questions.jsx';
-import Question from './subcomponents/Question.jsx';
 import axios from 'axios';
 import git_api from '../../../../config.js';
 
 
 let QuestionsAnswers = ({product}) => {
     const [questions, setQuestions] = useState([]);
-    // const [answers, setAnswers] = useState([]);
 
     const getQuestions = () => {
         let url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/`;
