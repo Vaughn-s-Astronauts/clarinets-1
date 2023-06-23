@@ -1,7 +1,7 @@
 import React from 'react';
 import Detail from './Detail.jsx';
 import axios from 'axios';
-import git_api from '../../../config.js';
+import git_api from './../../config.js'; // dot removed to properly map my machine -bas
 
 let App = () => {
     //Pull the products from the API
@@ -28,7 +28,7 @@ let App = () => {
             }
             {product.id === undefined && products.map((o) => {
                 return <div key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px'}}>
-                        {o.name}                        
+                        {o.name}
                         </div>;
             })}
         </div>
