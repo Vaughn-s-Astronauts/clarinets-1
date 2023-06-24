@@ -134,7 +134,7 @@ body ->
 }
 */
 let POST_CART = (BODY) => {
-    return axios.get(`${baseUrl}${endpoints['BODY_CART']}`, BODY);
+    return axios.post(`${baseUrl}${endpoints['BODY_CART']}`, BODY);
 };
 
 
