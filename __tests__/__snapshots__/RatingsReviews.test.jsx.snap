@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays a list of review entries 1`] = `
+<div
+  style={
+    {
+      "maxHeight": "50%",
+      "overflow": "auto",
+    }
+  }
+/>
+`;

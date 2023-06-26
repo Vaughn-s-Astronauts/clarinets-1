@@ -15,12 +15,27 @@ let App = () => {
         }).catch((error) => {
             console.log(error);
         });
-      });
-  return (
-    <div>
-        <Detail products={products} setProducts={setProducts} product={product} setProduct={setProduct} productInfo={productInfo} setProductInfo={setProductInfo} styles={styles} setStyles={setStyles} style={style} setStyle={setStyle}/>
-    </div>
-  )
+
+    }, []);
+
+    const goBack = () => {
+        setProduct({});
+    }
+    return (
+        <div>
+            {product.id !== undefined &&
+            <div>
+                <button onClick={goBack}>Back</button>
+                <Detail product={product}/>
+            </div>
+            }
+            {product.id === undefined && products.map((o) => {
+                return <div key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px'}}>
+                        {o.name}
+                        </div>;
+            })}
+        </div>
+    );
 };
 
       export default App;
