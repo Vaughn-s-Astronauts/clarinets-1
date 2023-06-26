@@ -1,7 +1,6 @@
 import React from 'react';
 import Detail from './Detail.jsx';
-import axios from 'axios';
-import git_api from '../../../config.js';
+import API from '../helpers/API.js';
 
 let App = () => {
     //Pull the products from the API
@@ -11,10 +10,7 @@ let App = () => {
     const [products, setProducts] = React.useState([]);
     const [product, setProduct] = React.useState({});
     React.useEffect(() => {
-        let url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/`;
-        axios.get(url, {headers:{
-            'Authorization' : git_api()
-        }}).then((response) => {
+        API.GET_PRODUCTS().then((response) => {
             setProducts(response.data);
         }).catch((error) => {
             console.log(error);
