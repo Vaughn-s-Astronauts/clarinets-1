@@ -17,9 +17,14 @@ let Question = ({question}) => {
     return (
         <div style={{border: '1px solid blue'}}>
             <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
-            {answers.map((answer, i) => {
-                return <Answer key={i} answer={answer} />
-            })}
+            <div style={{'display': 'flex'}}>
+                {answers.length > 0 ? <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> : null}
+                <div>
+                    {answers.map((answer, i) => {
+                        return <Answer key={i} answer={answer} />
+                    })}
+                </div>
+            </div>
         </div>
     )
 };
