@@ -5,7 +5,6 @@ import API from '../../../helpers/API.js';
 let Question = ({question}) => {
     const [answers, setAnswers] = useState([]);
     let id = question.question_id;
-    console.log(question);
 
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
@@ -17,12 +16,10 @@ let Question = ({question}) => {
 
     return (
         <div style={{border: '1px solid blue'}}>
-            <p className='question '>Q: {question.question_body}</p>
+            <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
             {answers.map((answer, i) => {
                 return <Answer key={i} answer={answer} />
             })}
-            <p> by User1234 </p>
-            <p> Helpful? Yes </p>
         </div>
     )
 };
