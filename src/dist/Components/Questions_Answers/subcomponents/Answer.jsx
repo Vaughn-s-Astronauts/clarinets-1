@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import git_api from '../../../../../config.js';
 
-let Answer = ({product, question, answers}) => {
-  console.log(answers.body);
-
+let Answer = ({answer}) => {
+    console.log('IS THIS GETTING PICKED UP??');
 
     return (
         <div>
-            <p className='answer '>A: {}</p>
+            <p className='answer' >A: {answer.body}</p>
         </div>
     )
 };
