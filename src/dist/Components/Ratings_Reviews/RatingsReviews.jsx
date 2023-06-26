@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import git_api from '../../../../config.js';
 import ReviewsList from './ReviewsList.jsx';
+import API from '../../helpers/API.js';
 
 let RatingsReviews = ({product}) => {
   const [allReviews, setAllReviews] = useState([]);
@@ -9,17 +9,7 @@ let RatingsReviews = ({product}) => {
   const [reviewAmount, setReviewAmount] = useState(2);
 
   const getReviews = () => {
-    let url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/`;
-    axios.get(url, {
-      headers: {
-      'Authorization': git_api(),
-      },
-      params: {
-        page: 1,
-        count: 1000,
-        sort: "newest", //"newest", "helpful", or "relevant"
-        product_id: product.id
-    }}).then((response) => {
+    API.GET_REVIEWS(product.id, 1, 1000, 'newest').then((response) => {
       setAllReviews(response.data.results);
       setShownReviews(response.data.results.slice(0, 2));
     }).catch((error) => {
