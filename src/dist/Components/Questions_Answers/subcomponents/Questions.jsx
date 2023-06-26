@@ -5,8 +5,8 @@ let Questions = ({questions}) => {
 
     return (
         <div>
-            {questions.map(question => (
-                <Question key={question.question_id} question={question}/>
+            {questions.map((question, i) => (
+                <Question key={i} question={question}/>
             ))}
         </div>
     )

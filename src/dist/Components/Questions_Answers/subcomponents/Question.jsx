@@ -18,8 +18,8 @@ let Question = ({question}) => {
     return (
         <div style={{border: '1px solid blue'}}>
             <p className='question '>Q: {question.question_body}</p>
-            {answers.map(answer => {
-                return <Answer key={answer.answer_id} answer={answer} />
+            {answers.map((answer, i) => {
+                return <Answer key={i} answer={answer} />
             })}
             <p> by User1234 </p>
             <p> Helpful? Yes </p>

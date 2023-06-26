@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 let Answer = ({answer}) => {
-    console.log('IS THIS GETTING PICKED UP??');
 
     return (
         <div>
