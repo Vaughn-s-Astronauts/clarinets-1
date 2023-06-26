@@ -1,163 +1,103 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import github_token from './../../../config.js'
+import useState from 'react';
 
-const products = [];
-
-
-let ProductDetail = ({product}) => {
-
-    let productList = [
-        {
-            "id": 37311,
-            "campus": "hr-rfe",
-            "name": "Camo Onesie",
-            "slogan": "Blend in to your crowd",
-            "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
-            "category": "Jackets",
-            "default_price": "140.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37312,
-            "campus": "hr-rfe",
-            "name": "Bright Future Sunglasses",
-            "slogan": "You've got to wear shades",
-            "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
-            "category": "Accessories",
-            "default_price": "69.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37313,
-            "campus": "hr-rfe",
-            "name": "Morning Joggers",
-            "slogan": "Make yourself a morning person",
-            "description": "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers.",
-            "category": "Pants",
-            "default_price": "40.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37314,
-            "campus": "hr-rfe",
-            "name": "Slacker's Slacks",
-            "slogan": "Comfortable for everything, or nothing",
-            "description": "I'll tell you how great they are after I nap for a bit.",
-            "category": "Pants",
-            "default_price": "65.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37315,
-            "campus": "hr-rfe",
-            "name": "Heir Force Ones",
-            "slogan": "A sneaker dynasty",
-            "description": "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
-            "category": "Kicks",
-            "default_price": "99.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        }
-    ]
-
-    let productInfo = {
-        "id": 37311,
-        "campus": "hr-rfe",
-        "name": "Camo Onesie",
-        "slogan": "Blend in to your crowd",
-        "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
-        "category": "Jackets",
-        "default_price": "140.00",
-        "created_at": "2021-08-13T14:37:33.145Z",
-        "updated_at": "2021-08-13T14:37:33.145Z",
-        "features": [
-            {
-                "feature": "Fabric",
-                "value": "Canvas"
-            },
-            {
-                "feature": "Buttons",
-                "value": "Brass"
-            }
-        ]
-    };
-
-    let styles = [
-        {
-            "id": 37311,
-            "campus": "hr-rfe",
-            "name": "Camo Onesie",
-            "slogan": "Blend in to your crowd",
-            "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
-            "category": "Jackets",
-            "default_price": "140.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37312,
-            "campus": "hr-rfe",
-            "name": "Bright Future Sunglasses",
-            "slogan": "You've got to wear shades",
-            "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
-            "category": "Accessories",
-            "default_price": "69.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37313,
-            "campus": "hr-rfe",
-            "name": "Morning Joggers",
-            "slogan": "Make yourself a morning person",
-            "description": "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers.",
-            "category": "Pants",
-            "default_price": "40.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37314,
-            "campus": "hr-rfe",
-            "name": "Slacker's Slacks",
-            "slogan": "Comfortable for everything, or nothing",
-            "description": "I'll tell you how great they are after I nap for a bit.",
-            "category": "Pants",
-            "default_price": "65.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        },
-        {
-            "id": 37315,
-            "campus": "hr-rfe",
-            "name": "Heir Force Ones",
-            "slogan": "A sneaker dynasty",
-            "description": "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
-            "category": "Kicks",
-            "default_price": "99.00",
-            "created_at": "2021-08-13T14:37:33.145Z",
-            "updated_at": "2021-08-13T14:37:33.145Z"
-        }
-    ];
+let ProductDetail = ({ products, setProducts, product, setProduct, productInfo, setProductInfo, styles, setStyles, style, setStyle }) => {
+  console.log('product: ', product);
+  console.log('productInfo: ', productInfo);
+  console.log('styles', styles);
+  // axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products', { headers: { Authorization: github_token() } })
+  //   .then((response) => {
+  //     setProducts(response.data);
+  //     setProduct(response.data[0]) //make first product the default;
+  //   })
+  //   .then(() => {
+  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${product.id}`, { headers: { Authorization: github_token() } })
+  //   })
+  //   .then((response) => {
+  //     setProductInfor(response)
+  //   })
+  //   .then(() => {
+  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${product.id}/styles`, { headers: { Authorization: github_token() } })
+  //   })
+  //   .then((response) => {
+  //     setStyle(response)
+  //   })
+  //   .then(() => {
+  //     console.log('products: ', products);
+  //     console.log('default product: ', product);
+  //     console.log('product info: ', productInfo);
+  //     console.log('product styles: ', style)
+  //   })
+  //   .catch((err) => {
+  //     console.log('error in establishing default entries: ', err)
+  //   });
+  return (
+    <div>
+      <div className="row container p-5 my-5 bg-dark text-white">
+        <div className="col-lg-6">
+          <h1>logo</h1>
+        </div>
+        <div className="col-lg-6">
+          <h1>search bar</h1>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <h4><small>SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT</small></h4>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-2">
+          <p>sidebar of veritical pics</p>
+        </div>
+        <div className="col-lg-6">
 
 
-    let allProducts = [];
-    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products', {headers: {Authorization: github_token()}})
-      .then((response) => {
-        allProducts = (response.data);
-      })
-      .then(() => {
-        console.log(allProducts);
-      })
-    return (
-        <div>Hellow World!</div>
-    )
+          {/* <!-- Carousel -->*/}
+          <div id="demo" className="carousel slide" data-bs-ride="carousel">
+
+            {/* <!-- Indicators/dots --> */}
+            <div className="carousel-indicators">
+              <button type="button" data-bs-target="#demo" data-bs-slide-to="0" className="active"></button>
+              <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            </div>
+
+            {/* <!-- The slideshow/carousel --> */}
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img src="la.jpg" alt="Los Angeles" className="d-block w-100"></img>
+              </div>
+              <div className="carousel-item">
+                <img src="chicago.jpg" alt="Chicago" className="d-block w-100"></img>
+              </div>
+              <div className="carousel-item">
+                <img src="ny.jpg" alt="New York" className="d-block w-100"></img>
+              </div>
+            </div>
+
+            {/* <!-- Left and right controls/icons --> */}
+            <button className="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon"></span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+              <span className="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+        </div>
+        <div className="col-lg-4">
+          <p>star ratings</p>
+          <p>Category</p>
+          <p>{product.category}</p>
+          <p>{product.default_price}</p>
+          <p>STYLE {'>'} SELECTED STYLE</p>
+        </div>
+      </div>
+    </div>
+  )
 };
 
 export default ProductDetail;
