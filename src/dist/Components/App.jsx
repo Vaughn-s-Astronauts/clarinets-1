@@ -15,7 +15,7 @@ let App = () => {
         }).catch((error) => {
             console.log(error);
         });
-
+      });
   return (
     <div>
         <Detail products={products} setProducts={setProducts} product={product} setProduct={setProduct} productInfo={productInfo} setProductInfo={setProductInfo} styles={styles} setStyles={setStyles} style={style} setStyle={setStyle}/>

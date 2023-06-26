@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import git_api from '../../../../config.js';
+import git_api from './../../../config.js';
 import ReviewsList from './ReviewsList.jsx';
 
 let RatingsReviews = ({product}) => {
