@@ -42,7 +42,7 @@ let Answer = ({answer}) => {
                     <p style={{'marginRight': '15px'}}>by <b>{answer.answerer_name}</b>, {editedDate}</p> :
                     <p style={{'marginRight': '15px'}}>by {answer.answerer_name}, {editedDate}</p>}
                 <p style={{'marginRight': '15px'}}>|</p>
-                <p style={{'marginRight': '10px'}}>Helpful?</p>
+                <p style={{'marginRight': '3px'}}>Helpful?</p>
                 <u style={{'cursor': 'pointer'}} onClick={handleHelpful}>Yes</u>
                 <p style={{'marginRight': '15px'}}>({helpful})</p>
                 <p style={{'marginRight': '15px'}}>|</p>
