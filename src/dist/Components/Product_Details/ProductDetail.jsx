@@ -30,10 +30,10 @@ export default function ProductDetail({ product }) {
 
   useEffect(getCatalog, []);
 
-  console.log('catalog: ', catalog);
-  console.log('currentItem: ', currentItem);
-  console.log('itemInfo: ', itemInfo);
-  console.log('itemStyles: ', itemStyles);
+  // console.log('catalog: ', catalog);
+  // console.log('currentItem: ', currentItem);
+  // console.log('itemInfo: ', itemInfo);
+  // console.log('itemStyles: ', itemStyles);
 
   return (
     <div>
