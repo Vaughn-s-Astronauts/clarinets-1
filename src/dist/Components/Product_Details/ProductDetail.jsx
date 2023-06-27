@@ -6,34 +6,32 @@ export default function ProductDetail({ product }) {
 
   const [catalog, setCatalog] = useState([]);
   const [currentItem, setCurrentItem] = useState({});
-  const [itemInfo, setItemInfo] = useState({});
-  const [itemStyles, setItemStyles] = useState({});
-  const {currentStyle, setCurrentStyle} = useState({});
+  const [itemStyles, setItemStyles] = useState([]);
+  const [currentStyle, setCurrentStyle] = useState({});
+  const [photo, setPhoto] = useState([])
 
   let getCatalog = () => {
-    axios.defaults.baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products';
     axios.defaults.headers.common['Authorization'] = github_token();
-    axios.get('/')
+    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/')
     .then((response) => {
       setCatalog(response.data)
       setCurrentItem(response.data[0])
-      axios.get(`/${response.data[0].id}`)
+      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${response.data[0].id}/styles`)
       .then((response) => {
-        setItemInfo(response.data);
-        axios.get(`/${response.data.id}/styles`)
-        .then((response) => {
-          setItemStyles(response.data.results)
-        })
+        setItemStyles(response.data.results)
+        setCurrentStyle(response.data.results[0])
+        setPhoto(response.data.results[0].photos[0].url)
       })
     })
   }
 
   useEffect(getCatalog, []);
 
-  // console.log('catalog: ', catalog);
-  // console.log('currentItem: ', currentItem);
-  // console.log('itemInfo: ', itemInfo);
-  // console.log('itemStyles: ', itemStyles);
+  console.log('catalog: ', catalog);
+  console.log('currentItem: ', currentItem);
+  console.log('itemStyles: ', itemStyles);
+  console.log('currentStyle: ', currentStyle);
+  console.log('photos: ', photo);
 
   return (
     <div>
@@ -70,7 +68,7 @@ export default function ProductDetail({ product }) {
             {/* <!-- The slideshow/carousel --> */}
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img src="la.jpg" alt="Los Angeles" className="d-block w-100"></img>
+                <img src={`${photo}`} alt="Los Angeles" className="d-block w-100"></img>
               </div>
               <div className="carousel-item">
                 <img src="chicago.jpg" alt="Chicago" className="d-block w-100"></img>
