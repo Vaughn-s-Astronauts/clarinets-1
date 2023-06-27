@@ -31,7 +31,6 @@ let ReviewEntry = ({review}) => {
   }
 
   const addHelpful = () => {
-    console.log('clicked');
     if (!clickedHelpful) {
       API.PUT_REVIEW_HELPFUL(review.review_id);
       setHelpful(helpful+1);
@@ -54,7 +53,7 @@ let ReviewEntry = ({review}) => {
       </div>}
       {review.photos.map((photo, i) => {
         return <span key={i}>
-          <img src={photo.url} width="64" onClick={openModal}></img>
+          <img src={photo.url} width="64" onClick={openModal} style={{cursor: "pointer"}}></img>
           </span>
       })}
       {review.recommend && <div>I recommend this product&#9745;</div>}
@@ -66,7 +65,7 @@ let ReviewEntry = ({review}) => {
       </div>}
 
       <div>Was this review helpful?  
-        <span onClick={addHelpful}> <u>Yes</u> </span>({helpful})
+        <span onClick={addHelpful}> <u style={{cursor: "pointer"}}>Yes</u> </span>({helpful})
       </div>
 
       <Modal open={open} onClose={closeModal}>
