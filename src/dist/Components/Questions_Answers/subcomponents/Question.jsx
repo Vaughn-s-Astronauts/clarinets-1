@@ -30,16 +30,18 @@ let Question = ({question}) => {
     }, [answerAmount]);
 
     return (
-        <div style={{border: '1px solid blue'}}>
+        <div style={{'border': '2px solid blue'}}>
             <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
-            <div style={{'display': 'flex'}}>
+            <div style={{'display': 'flex', 'maxHeight': '50%', 'overflow': 'auto'}}>
                 {shownAnswers.length > 0 ? <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> : null}
-                <div style={{'maxHeight': '50%', 'overflow': 'auto'}}>
+                <div>
                     {shownAnswers.map((answer, i) => {
                         return <Answer key={i} answer={answer} />
                     })}
-                    {(answerAmount < answers.length && answers.length > 2) ?
+                    {(answerAmount < answers.length) ?
                         <button onClick={seeMoreAnswers}>See more answers</button> :
+                        answers.length < 2 ?
+                        null :
                         <button onClick={collapseAnswers}>Collapse answers</button>
                     }
                 </div>
