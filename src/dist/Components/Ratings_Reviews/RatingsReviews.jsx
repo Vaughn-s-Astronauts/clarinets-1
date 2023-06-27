@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import git_api from '../../../../config.js';
 import ReviewsList from './ReviewsList.jsx';
 import SortOptions from './SortOptions.jsx';
+import RatingBreakdown from './RatingBreakdown.jsx';
 import API from '../../helpers/API.js';
 
 let RatingsReviews = ({product}) => {
@@ -9,6 +10,7 @@ let RatingsReviews = ({product}) => {
   const [shownReviews, setShownReviews] = useState([]);
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
+  const [ratings, setRatings] = useState({});
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
@@ -19,25 +21,38 @@ let RatingsReviews = ({product}) => {
     });
   }
 
-    const showMoreReviews = () => {
-      setReviewAmount(reviewAmount+2);
-    }
+  const getRatings = () => {
+    API.GET_REVIEWS_META(product.id).then((response) => {
+      setRatings(response.data.ratings);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
-    const changeSortOrder = (value) => {
-      setSortBy(value);
-    }
+  const showMoreReviews = () => {
+    setReviewAmount(reviewAmount+2);
+  }
 
-    useEffect(() => {
-      getReviews();
-    }, [sortBy]);
+  const changeSortOrder = (value) => {
+    setSortBy(value);
+  }
 
-    useEffect(() => {
-      setShownReviews(allReviews.slice(0, reviewAmount));
-    }, [reviewAmount]);
+  useEffect(() => {
+    getRatings();
+  }, []);
+
+  useEffect(() => {
+    getReviews();
+  }, [sortBy]);
+
+  useEffect(() => {
+    setShownReviews(allReviews.slice(0, reviewAmount));
+  }, [reviewAmount]);
 
 
   return (
     <div style={{border: 'solid red'}}>
+      <RatingBreakdown ratings={ratings}/>
       <h2>Reviews for {product.name}</h2>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
