@@ -1,5 +1,5 @@
 import axios from 'axios';
-import git_api from '../../../config.js';
+import git_api from './../../config.js';
 
 
 axios.defaults.headers.common['Authorization'] = git_api();
@@ -43,7 +43,7 @@ let GET_REVIEWS = (PRODUCT_ID, PAGE=1, COUNT=5, SORT='newest') => {
 };
 //Returns review metadata for a given product.
 let GET_REVIEWS_META = (PRODUCT_ID) => {
-  return axios.get(`${baseUrl}${endpoints['GET_REVIEWS']}/meta?product_id=${PRODUCT_ID}`);  
+  return axios.get(`${baseUrl}${endpoints['GET_REVIEWS']}/meta?product_id=${PRODUCT_ID}`);
 };
 //Adds a review for the given product.
 /*
@@ -66,21 +66,21 @@ let POST_REVIEWS = (BODY) => {
 let PUT_REVIEW_HELPFUL = (REVIEW_ID) => {
     return axios.put(`${baseUrl}${endpoints['POST_REVIEWS']}${REVIEW_ID}/helpful`);
 };
-//Updates a review to show it was reported. Note, this action does not delete the review, but the review will not be returned in the above GET request. 
+//Updates a review to show it was reported. Note, this action does not delete the review, but the review will not be returned in the above GET request.
 let PUT_REVIEW_REPORT = (REVIEW_ID) => {
     return axios.put(`${baseUrl}${endpoints['POST_REVIEWS']}${REVIEW_ID}/report`);
 };
 
 //Retrieves a list of questions for a particular product. This list does not include any reported questions.
 let GET_QA_QUESTIONS = (PRODUCT_ID, PAGE=1, COUNT=5) => {
-    return axios.get(`${baseUrl}${endpoints['GET_QA_QUESTIONS']}?product_id=${PRODUCT_ID}&page=${PAGE}&count=${COUNT}`);    
+    return axios.get(`${baseUrl}${endpoints['GET_QA_QUESTIONS']}?product_id=${PRODUCT_ID}&page=${PAGE}&count=${COUNT}`);
 };
 //Returns answers for a given question. This list does not include any reported answers.
 let GET_QA_QUESTION_ANSWERS = (QUESTION_ID, PAGE=1, COUNT=5) => {
-    return axios.get(`${baseUrl}${endpoints['GET_QA_QUESTIONS']}${QUESTION_ID}/answers?page=${PAGE}&count=${COUNT}`);    
+    return axios.get(`${baseUrl}${endpoints['GET_QA_QUESTIONS']}${QUESTION_ID}/answers?page=${PAGE}&count=${COUNT}`);
 };
 //Adds a question for the given product
-/*body -> 
+/*body ->
 {
     body: text //Text of question being asked
     name: text //Username for question asker
@@ -93,7 +93,7 @@ let POST_QA_QUESTION = (BODY) => {
     return axios.post(`${baseUrl}${endpoints['POST_QA_QUESTION']}`, BODY);
 }
 //Adds an answer for the given question
-/*body -> 
+/*body ->
 {
     body: text //Text of question being asked
     name: text //Username for question asker
@@ -128,7 +128,7 @@ let GET_CART = () => {
 };
 //Adds a product to the cart.
 /*
-body -> 
+body ->
 {
     sku_id : int //	ID for the product being added to the cart
 }

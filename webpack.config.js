@@ -4,18 +4,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //This property defines where the application starts
   entry:'./src/dist/index.js',
-    
+
   //This property defines the file path and the file name which will be used for deploying the bundled file
   output:{
     path: path.join(__dirname, '/src/dist'),
     filename: 'bundle.js'
   },
-    
+
   //Setup loaders
   module: {
     rules: [
       {
-        test: /\.(js|jsx|tsx)$/, 
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -23,7 +23,7 @@ module.exports = {
       }
     ]
   },
-    
+
   // Setup plugin to use a HTML file for serving bundled js files
   plugins: [
     new HtmlWebpackPlugin({

@@ -31,11 +31,11 @@ let App = () => {
             }
             {product.id === undefined && products.map((o) => {
                 return <div key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px'}}>
-                        {o.name}                        
+                        {o.name}
                         </div>;
             })}
         </div>
     );
 };
 
-export default App;
+      export default App;
