@@ -9,7 +9,7 @@ let Question = ({question}) => {
     const [helpfulQ, setHelpfulQ] = useState(question.question_helpfulness);
     const [votedQ, setVotedQ] = useState(false);
     let id = question.question_id;
-    console.log(question);
+
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
             setAnswers(response.data.results);
@@ -46,16 +46,16 @@ let Question = ({question}) => {
         <div style={{'border': '2px solid pink'}}>
             <div>
                 <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
-            </div>
-            <div style={{'display': 'flex', 'fontSize': '12px', 'float': 'right'}}>
-                <p style={{'marginRight': '3px'}}>Helpful?</p>
-                <u style={{'cursor': 'pointer'}} onClick={handleHelpfulQ}>Yes</u>
-                <p style={{'marginRight': '15px'}}>({helpfulQ})</p>
-                <p style={{'marginRight': '15px'}}>|</p>
-                <u style={{'cursor': 'pointer'}}>Add Answer</u>
+                <div style={{'display': 'flex', 'fontSize': '12px', 'float': 'right'}}>
+                    <p style={{'marginRight': '3px'}}>Helpful?</p>
+                    <u style={{'cursor': 'pointer'}} onClick={handleHelpfulQ}>Yes</u>
+                    <p style={{'marginRight': '15px'}}>({helpfulQ})</p>
+                    <p style={{'marginRight': '15px'}}>|</p>
+                    <u style={{'cursor': 'pointer'}}>Add Answer</u>
+                </div>
             </div>
             <div style={{'display': 'flex', 'maxHeight': '50%', 'overflow': 'auto'}}>
-                {shownAnswers.length > 0 ? <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> : null}
+                {shownAnswers.length > 0 ? <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> : <i style={{'fontSize': '12px', 'float': 'right'}}>No answers to display</i>}
                 <div>
                     {shownAnswers.map((answer, i) => {
                         return <Answer key={i} answer={answer} />
