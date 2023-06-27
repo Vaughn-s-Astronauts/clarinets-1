@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import github_token from './../../../config.js'
+import github_token from '../../../../config.js'
 
 export default function ProductDetail({ product }) {
 

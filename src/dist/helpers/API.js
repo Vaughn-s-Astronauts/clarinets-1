@@ -1,5 +1,5 @@
 import axios from 'axios';
-import git_api from './../../config.js';
+import git_api from '../../../config.js';
 
 
 axios.defaults.headers.common['Authorization'] = git_api();
