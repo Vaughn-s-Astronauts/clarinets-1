@@ -1,38 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import github_token from './../../../config.js'
-import useState from 'react';
 
-let ProductDetail = ({ products, setProducts, product, setProduct, productInfo, setProductInfo, styles, setStyles, style, setStyle }) => {
-  console.log('product: ', product);
-  console.log('productInfo: ', productInfo);
-  console.log('styles', styles);
-  // axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products', { headers: { Authorization: github_token() } })
-  //   .then((response) => {
-  //     setProducts(response.data);
-  //     setProduct(response.data[0]) //make first product the default;
-  //   })
-  //   .then(() => {
-  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${product.id}`, { headers: { Authorization: github_token() } })
-  //   })
-  //   .then((response) => {
-  //     setProductInfor(response)
-  //   })
-  //   .then(() => {
-  //     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${product.id}/styles`, { headers: { Authorization: github_token() } })
-  //   })
-  //   .then((response) => {
-  //     setStyle(response)
-  //   })
-  //   .then(() => {
-  //     console.log('products: ', products);
-  //     console.log('default product: ', product);
-  //     console.log('product info: ', productInfo);
-  //     console.log('product styles: ', style)
-  //   })
-  //   .catch((err) => {
-  //     console.log('error in establishing default entries: ', err)
-  //   });
+export default function ProductDetail({ product }) {
+
+  const [catalog, setCatalog] = useState([]);
+  const [currentItem, setCurrentItem] = useState({});
+  const [itemInfo, setItemInfo] = useState({});
+  const [itemStyles, setItemStyles] = useState({});
+  const {currentStyle, setCurrentStyle} = useState({});
+
+  let getCatalog = () => {
+    axios.defaults.baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products';
+    axios.defaults.headers.common['Authorization'] = github_token();
+    axios.get('/')
+    .then((response) => {
+      setCatalog(response.data)
+      setCurrentItem(response.data[0])
+      axios.get(`/${response.data[0].id}`)
+      .then((response) => {
+        setItemInfo(response.data);
+        axios.get(`/${response.data.id}/styles`)
+        .then((response) => {
+          setItemStyles(response.data.results)
+        })
+      })
+    })
+  }
+
+  useEffect(getCatalog, []);
+
+  console.log('catalog: ', catalog);
+  console.log('currentItem: ', currentItem);
+  console.log('itemInfo: ', itemInfo);
+  console.log('itemStyles: ', itemStyles);
+
   return (
     <div>
       <div className="row container p-5 my-5 bg-dark text-white">
@@ -99,5 +101,3 @@ let ProductDetail = ({ products, setProducts, product, setProduct, productInfo, 
     </div>
   )
 };
-
-export default ProductDetail;
