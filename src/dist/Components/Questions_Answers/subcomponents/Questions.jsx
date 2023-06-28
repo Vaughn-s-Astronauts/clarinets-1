@@ -1,11 +1,11 @@
 import React from 'react';
 import Question from './Question.jsx';
 
-let Questions = ({questions}) => {
+let Questions = ({shownQuestions}) => {
 
     return (
-        <div>
-            {questions.map((question, i) => (
+        <div style={{'maxHeight': '100%', 'overflow': 'auto'}}>
+            {shownQuestions.map((question, i) => (
                 <Question key={i} question={question}/>
             ))}
         </div>
