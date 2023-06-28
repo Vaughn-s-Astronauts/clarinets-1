@@ -11,11 +11,16 @@ let RatingsReviews = ({product}) => {
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
   const [ratings, setRatings] = useState({});
+  const [filter, setFilter] = useState(0);
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
-      setAllReviews(response.data.results);
-      setShownReviews(response.data.results.slice(0, reviewAmount));
+      let reviews = response.data.results;
+      if (filter !== 0) {
+        reviews = reviews.filter(review => review.rating === filter);
+      }
+      setAllReviews(reviews);
+      setShownReviews(reviews.slice(0, reviewAmount));
     }).catch((error) => {
       console.log(error);
     });
@@ -23,7 +28,7 @@ let RatingsReviews = ({product}) => {
 
   const getRatings = () => {
     API.GET_REVIEWS_META(product.id).then((response) => {
-      setRatings(response.data.ratings);
+      setRatings(response.data);
     }).catch((error) => {
       console.log(error);
     })
@@ -37,23 +42,34 @@ let RatingsReviews = ({product}) => {
     setSortBy(value);
   }
 
+  const filterReviews = (star) => {
+    console.log('only show ', star);
+    console.log('current reviews', allReviews);
+    setFilter(star);
+  }
+
   useEffect(() => {
     getRatings();
   }, []);
 
   useEffect(() => {
     getReviews();
-  }, [sortBy]);
+  }, [sortBy, filter]);
 
   useEffect(() => {
     setShownReviews(allReviews.slice(0, reviewAmount));
   }, [reviewAmount]);
 
+  console.log('reviews parent', allReviews);
+
+  console.log('ratings parent',ratings);
+
 
   return (
     <div style={{border: 'solid red'}}>
       <h1>Ratings & Reviews</h1>
-      <RatingBreakdown ratings={ratings}/>
+      {ratings ? <RatingBreakdown ratings={ratings} filterReviews={filterReviews}/> 
+      : <div></div>}
       <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
