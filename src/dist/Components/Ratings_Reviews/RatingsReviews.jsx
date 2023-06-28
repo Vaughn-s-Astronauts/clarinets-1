@@ -11,13 +11,13 @@ let RatingsReviews = ({product}) => {
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
   const [ratings, setRatings] = useState({});
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState([]);
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
       let reviews = response.data.results;
-      if (filter !== 0) {
-        reviews = reviews.filter(review => review.rating === filter);
+      if (filter.length > 0) {
+        reviews = reviews.filter(review => filter.includes(review.rating));
       }
       setAllReviews(reviews);
       setShownReviews(reviews.slice(0, reviewAmount));
@@ -42,10 +42,23 @@ let RatingsReviews = ({product}) => {
     setSortBy(value);
   }
 
-  const filterReviews = (star) => {
-    console.log('only show ', star);
-    console.log('current reviews', allReviews);
-    setFilter(star);
+  const addFilter = (star) => {
+    if (!filter.includes(star)) {
+      setFilter(filter => [...filter, star]);
+    }
+  }
+
+  const removeFilter = (star) => {
+    if (star === -1) {
+      setFilter([]);
+    } else if (filter.includes(star)) {
+      let array = [...filter]; // make a separate copy of the array
+      let index = array.indexOf(star)
+      if (index !== -1) {
+        array.splice(index, 1);
+        setFilter(array);
+      }
+    }
   }
 
   useEffect(() => {
@@ -68,7 +81,7 @@ let RatingsReviews = ({product}) => {
   return (
     <div style={{border: 'solid red'}}>
       <h1>Ratings & Reviews</h1>
-      {ratings ? <RatingBreakdown ratings={ratings} filterReviews={filterReviews}/> 
+      {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
       : <div></div>}
       <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import RatingEntry from './RatingEntry.jsx'
 
-let RatingBreakdown = ({ratings, filterReviews}) => {
+let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
   let recommendedPercent = 0;
   let avgRating = 0;
   let totalRatings = 0;
@@ -25,32 +25,19 @@ let RatingBreakdown = ({ratings, filterReviews}) => {
     avgRating /= totalRatings;
   }
 
-  console.log('ratings child',ratings);
-
-
-  const handleClick = (key) => {
-    console.log(key);
+  const clearFilters = () => {
+    removeFilter(-1);
   }
-
-
-  const handleMouseOver = (e) => {
-    console.log(e.target);
-  }
-
-  const handleMouseOut = (e) => {
-    console.log(e.target);
-  }
-  
-
-
 
   return (
     <div>
       {avgRating.toFixed(1)}
       <Rating name="read-only" value={avgRating} precision={0.25} readOnly />
       ({totalRatings} reviews)
+      <br/>Rating Breakdown:<br/>
+      {filter.length > 0 && <u style={{cursor: 'pointer'}} onClick={clearFilters}>Clear filters</u>}
       {ratings.ratings && Object.values(ratings.ratings).reverse().map((rating, i) => (
-        <RatingEntry key={i} i={5-i} rating={rating} totalRatings={totalRatings} filterReviews={filterReviews}/>
+        <RatingEntry key={i} i={5-i} rating={rating} totalRatings={totalRatings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/>
       ))}
       
       <div>{recommendedPercent}% of reviewers recommend this product.</div>
