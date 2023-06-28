@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 let AddQuestion = ({ product }) => {
   const [open, setOpen] = React.useState(false);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };

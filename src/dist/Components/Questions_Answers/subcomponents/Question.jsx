@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import UploadPic from './UploadPic.jsx';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -16,7 +17,31 @@ let Question = ({product, question}) => {
     const [helpfulQ, setHelpfulQ] = useState(question.question_helpfulness);
     const [votedQ, setVotedQ] = useState(false);
     const [open, setOpen] = useState(false);
+    const [image, setImage] = useState({ preview: "", raw: "" });
     let id = question.question_id;
+
+    const handleChange = (e) => {
+      if (e.target.files.length) {
+        setImage({
+          preview: URL.createObjectURL(e.target.files[0]),
+          raw: e.target.files[0]
+        });
+      }
+    };
+
+    const handleUpload = async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("image", image.raw);
+
+      await fetch("YOUR_URL", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        body: formData
+      });
+    };
 
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
@@ -132,9 +157,7 @@ let Question = ({product, question}) => {
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
                 </DialogContentText>
-                <DialogContentText>
-                    Upload photos TBU
-                </DialogContentText>
+                <UploadPic image={image} handleChange={handleChange} handleUpload={handleUpload}/>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
