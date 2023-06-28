@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Search from './subcomponents/Search.jsx';
 import Questions from './subcomponents/Questions.jsx';
+import AddQuestion from './subcomponents/AddQuestion.jsx';
 import API from '../../helpers/API.js';
 
 
@@ -8,8 +9,6 @@ let QuestionsAnswers = ({product}) => {
     const [questions, setQuestions] = useState([]);
     const [shownQuestions, setShownQuestions] = useState([]);
     const [questionAmount, setQuestionAmount] = useState(2);
-
-
 
     React.useEffect(() => {
         API.GET_QA_QUESTIONS(product.id).then((response) => {
@@ -37,7 +36,7 @@ let QuestionsAnswers = ({product}) => {
                 <button onClick={seeMoreQuestions}>See more questions</button> :
                 null
             }
-            <button>Add a Question</button>
+            <AddQuestion product={product}/>
         </div>
     )
 };
