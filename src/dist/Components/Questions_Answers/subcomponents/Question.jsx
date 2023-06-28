@@ -67,7 +67,10 @@ let Question = ({question}) => {
                 </div>
             </div>
             <div style={{'display': 'flex', 'maxHeight': '50%', 'overflow': 'auto'}}>
-                {shownAnswers.length > 0 ? <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> : <i style={{'fontSize': '12px', 'float': 'right'}}>No answers to display</i>}
+                {shownAnswers.length > 0 ?
+                    <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> :
+                    <i style={{'fontSize': '12px', 'float': 'right'}}>No answers to display</i>
+                }
                 <div>
                     {shownAnswers.map((answer, i) => {
                         return <Answer key={i} answer={answer} />
