@@ -3,6 +3,7 @@ import git_api from '../../../../config.js';
 import ReviewsList from './ReviewsList.jsx';
 import SortOptions from './SortOptions.jsx';
 import RatingBreakdown from './RatingBreakdown.jsx';
+import ProductBreakdown from './ProductBreakdown.jsx';
 import API from '../../helpers/API.js';
 
 let RatingsReviews = ({product}) => {
@@ -63,11 +64,11 @@ let RatingsReviews = ({product}) => {
 
   useEffect(() => {
     getRatings();
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     getReviews();
-  }, [sortBy, filter]);
+  }, [sortBy, filter, product]);
 
   useEffect(() => {
     setShownReviews(allReviews.slice(0, reviewAmount));
@@ -83,6 +84,7 @@ let RatingsReviews = ({product}) => {
       <h1>Ratings & Reviews</h1>
       {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
       : <div></div>}
+      <ProductBreakdown chars={ratings.characteristics}/>
       <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>

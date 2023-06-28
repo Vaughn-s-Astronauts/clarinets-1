@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import Rating from '@mui/material/Rating';
-import API from '../../helpers/API.js';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
 import RatingEntry from './RatingEntry.jsx'
 
 let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
