@@ -11,11 +11,16 @@ let RatingsReviews = ({product}) => {
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
   const [ratings, setRatings] = useState({});
+  const [filter, setFilter] = useState([]);
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
-      setAllReviews(response.data.results);
-      setShownReviews(response.data.results.slice(0, reviewAmount));
+      let reviews = response.data.results;
+      if (filter.length > 0) {
+        reviews = reviews.filter(review => filter.includes(review.rating));
+      }
+      setAllReviews(reviews);
+      setShownReviews(reviews.slice(0, reviewAmount));
     }).catch((error) => {
       console.log(error);
     });
@@ -23,7 +28,7 @@ let RatingsReviews = ({product}) => {
 
   const getRatings = () => {
     API.GET_REVIEWS_META(product.id).then((response) => {
-      setRatings(response.data.ratings);
+      setRatings(response.data);
     }).catch((error) => {
       console.log(error);
     })
@@ -37,23 +42,48 @@ let RatingsReviews = ({product}) => {
     setSortBy(value);
   }
 
+  const addFilter = (star) => {
+    if (!filter.includes(star)) {
+      setFilter(filter => [...filter, star]);
+    }
+  }
+
+  const removeFilter = (star) => {
+    if (star === -1) {
+      setFilter([]);
+    } else if (filter.includes(star)) {
+      let array = [...filter]; // make a separate copy of the array
+      let index = array.indexOf(star)
+      if (index !== -1) {
+        array.splice(index, 1);
+        setFilter(array);
+      }
+    }
+  }
+
   useEffect(() => {
     getRatings();
   }, []);
 
   useEffect(() => {
     getReviews();
-  }, [sortBy]);
+  }, [sortBy, filter]);
 
   useEffect(() => {
     setShownReviews(allReviews.slice(0, reviewAmount));
   }, [reviewAmount]);
 
+  console.log('reviews parent', allReviews);
+
+  console.log('ratings parent',ratings);
+
 
   return (
     <div style={{border: 'solid red'}}>
-      <RatingBreakdown ratings={ratings}/>
-      <h2>Reviews for {product.name}</h2>
+      <h1>Ratings & Reviews</h1>
+      {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
+      : <div></div>}
+      <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
 
