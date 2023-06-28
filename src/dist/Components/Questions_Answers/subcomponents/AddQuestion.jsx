@@ -6,10 +6,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import API from '../../../helpers/API.js';
 
 let AddQuestion = ({ product }) => {
   const [open, setOpen] = React.useState(false);
+  const [formData, setFormData] = useState({
+    body: '',
+    name: '',
+    email: '',
+    product_id: product.id
+  })
 
+  console.log('FORM DATA ', formData);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,6 +27,14 @@ let AddQuestion = ({ product }) => {
     setOpen(false);
   };
 
+  const handleSubmit = () => {
+    API.POST_QA_QUESTION(formData).then((response) => {
+        console.log('Question submitted!', response);
+    }).catch((error) => {
+        console.log(error);
+    });
+    handleClose();
+  };
 
   return (
     <div>
@@ -39,6 +55,7 @@ let AddQuestion = ({ product }) => {
             fullWidth
             variant="standard"
             inputProps={{ maxLength: 1000 }}
+            onChange={e => setFormData({...formData, body: e.target.value})}
           />
           <TextField
             required
@@ -49,6 +66,7 @@ let AddQuestion = ({ product }) => {
             fullWidth
             variant="standard"
             inputProps={{ maxLength: 60 }}
+            onChange={e => setFormData({...formData, name: e.target.value})}
           />
             <DialogContentText>
               <i style={{'fontSize': '12px'}}> For privacy reasons, do not use your full name or email address. </i>
@@ -63,6 +81,7 @@ let AddQuestion = ({ product }) => {
             fullWidth
             variant="standard"
             inputProps={{ maxLength: 60 }}
+            onChange={e => setFormData({...formData, email: e.target.value})}
           />
             <DialogContentText>
               <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
@@ -70,7 +89,7 @@ let AddQuestion = ({ product }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
