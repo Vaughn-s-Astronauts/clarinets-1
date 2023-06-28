@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import API from '../../helpers/API.js';
-import CarouselItem from './CarouselItem.jsx'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
