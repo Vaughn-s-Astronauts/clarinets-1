@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Answer from './Answer.jsx';
 import API from '../../../helpers/API.js';
 
-let Question = ({question}) => {
+let Question = ({product, question}) => {
     const [answers, setAnswers] = useState([]);
     const [shownAnswers, setShownAnswers] = useState([]);
     const [answerAmount, setAnswerAmount] = useState(2);
@@ -13,6 +17,8 @@ let Question = ({question}) => {
     const [votedQ, setVotedQ] = useState(false);
     const [open, setOpen] = useState(false);
     let id = question.question_id;
+
+    console.log(question);
 
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
@@ -83,35 +89,62 @@ let Question = ({question}) => {
                     }
                 </div>
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
-                </Box>
-            </Modal>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Submit Your Answer</DialogTitle>
+                <DialogContent>
+                <DialogContentText margin="dense">
+                    {product.name}: {question.question_body}
+                </DialogContentText>
+                <TextField
+                    required
+                    autoFocus
+                    multiline
+                    maxRows={4}
+                    margin="dense"
+                    id="question"
+                    label="Your Answer"
+                    fullWidth
+                    variant="standard"
+                    inputProps={{ maxLength: 1000 }}
+                />
+                <TextField
+                    required
+                    margin="dense"
+                    id="nickname"
+                    label="Nickname"
+                    placeholder="Example: jack543!"
+                    fullWidth
+                    variant="standard"
+                    inputProps={{ maxLength: 60 }}
+                />
+                <DialogContentText>
+                <i style={{'fontSize': '12px'}}> For privacy reasons, do not use your full name or email address. </i>
+                </DialogContentText>
+                <TextField
+                    required
+                    margin="dense"
+                    id="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Example: jack@email.com"
+                    fullWidth
+                    variant="standard"
+                    inputProps={{ maxLength: 60 }}
+                />
+                <DialogContentText>
+                <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
+                </DialogContentText>
+                <DialogContentText>
+                    Upload photos TBU
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose}>Submit</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 };
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
 export default Question;

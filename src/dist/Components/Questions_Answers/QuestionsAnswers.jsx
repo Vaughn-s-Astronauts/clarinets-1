@@ -31,7 +31,7 @@ let QuestionsAnswers = ({product}) => {
         <div style={{border: '2px solid blue'}}>
             <h1>Questions & Answers</h1>
             <Search />
-            <Questions shownQuestions={shownQuestions}/>
+            <Questions product={product} shownQuestions={shownQuestions}/>
             {(questionAmount < questions.length && questions.length > 2) ?
                 <button onClick={seeMoreQuestions}>See more questions</button> :
                 null

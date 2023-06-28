@@ -1,12 +1,12 @@
 import React from 'react';
 import Question from './Question.jsx';
 
-let Questions = ({shownQuestions}) => {
+let Questions = ({product, shownQuestions}) => {
 
     return (
         <div style={{'maxHeight': '100%', 'overflow': 'auto'}}>
             {shownQuestions.map((question, i) => (
-                <Question key={i} question={question}/>
+                <Question key={i} product={product} question={question}/>
             ))}
         </div>
     )
