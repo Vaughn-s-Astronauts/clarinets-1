@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import Answer from './Answer.jsx';
 import API from '../../../helpers/API.js';
 
@@ -8,6 +11,7 @@ let Question = ({question}) => {
     const [answerAmount, setAnswerAmount] = useState(2);
     const [helpfulQ, setHelpfulQ] = useState(question.question_helpfulness);
     const [votedQ, setVotedQ] = useState(false);
+    const [open, setOpen] = useState(false);
     let id = question.question_id;
 
     React.useEffect(() => {
@@ -42,6 +46,14 @@ let Question = ({question}) => {
         setShownAnswers(answers.slice(0, answerAmount));
     }, [answerAmount]);
 
+    const handleOpen = (e) => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     return (
         <div style={{'border': '2px solid pink'}}>
             <div>
@@ -51,7 +63,7 @@ let Question = ({question}) => {
                     <u style={{'cursor': 'pointer'}} onClick={handleHelpfulQ}>Yes</u>
                     <p style={{'marginRight': '15px'}}>({helpfulQ})</p>
                     <p style={{'marginRight': '15px'}}>|</p>
-                    <u style={{'cursor': 'pointer'}}>Add Answer</u>
+                    <u style={{'cursor': 'pointer'}} onClick={handleOpen}>Add Answer</u>
                 </div>
             </div>
             <div style={{'display': 'flex', 'maxHeight': '50%', 'overflow': 'auto'}}>
@@ -68,8 +80,35 @@ let Question = ({question}) => {
                     }
                 </div>
             </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                </Box>
+            </Modal>
         </div>
     )
 };
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
 export default Question;
