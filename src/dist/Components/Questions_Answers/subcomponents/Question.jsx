@@ -18,8 +18,6 @@ let Question = ({product, question}) => {
     const [open, setOpen] = useState(false);
     let id = question.question_id;
 
-    console.log(question);
-
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
             setAnswers(response.data.results);
