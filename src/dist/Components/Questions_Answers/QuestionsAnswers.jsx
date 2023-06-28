@@ -16,7 +16,7 @@ let QuestionsAnswers = ({product}) => {
     }, []);
 
     return (
-        <div style={{border: '1px solid pink'}}>
+        <div style={{border: '2px solid blue'}}>
             <h1>Questions & Answers</h1>
             <Search />
             <Questions product={product} questions={questions}/>
