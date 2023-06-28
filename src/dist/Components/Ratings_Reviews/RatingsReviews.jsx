@@ -52,8 +52,9 @@ let RatingsReviews = ({product}) => {
 
   return (
     <div style={{border: 'solid red'}}>
+      <h1>Ratings & Reviews</h1>
       <RatingBreakdown ratings={ratings}/>
-      <h2>Reviews for {product.name}</h2>
+      <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
 
