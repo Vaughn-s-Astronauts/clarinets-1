@@ -1,37 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import github_token from '../../../../config.js'
+import API from '../../helpers/API.js';
+import ImageGallery from './ImageGallery.jsx'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function ProductDetail({ product }) {
 
-  const [catalog, setCatalog] = useState([]);
-  const [currentItem, setCurrentItem] = useState({});
-  const [itemStyles, setItemStyles] = useState([]);
-  const [currentStyle, setCurrentStyle] = useState({});
-  const [photo, setPhoto] = useState([])
+  const [state, setState] = useState({
+    currentProduct: product,
+    styles: [],
+    currentStyle: {},
+    photos: [],
+    currentPhoto: ''
+  })
 
-  let getCatalog = () => {
-    axios.defaults.headers.common['Authorization'] = github_token();
-    axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/')
+  useEffect(() => {
+    API.GET_PRODUCT_STYLES(product.id)
     .then((response) => {
-      setCatalog(response.data)
-      setCurrentItem(response.data[0])
-      axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${response.data[0].id}/styles`)
-      .then((response) => {
-        setItemStyles(response.data.results)
-        setCurrentStyle(response.data.results[0])
-        setPhoto(response.data.results[0].photos[0].url)
+      console.log(response.data);
+      setState({
+        ...state,
+        styles: response.data.results,
+        currentStyle: response.data.results[0],
+        photos: response.data.results[0].photos,
+        currentPhoto: response.data.results[0].photos[0].url
       })
     })
-  }
-
-  useEffect(getCatalog, []);
-
-  console.log('catalog: ', catalog);
-  console.log('currentItem: ', currentItem);
-  console.log('itemStyles: ', itemStyles);
-  console.log('currentStyle: ', currentStyle);
-  console.log('photos: ', photo);
+  }, [])
 
   return (
     <div>
@@ -54,45 +50,14 @@ export default function ProductDetail({ product }) {
         </div>
         <div className="col-lg-6">
 
-
-          {/* <!-- Carousel -->*/}
-          <div id="demo" className="carousel slide" data-bs-ride="carousel">
-
-            {/* <!-- Indicators/dots --> */}
-            <div className="carousel-indicators">
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="0" className="active"></button>
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-            </div>
-
-            {/* <!-- The slideshow/carousel --> */}
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img src={`${photo}`} alt="Los Angeles" className="d-block w-100"></img>
-              </div>
-              <div className="carousel-item">
-                <img src="chicago.jpg" alt="Chicago" className="d-block w-100"></img>
-              </div>
-              <div className="carousel-item">
-                <img src="ny.jpg" alt="New York" className="d-block w-100"></img>
-              </div>
-            </div>
-
-            {/* <!-- Left and right controls/icons --> */}
-            <button className="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon"></span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-              <span className="carousel-control-next-icon"></span>
-            </button>
-          </div>
+          <img src={state.currentPhoto} ></img>
 
         </div>
         <div className="col-lg-4">
           <p>star ratings</p>
           <p>Category</p>
-          <p>{product.category}</p>
-          <p>{product.default_price}</p>
+          <p>{state.currentProduct.category}</p>
+          <p>{state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
         </div>
       </div>
