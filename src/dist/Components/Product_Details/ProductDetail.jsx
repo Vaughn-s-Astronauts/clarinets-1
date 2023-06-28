@@ -4,7 +4,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Carousel from 'react-bootstrap/Carousel';
-
+import Image from 'react-bootstrap/Image'
+import Stack from 'react-bootstrap/Stack';
+import Ratio from 'react-bootstrap/Ratio';
 
 export default function ProductDetail({ product }) {
 
@@ -32,6 +34,7 @@ export default function ProductDetail({ product }) {
 
   return (
     <Container fluid>
+
       <Row>
         <Col>logo</Col>
         <Col>search bar</Col>
@@ -42,19 +45,33 @@ export default function ProductDetail({ product }) {
       </Row>
 
       <Row>
-        <Col>
-          sidebar of veritical pics
+        <Col xs={1}>
+          <Stack gap={3}>
+            {state.photos.map((pic) => {
+              return(
+                <Image
+                  src={pic.thumbnail_url}
+                  rounded
+                  width="48"
+                />
+              )
+            })}
+          </Stack>
         </Col>
 
-        <Col>
+        <Col xs={5}>
           <Carousel fade>
-            src={state.photos.map((pic) => {
+            {state.photos.map((pic) => {
               return(
                 <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src={pic.url}
-                />
+                  <Ratio aspectRatio={80}>
+                    <Image
+                      className="d-block w-100"
+                      src={pic.url}
+                      rounded
+                      style={{height: '100%'}}
+                    />
+                  </Ratio>
                 <Carousel.Caption>
                   <h3>Picture label</h3>
                   <p>Some description</p>
@@ -65,7 +82,7 @@ export default function ProductDetail({ product }) {
           </Carousel>
         </Col>
 
-        <Col>
+        <Col xs={5}>
           <p>star ratings</p>
           <p>Category</p>
           <p>{state.currentProduct.category}</p>
@@ -74,6 +91,8 @@ export default function ProductDetail({ product }) {
         </Col>
 
       </Row>
+      <p></p>
     </Container>
   )
 };
+
