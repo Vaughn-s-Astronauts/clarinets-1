@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import API from '../../helpers/API.js';
-import ImageGallery from './ImageGallery.jsx'
+import CarouselItem from './CarouselItem.jsx'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Carousel from 'react-bootstrap/Carousel';
+
 
 export default function ProductDetail({ product }) {
 
@@ -30,37 +32,49 @@ export default function ProductDetail({ product }) {
   }, [])
 
   return (
-    <div>
-      <div className="row container p-5 my-5 bg-dark text-white">
-        <div className="col-lg-6">
-          <h1>logo</h1>
-        </div>
-        <div className="col-lg-6">
-          <h1>search bar</h1>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-12">
-          <h4><small>SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT</small></h4>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-2">
-          <p>sidebar of veritical pics</p>
-        </div>
-        <div className="col-lg-6">
+    <Container fluid>
+      <Row>
+        <Col>logo</Col>
+        <Col>search bar</Col>
+      </Row>
 
-          <img src={state.currentPhoto} ></img>
+      <Row>
+      SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT
+      </Row>
 
-        </div>
-        <div className="col-lg-4">
+      <Row>
+        <Col>
+          sidebar of veritical pics
+        </Col>
+
+        <Col>
+          <Carousel fade>
+            src={state.photos.map((pic) => {
+              return(
+                <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={pic.url}
+                />
+                <Carousel.Caption>
+                  <h3>Picture label</h3>
+                  <p>Some description</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+              )
+            })}
+          </Carousel>
+        </Col>
+
+        <Col>
           <p>star ratings</p>
           <p>Category</p>
           <p>{state.currentProduct.category}</p>
           <p>{state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
-        </div>
-      </div>
-    </div>
+        </Col>
+
+      </Row>
+    </Container>
   )
 };
