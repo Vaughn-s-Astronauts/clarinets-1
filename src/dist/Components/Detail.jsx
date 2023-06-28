@@ -6,7 +6,7 @@ import RatingsReviews from './Ratings_Reviews/RatingsReviews.jsx';
 import API from '../helpers/API.js';
 
 
-let Detail = ({product}) => {
+let Detail = ({product, updateProduct}) => {
     const [details, setDetails] = React.useState(product);//defaulted to the 'basic' details
 
     React.useEffect(() => {
@@ -19,10 +19,17 @@ let Detail = ({product}) => {
         }
 
     }, []);
+    React.useEffect(() => {//this is bad come back to this lol
+        API.GET_PRODUCT(product.id).then((response) => {
+            setDetails(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [product]);
     return (
         <div>
             <ProductDetail product={details}/>
-            <RelatedProducts product={details}/>
+            <RelatedProducts product={details} updateProduct={updateProduct}/>
             <QuestionsAnswers product={details}/>
             <RatingsReviews product={details}/>
         </div>
