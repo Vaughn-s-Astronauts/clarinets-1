@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //This property defines where the application starts
   entry:'./src/dist/index.js',
-
+  mode: "development",
   //This property defines the file path and the file name which will be used for deploying the bundled file
   output:{
     path: path.join(__dirname, '/src/dist'),
