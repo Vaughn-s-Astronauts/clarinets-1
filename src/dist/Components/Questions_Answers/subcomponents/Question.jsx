@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import UploadPic from './UploadPic.jsx';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -26,8 +25,6 @@ let Question = ({product, question}) => {
         photos: []
     });
     let id = question.question_id;
-
-    console.log('PHOTOS: ', ansFormData.photos);
 
     // This handles submitting new answers to questions
     const handleSubmit = () => {
@@ -104,13 +101,12 @@ let Question = ({product, question}) => {
     }, []);
 
     // Handling adding a picture
-    const addPic = () => {
-        if (numPics > 5) {
-            alert('You can only upload five (5) photos');
-        } else {
-            setAnsFormData({...ansFormData, name: e.target.value})
-            setNumPics(numPics + 1);
-        }
+    const addPic = (e) => {
+        let photosArr = []
+        photos.push(URL.createObjectURL(e.target.files[0]));
+        setAnsFormData({...ansFormData, photos: photosArr})
+        setNumPics(numPics + 1);
+        handleClosePics();
     }
 
     return (
@@ -190,7 +186,10 @@ let Question = ({product, question}) => {
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
                 </DialogContentText>
-                <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button>
+                {numPics < 5 ?
+                    <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button> :
+                    null
+                }
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
@@ -209,6 +208,7 @@ let Question = ({product, question}) => {
                     fullWidth
                     variant="standard"
                     inputProps={{ maxLength: 1000 }}
+                    onChange={e => setAnsFormData({...ansFormData, photos: e.target.value})}
                 />
                 <button onClick={addPic}>Upload photo</button>
                 </DialogContent>
