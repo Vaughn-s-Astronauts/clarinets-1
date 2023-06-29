@@ -4,7 +4,11 @@ import ReviewsList from './ReviewsList.jsx';
 import SortOptions from './SortOptions.jsx';
 import RatingBreakdown from './RatingBreakdown.jsx';
 import ProductBreakdown from './ProductBreakdown.jsx';
+import AddReview from './AddReview.jsx';
 import API from '../../helpers/API.js';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 let RatingsReviews = ({product}) => {
   const [allReviews, setAllReviews] = useState([]);
@@ -89,9 +93,12 @@ let RatingsReviews = ({product}) => {
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
 
+      <Stack direction="row" spacing={2}>
       {(reviewAmount < allReviews.length && allReviews.length > 2) ?
-      <button onClick={showMoreReviews}>More reviews</button>
+      <Button variant="outlined" onClick={showMoreReviews}>MORE REVIEWS</Button>
       : <div> All reviews displayed </div>}
+      <AddReview productName={product.name} chars={ratings.characteristics}/>
+      </Stack>
     </div>);
 };
 
