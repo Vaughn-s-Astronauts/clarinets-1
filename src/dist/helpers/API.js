@@ -1,8 +1,9 @@
 import axios from 'axios';
+import git_api from '../../../config.js';
 
 
-
-axios.defaults.baseURL = `http://localhost:3000/api`;
+axios.defaults.headers.common['Authorization'] = git_api();
+axios.defaults.baseURL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe`;
 let endpoints = {
     'GET_PRODUCTS' : '/products/',
     'GET_REVIEWS' : '/reviews/',
