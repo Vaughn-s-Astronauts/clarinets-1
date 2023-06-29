@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Search from './subcomponents/Search.jsx';
 import Questions from './subcomponents/Questions.jsx';
+import AddQuestion from './subcomponents/AddQuestion.jsx';
 import API from '../../helpers/API.js';
 
 
@@ -10,16 +11,29 @@ let QuestionsAnswers = ({product}) => {
     const [questionAmount, setQuestionAmount] = useState(2);
 
 
+    console.log('HERE ARE YOUR QUESTIONS', questions);
 
-    React.useEffect(() => {
+    // Handle submitting a question, posting to server
+    const handleSubmitQues = (formData) => {
+        API.POST_QA_QUESTION(formData).then((response) => {
+            console.log('Question submitted!', response);
+            getAndSet();
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+
+    // This is used to get questions from server and set them as state
+    const getAndSet = () => {
         API.GET_QA_QUESTIONS(product.id).then((response) => {
             setQuestions(response.data.results);
             setShownQuestions(response.data.results.slice(0, questionAmount));
         }).catch((error) => {
             console.log(error);
         });
-    }, []);
+    }
 
+    // These handle expalding the question list
     const seeMoreQuestions = () => {
         setQuestionAmount(questionAmount + 2);
     }
@@ -28,16 +42,21 @@ let QuestionsAnswers = ({product}) => {
         setShownQuestions(questions.slice(0, questionAmount));
     }, [questionAmount]);
 
+    // This handles the initial get and set on load
+    React.useEffect(() => {
+        getAndSet();
+    }, []);
+
     return (
         <div style={{border: '2px solid blue'}}>
             <h1>Questions & Answers</h1>
             <Search />
-            <Questions shownQuestions={shownQuestions}/>
+            <Questions product={product} shownQuestions={shownQuestions}/>
             {(questionAmount < questions.length && questions.length > 2) ?
                 <button onClick={seeMoreQuestions}>See more questions</button> :
                 null
             }
-            <button>Add a Question</button>
+            <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
         </div>
     )
 };
