@@ -31,6 +31,7 @@ let Question = ({product, question}) => {
         } else {
           API.POST_QA_QUESTION_ANSWER(id, ansFormData).then((response) => {
               console.log('Answer submitted!', response);
+              getAndSetAns();
           }).catch((error) => {
               console.log(error);
           });
