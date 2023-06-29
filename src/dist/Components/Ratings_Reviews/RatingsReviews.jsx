@@ -78,10 +78,9 @@ let RatingsReviews = ({product}) => {
     setShownReviews(allReviews.slice(0, reviewAmount));
   }, [reviewAmount]);
 
-  console.log('reviews parent', allReviews);
+  // console.log('reviews parent', allReviews);
 
-  console.log('ratings parent',ratings);
-
+  // console.log('ratings parent',ratings);
 
   return (
     <div style={{border: 'solid red'}}>

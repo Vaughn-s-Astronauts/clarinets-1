@@ -1,9 +1,12 @@
 import React from 'react';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 let lowest = 'bad';
 let highest = 'good';
+
+
 
 let Characteristic = ({char, score}) => {
 
@@ -27,17 +30,32 @@ let Characteristic = ({char, score}) => {
     highest = 'Too loose';
   }
 
+  let marks = [
+    {
+      value: 0,
+      label: lowest,
+    },
+    {
+      value: 25
+    },
+    {
+      value: 50
+    },
+    {
+      value: 75
+    },
+    {
+      value: 100,
+      label: highest,
+    },
+  ];
+
   return (
-    <div style={{width: 150}}>
-      <div style={{textAlign: 'center'}}>{char}</div>
+    <div style={{width: 200}}>
       <Stack alignItems="center">
-      <Slider sx={{width: 125}} disabled defaultValue={score*20} aria-label="Disabled slider" align="center"/>
+      <Typography id="input-slider" gutterBottom>{char}</Typography>
+      <Slider sx={{width: 125, mb: 4}} disabled defaultValue={score*20} aria-label="Disabled slider" align="center" step={25} marks={marks} track={false}/>
       </Stack>
-      <div>
-      <span style={{float:'left'}}>{lowest}</span>
-      <span style={{float:'right'}}>{highest}</span>
-      <br/>
-      </div>
     </div>
   )
 }
