@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production --watch",
     "test": "jest",
-    "server-dev": "nodemon ./index.js"
+    "server-dev": "npx nodemon --watch index.js",
+    "client-dev": "npx webpack --watch"
   },
   "author": "",
   "license": "ISC",
