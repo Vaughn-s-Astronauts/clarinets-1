@@ -10,17 +10,20 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import TextField from '@mui/material/TextField';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  height: '90vh',
   width: 600,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll'
 };
 
 let AddReview = ({productName, chars}) => {
@@ -29,6 +32,7 @@ let AddReview = ({productName, chars}) => {
   const [rating, setRating] = useState(0);
   const [recommend, setRecommend] = useState('');
   const [charObj, setCharObj] = useState({});
+  const [summary, setSummary] = useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -38,13 +42,18 @@ let AddReview = ({productName, chars}) => {
     setCharObj({...charObj,
       [e.target.name]: value
     });
-
-    console.log(charObj);
-    console.log(Object.keys(chars));
   }
 
+  const updateSummary = (e) => {
+    setSummary(e.target.value);
+  }
 
-
+  const submit = () => {
+    console.log('rating', rating);
+    console.log('recommend', recommend);
+    console.log('charObj', charObj);
+    console.log('summary', summary);
+  }
 
   return (
     <div>
@@ -54,6 +63,7 @@ let AddReview = ({productName, chars}) => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{overflow: 'scroll'}}
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -82,7 +92,18 @@ let AddReview = ({productName, chars}) => {
           <FormControlLabel value="no" control={<Radio />} label="No" />
           </RadioGroup>
         </FormControl>
-          {chars && Object.keys(chars).map((char, i) => (<CharReviewEntry key={i} char={char} />))}
+        {chars && Object.keys(chars).map((char, i) => (<CharReviewEntry key={i} char={char} charObj={charObj} setCharObj={setCharObj}/>))}
+        <TextField
+          id="review-summary"
+          label="Review Summary"
+          multiline
+          fullWidth
+          rows={4}
+          placeholder="Example: Best purchase ever!"
+          value={summary}
+          onChange={e => setSummary(e.target.value)}
+        />
+        <Button variant="contained" onClick={submit}>Submit</Button>
         </Box>
       </Modal>
 

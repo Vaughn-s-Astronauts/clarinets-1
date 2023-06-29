@@ -55,7 +55,6 @@ let CharReviewEntry = ({char}) => {
   }
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setCurrentSelected(descObj[e.target.value])
   }
 
