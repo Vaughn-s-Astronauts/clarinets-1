@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import API from '../../../helpers/API.js';
 
-let AddQuestion = ({ product }) => {
+let AddQuestion = ({ product, handleSubmitQues }) => {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState({
     body: '',
@@ -17,11 +17,7 @@ let AddQuestion = ({ product }) => {
     product_id: product.id,
   })
 
-  // const validateEmail = (email) => {
-  //   var emailTest = /\S+@\S+\.\S+/;
-  //   return emailTest.test(email);
-  // };
-
+  // Handling opening and closing modal
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -30,16 +26,11 @@ let AddQuestion = ({ product }) => {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
+  const addQuestion = () => {
     if (!formData.body || !formData.name || !formData.email || !formData.email.includes('@') || !formData.email.includes('.')) {
       alert('Error submitting, please recheck entries');
     } else {
-      API.POST_QA_QUESTION(formData).then((response) => {
-          console.log('FORM DATA ', formData);
-          console.log('Question submitted!', response);
-      }).catch((error) => {
-          console.log(error);
-      });
+      handleSubmitQues(formData);
       handleClose();
     }
   };
@@ -97,7 +88,7 @@ let AddQuestion = ({ product }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={addQuestion}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

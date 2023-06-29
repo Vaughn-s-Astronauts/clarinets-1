@@ -17,7 +17,6 @@ let Question = ({product, question}) => {
     const [helpfulQ, setHelpfulQ] = useState(question.question_helpfulness);
     const [votedQ, setVotedQ] = useState(false);
     const [open, setOpen] = useState(false);
-    const [image, setImage] = useState({ preview: "", raw: "" });
     const [ansFormData, setAnsFormData] = useState({
         body: '',
         name: '',
@@ -39,45 +38,22 @@ let Question = ({product, question}) => {
         }
       };
 
-    // Setting images selected from computer
-    const handleChange = (e) => {
-      if (e.target.files.length) {
-        setImage({
-          preview: URL.createObjectURL(e.target.files[0]),
-          raw: e.target.files[0]
-        });
-      }
-    };
-
-    const handleUpload = async (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("image", image.raw);
-
-      await fetch("YOUR_URL", {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        body: formData
-      });
-    };
-
     // Getting answers from server, initial setting
-    React.useEffect(() => {
+    const getAndSetAns = () => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
             setAnswers(response.data.results);
             setShownAnswers(response.data.results.slice(0, 2));
         }).catch((error) => {
             console.log(error);
         });
-    }, []);
+    }
+
 
     // Handling voting questions as helpful
     const handleHelpfulQ = () => {
         if (!votedQ) {
             API.PUT_QA_QUESTION_HELPFUL(id).then((response) => {
-            setHelpfulQ(helpfulQ + 1);
+                setHelpfulQ(helpfulQ + 1);
             }).catch((error) => {
                 console.log(error);
             });
@@ -107,6 +83,11 @@ let Question = ({product, question}) => {
     const handleClose = () => {
         setOpen(false);
     }
+
+    // Handle initial getting and setting of answers
+    React.useEffect(() => {
+        getAndSetAns();
+    }, []);
 
     return (
         <div style={{'border': '2px solid pink'}}>
@@ -185,7 +166,7 @@ let Question = ({product, question}) => {
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
                 </DialogContentText>
-                <UploadPic image={image} handleChange={handleChange} handleUpload={handleUpload}/>
+                <button>Upload photos</button>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>

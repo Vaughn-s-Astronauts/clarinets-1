@@ -10,17 +10,30 @@ let QuestionsAnswers = ({product}) => {
     const [shownQuestions, setShownQuestions] = useState([]);
     const [questionAmount, setQuestionAmount] = useState(2);
 
-    console.log('QUESTIONS: ', questions);
 
-    React.useEffect(() => {
+    console.log('HERE ARE YOUR QUESTIONS', questions);
+
+    // Handle submitting a question, posting to server
+    const handleSubmitQues = (formData) => {
+        API.POST_QA_QUESTION(formData).then((response) => {
+            console.log('Question submitted!', response);
+            getAndSet();
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+
+    // This is used to get questions from server and set them as state
+    const getAndSet = () => {
         API.GET_QA_QUESTIONS(product.id).then((response) => {
             setQuestions(response.data.results);
             setShownQuestions(response.data.results.slice(0, questionAmount));
         }).catch((error) => {
             console.log(error);
         });
-    }, []);
+    }
 
+    // These handle expalding the question list
     const seeMoreQuestions = () => {
         setQuestionAmount(questionAmount + 2);
     }
@@ -28,6 +41,11 @@ let QuestionsAnswers = ({product}) => {
     React.useEffect(() => {
         setShownQuestions(questions.slice(0, questionAmount));
     }, [questionAmount]);
+
+    // This handles the initial get and set on load
+    React.useEffect(() => {
+        getAndSet();
+    }, []);
 
     return (
         <div style={{border: '2px solid blue'}}>
@@ -38,7 +56,7 @@ let QuestionsAnswers = ({product}) => {
                 <button onClick={seeMoreQuestions}>See more questions</button> :
                 null
             }
-            <AddQuestion product={product}/>
+            <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
         </div>
     )
 };
