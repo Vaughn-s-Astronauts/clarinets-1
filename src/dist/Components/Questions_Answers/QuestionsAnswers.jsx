@@ -10,6 +10,8 @@ let QuestionsAnswers = ({product}) => {
     const [shownQuestions, setShownQuestions] = useState([]);
     const [questionAmount, setQuestionAmount] = useState(2);
 
+    console.log('QUESTIONS: ', questions);
+
     React.useEffect(() => {
         API.GET_QA_QUESTIONS(product.id).then((response) => {
             setQuestions(response.data.results);

@@ -14,10 +14,13 @@ let AddQuestion = ({ product }) => {
     body: '',
     name: '',
     email: '',
-    product_id: product.id
+    product_id: product.id,
   })
 
-  console.log('FORM DATA ', formData);
+  // const validateEmail = (email) => {
+  //   var emailTest = /\S+@\S+\.\S+/;
+  //   return emailTest.test(email);
+  // };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,12 +31,17 @@ let AddQuestion = ({ product }) => {
   };
 
   const handleSubmit = () => {
-    API.POST_QA_QUESTION(formData).then((response) => {
-        console.log('Question submitted!', response);
-    }).catch((error) => {
-        console.log(error);
-    });
-    handleClose();
+    if (!formData.body || !formData.name || !formData.email || !formData.email.includes('@') || !formData.email.includes('.')) {
+      alert('Error submitting, please recheck entries');
+    } else {
+      API.POST_QA_QUESTION(formData).then((response) => {
+          console.log('FORM DATA ', formData);
+          console.log('Question submitted!', response);
+      }).catch((error) => {
+          console.log(error);
+      });
+      handleClose();
+    }
   };
 
   return (

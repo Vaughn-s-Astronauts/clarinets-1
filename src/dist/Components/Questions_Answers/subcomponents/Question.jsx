@@ -18,8 +18,28 @@ let Question = ({product, question}) => {
     const [votedQ, setVotedQ] = useState(false);
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState({ preview: "", raw: "" });
+    const [ansFormData, setAnsFormData] = useState({
+        body: '',
+        name: '',
+        email: '',
+        photos: [],
+    });
     let id = question.question_id;
 
+    const handleSubmit = () => {
+        if (!ansFormData.body || !ansFormData.name || !ansFormData.email || !ansFormData.email.includes('@') || !ansFormData.email.includes('.')) {
+          alert('Error submitting, please recheck entries');
+        } else {
+          API.POST_QA_QUESTION_ANSWER(id, ansFormData).then((response) => {
+              console.log('Answer submitted!', response);
+          }).catch((error) => {
+              console.log(error);
+          });
+          handleClose();
+        }
+      };
+
+    // Setting images selected from computer
     const handleChange = (e) => {
       if (e.target.files.length) {
         setImage({
@@ -43,6 +63,7 @@ let Question = ({product, question}) => {
       });
     };
 
+    // Getting answers from server, initial setting
     React.useEffect(() => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
             setAnswers(response.data.results);
@@ -52,6 +73,7 @@ let Question = ({product, question}) => {
         });
     }, []);
 
+    // Handling voting questions as helpful
     const handleHelpfulQ = () => {
         if (!votedQ) {
             API.PUT_QA_QUESTION_HELPFUL(id).then((response) => {
@@ -63,6 +85,7 @@ let Question = ({product, question}) => {
         }
     };
 
+    // Viewing / collapsing answers
     const seeMoreAnswers = () => {
         setAnswerAmount(answers.length);
     }
@@ -75,6 +98,8 @@ let Question = ({product, question}) => {
         setShownAnswers(answers.slice(0, answerAmount));
     }, [answerAmount]);
 
+
+    // Opening and closing modal
     const handleOpen = (e) => {
         setOpen(true);
     }
@@ -129,6 +154,7 @@ let Question = ({product, question}) => {
                     fullWidth
                     variant="standard"
                     inputProps={{ maxLength: 1000 }}
+                    onChange={e => setAnsFormData({...ansFormData, body: e.target.value})}
                 />
                 <TextField
                     required
@@ -139,6 +165,7 @@ let Question = ({product, question}) => {
                     fullWidth
                     variant="standard"
                     inputProps={{ maxLength: 60 }}
+                    onChange={e => setAnsFormData({...ansFormData, name: e.target.value})}
                 />
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For privacy reasons, do not use your full name or email address. </i>
@@ -153,6 +180,7 @@ let Question = ({product, question}) => {
                     fullWidth
                     variant="standard"
                     inputProps={{ maxLength: 60 }}
+                    onChange={e => setAnsFormData({...ansFormData, email: e.target.value})}
                 />
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
@@ -161,7 +189,7 @@ let Question = ({product, question}) => {
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Submit</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
                 </DialogActions>
             </Dialog>
         </div>
