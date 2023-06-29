@@ -2,9 +2,10 @@ import React from 'react';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
 
+let lowest = 'bad';
+let highest = 'good';
+
 let Characteristic = ({char, score}) => {
-  let lowest = 'bad';
-  let highest = 'good';
 
   if (char === 'Quality') {
     lowest = 'Low';
