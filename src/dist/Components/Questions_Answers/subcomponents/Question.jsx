@@ -17,14 +17,19 @@ let Question = ({product, question}) => {
     const [helpfulQ, setHelpfulQ] = useState(question.question_helpfulness);
     const [votedQ, setVotedQ] = useState(false);
     const [open, setOpen] = useState(false);
+    const [openPics, setOpenPics] = useState(false);
+    const [numPics, setNumPics] = useState(0);
     const [ansFormData, setAnsFormData] = useState({
         body: '',
         name: '',
         email: '',
-        photos: [],
+        photos: []
     });
     let id = question.question_id;
 
+    console.log('PHOTOS: ', ansFormData.photos);
+
+    // This handles submitting new answers to questions
     const handleSubmit = () => {
         if (!ansFormData.body || !ansFormData.name || !ansFormData.email || !ansFormData.email.includes('@') || !ansFormData.email.includes('.')) {
           alert('Error submitting, please recheck entries');
@@ -39,7 +44,7 @@ let Question = ({product, question}) => {
         }
       };
 
-    // Getting answers from server, initial setting
+    // Function for getting and setting answers
     const getAndSetAns = () => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
             setAnswers(response.data.results);
@@ -48,7 +53,6 @@ let Question = ({product, question}) => {
             console.log(error);
         });
     }
-
 
     // Handling voting questions as helpful
     const handleHelpfulQ = () => {
@@ -76,8 +80,8 @@ let Question = ({product, question}) => {
     }, [answerAmount]);
 
 
-    // Opening and closing modal
-    const handleOpen = (e) => {
+    // Opening and closing main modal
+    const handleOpen = () => {
         setOpen(true);
     }
 
@@ -85,10 +89,29 @@ let Question = ({product, question}) => {
         setOpen(false);
     }
 
+    // Opening and closing picture modal
+    const handleOpenPics = () => {
+        setOpenPics(true);
+    }
+
+    const handleClosePics = () => {
+        setOpenPics(false);
+    }
+
     // Handle initial getting and setting of answers
     React.useEffect(() => {
         getAndSetAns();
     }, []);
+
+    // Handling adding a picture
+    const addPic = () => {
+        if (numPics > 5) {
+            alert('You can only upload five (5) photos');
+        } else {
+            setAnsFormData({...ansFormData, name: e.target.value})
+            setNumPics(numPics + 1);
+        }
+    }
 
     return (
         <div style={{'border': '2px solid pink'}}>
@@ -119,7 +142,7 @@ let Question = ({product, question}) => {
                     }
                 </div>
             </div>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClosePics}>
                 <DialogTitle>Submit Your Answer</DialogTitle>
                 <DialogContent>
                 <DialogContentText margin="dense">
@@ -167,11 +190,30 @@ let Question = ({product, question}) => {
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
                 </DialogContentText>
-                <button>Upload photos</button>
+                <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleSubmit}>Submit</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={openPics} onClose={handleClose}>
+                <DialogTitle>Add Picture URL</DialogTitle>
+                <DialogContent>
+                <TextField
+                    required
+                    autoFocus
+                    margin="dense"
+                    id="pictures"
+                    label="Picture URL"
+                    fullWidth
+                    variant="standard"
+                    inputProps={{ maxLength: 1000 }}
+                />
+                <button onClick={addPic}>Upload photo</button>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClosePics}>Return</Button>
                 </DialogActions>
             </Dialog>
         </div>
