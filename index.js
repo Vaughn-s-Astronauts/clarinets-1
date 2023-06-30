@@ -28,7 +28,7 @@ app.all('/api*', (req, res) => {
     }).catch((error) => {
         res.send(error);
     });
-    
+
 });
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));

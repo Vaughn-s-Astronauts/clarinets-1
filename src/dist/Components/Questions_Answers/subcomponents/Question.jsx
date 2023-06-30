@@ -109,6 +109,8 @@ let Question = ({product, question}) => {
         handleClosePics();
     }
 
+    // setAnsFormData({...ansFormData, photos:[...ansFormData.photos, ADDITION]})
+
     return (
         <div style={{'border': '2px solid pink'}}>
             <div>
