@@ -3,21 +3,15 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 const actions = [
-  { icon: <FileCopyIcon />, name: 'Copy' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
+  { icon: <SmartToyIcon />, name: 'Customer Service' }
 ];
 
 export default function Dial() {
     return (
-      <div className="speed-dial-container" style={{  position: 'fixed', bottom: '20px', right: '20px'}}>
+      <div style={{  position: 'fixed', bottom: '20px', right: '20px'}}>
         <SpeedDial
           ariaLabel="SpeedDial example"
           icon={<SpeedDialIcon />}
