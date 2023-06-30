@@ -58,13 +58,13 @@ let Answer = ({answer}) => {
                     <u style={{'cursor': 'pointer'}} onClick={handleReported}>Report</u>
                     }
                 </>
-                <div>
-                    {answer.photos.map((photo, i) => {
-                        return <span key={i}>
-                        <img src={photo.url} width="64"></img>
-                        </span>
-                    })}
-                </div>
+            </div>
+            <div>
+                {answer.photos.map((photo, i) => {
+                    return <span key={i}>
+                    <img src={photo.url} width="64"></img>
+                    </span>
+                })}
             </div>
         </div>
     )
