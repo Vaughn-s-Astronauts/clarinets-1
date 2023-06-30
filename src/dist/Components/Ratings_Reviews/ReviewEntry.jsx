@@ -39,7 +39,7 @@ let ReviewEntry = ({review}) => {
   }
 
   return (
-    <div style={{border: "solid black"}}>
+    <div style={{border: "solid black", margin: "8px", padding: "4px"}}>
       <Rating name="read-only" value={review.rating} precision={0.25} readOnly />
       <div>Posted on {date.toDateString().slice(4)}</div>
       <div><b>{review.summary.slice(0, 60)}</b></div>

@@ -83,20 +83,30 @@ let RatingsReviews = ({product}) => {
   // console.log('ratings parent',ratings);
 
   return (
-    <div style={{border: 'solid red'}}>
+    <div>
       <h1>Ratings & Reviews</h1>
+
+      <Stack direction="row" spacing={2}>
+        <div>
+      <Stack spacing={2} alignItems="stretch">
       {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
       : <div></div>}
       <ProductBreakdown chars={ratings.characteristics}/>
+      </Stack>
+
+        </div>
+        <div style={{width: "100%"}}>
       <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
 
       <Stack direction="row" spacing={2}>
-      {(reviewAmount < allReviews.length && allReviews.length > 2) ?
+      {(allReviews && reviewAmount < allReviews.length && allReviews.length > 2) ?
       <Button variant="outlined" onClick={showMoreReviews}>MORE REVIEWS</Button>
       : <div> All reviews displayed </div>}
-      <AddReview productName={product.name} chars={ratings.characteristics}/>
+      <AddReview productID={product.id} productName={product.name} chars={ratings.characteristics}/>
+      </Stack>
+      </div>
       </Stack>
     </div>);
 };
