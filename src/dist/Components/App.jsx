@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Dial from './Dial.jsx';
 const darkTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
     },
   });
   
@@ -42,14 +42,16 @@ let App = () => {
                 <Detail product={product} updateProduct={setProduct}/>
             </div>
             }
-            <div className='container'>
-            {product.id === undefined && products.map((o) => {
-                return <div key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px'}}>
-                        {o.name}
-                        </div>;
-            })}
+            <div className='container px-4'>
+                <div className="row">
+                {product.id === undefined && products.map((o) => {
+                    return <div className="col text-center p-3" key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px'}}>
+                            {o.name}
+                            </div>;
+                })}
+                </div>
             </div>
-            
+        <Dial />
         </ThemeProvider>
     );
 };

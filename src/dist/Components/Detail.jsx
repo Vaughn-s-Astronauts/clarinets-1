@@ -27,7 +27,7 @@ let Detail = ({product, updateProduct}) => {
         });
     }, [product]);
     return (
-        <div>
+        <div className='container'>
             <ProductDetail product={details}/>
             <RelatedProducts product={details} updateProduct={updateProduct}/>
             <QuestionsAnswers product={details}/>
