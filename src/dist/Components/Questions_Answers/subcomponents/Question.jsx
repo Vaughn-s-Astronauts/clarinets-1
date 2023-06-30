@@ -22,7 +22,7 @@ let Question = ({product, question}) => {
         body: '',
         name: '',
         email: '',
-        photos: []
+        photos: ['http://res.cloudinary.com/joehan/image/upload/v1658093793/qj6sbcejvfke6v3kzjcs.gif', 'https://s.w-x.co/in-cat_in_glasses.jpg']
     });
     let id = question.question_id;
 
@@ -102,14 +102,10 @@ let Question = ({product, question}) => {
 
     // Handling adding a picture
     const addPic = (e) => {
-        let photosArr = []
-        photos.push(URL.createObjectURL(e.target.files[0]));
-        setAnsFormData({...ansFormData, photos: photosArr})
+        setAnsFormData({...ansFormData, photos:[...ansFormData.photos, e.target.value]});
         setNumPics(numPics + 1);
         handleClosePics();
     }
-
-    // setAnsFormData({...ansFormData, photos:[...ansFormData.photos, ADDITION]})
 
     return (
         <div style={{'border': '2px solid pink'}}>
@@ -192,6 +188,11 @@ let Question = ({product, question}) => {
                     <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button> :
                     null
                 }
+                {ansFormData.photos.map((photo, i) => {
+                    return <span key={i}>
+                    <img src={photo} width="64"></img>
+                    </span>
+                })}
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
@@ -210,7 +211,6 @@ let Question = ({product, question}) => {
                     fullWidth
                     variant="standard"
                     inputProps={{ maxLength: 1000 }}
-                    onChange={e => setAnsFormData({...ansFormData, photos: e.target.value})}
                 />
                 <button onClick={addPic}>Upload photo</button>
                 </DialogContent>
