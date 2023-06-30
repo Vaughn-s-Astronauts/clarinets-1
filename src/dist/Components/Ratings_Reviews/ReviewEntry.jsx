@@ -70,7 +70,7 @@ let ReviewEntry = ({review}) => {
 
       <Modal open={open} onClose={closeModal}>
         <Box sx={style}>
-          <img src={currentImg} height="650px"></img>
+          <img src={currentImg} height="100%"></img>
         </Box>
       </Modal>
 
@@ -82,6 +82,7 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
+  height: '90vh',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: '2px solid #000',

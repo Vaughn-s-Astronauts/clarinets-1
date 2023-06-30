@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import Rating from '@mui/material/Rating';
-import API from '../../helpers/API.js';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
 import RatingEntry from './RatingEntry.jsx'
 
 let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
@@ -15,7 +12,6 @@ let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
     recommendedPercent = Math.round(recommendedPercent);
   }
   if (ratings.ratings) {
-    console.log('values', Object.values(ratings.ratings).reverse());
     for (let i in ratings.ratings) {
       totalRatings += parseInt(ratings.ratings[i]);
     }
@@ -35,7 +31,7 @@ let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
       <Rating name="read-only" value={avgRating} precision={0.25} readOnly />
       ({totalRatings} reviews)
       <br/>Rating Breakdown:<br/>
-      {filter.length > 0 && <u style={{cursor: 'pointer'}} onClick={clearFilters}>Clear filters</u>}
+      {filter.length > 0 ? (<u style={{cursor: 'pointer'}} onClick={clearFilters}>Clear filters</u>) : <div><br/></div>}
       {ratings.ratings && Object.values(ratings.ratings).reverse().map((rating, i) => (
         <RatingEntry key={i} i={5-i} rating={rating} totalRatings={totalRatings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/>
       ))}

@@ -3,7 +3,12 @@ import git_api from '../../../../config.js';
 import ReviewsList from './ReviewsList.jsx';
 import SortOptions from './SortOptions.jsx';
 import RatingBreakdown from './RatingBreakdown.jsx';
+import ProductBreakdown from './ProductBreakdown.jsx';
+import AddReview from './AddReview.jsx';
 import API from '../../helpers/API.js';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 let RatingsReviews = ({product}) => {
   const [allReviews, setAllReviews] = useState([]);
@@ -63,33 +68,36 @@ let RatingsReviews = ({product}) => {
 
   useEffect(() => {
     getRatings();
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     getReviews();
-  }, [sortBy, filter]);
+  }, [sortBy, filter, product]);
 
   useEffect(() => {
     setShownReviews(allReviews.slice(0, reviewAmount));
   }, [reviewAmount]);
 
-  console.log('reviews parent', allReviews);
+  // console.log('reviews parent', allReviews);
 
-  console.log('ratings parent',ratings);
-
+  // console.log('ratings parent',ratings);
 
   return (
     <div style={{border: 'solid red'}}>
       <h1>Ratings & Reviews</h1>
       {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
       : <div></div>}
+      <ProductBreakdown chars={ratings.characteristics}/>
       <h3>Reviews for {product.name}</h3>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
       <ReviewsList shownReviews={shownReviews}/>
 
+      <Stack direction="row" spacing={2}>
       {(reviewAmount < allReviews.length && allReviews.length > 2) ?
-      <button onClick={showMoreReviews}>More reviews</button>
+      <Button variant="outlined" onClick={showMoreReviews}>MORE REVIEWS</Button>
       : <div> All reviews displayed </div>}
+      <AddReview productName={product.name} chars={ratings.characteristics}/>
+      </Stack>
     </div>);
 };
 
