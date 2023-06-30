@@ -14,7 +14,9 @@ let endpoints = {
     'PUT_QA_ANSWER' : '/qa/answers/',
     'GET_CART' : '/cart/',
     'POST_CART': '/cart/',
-    'POST_INTERACTIONS' : '/interactions/'
+    'POST_INTERACTIONS' : '/interactions/',
+    'GET_OUTFIT' : '/outfit/',
+    'POST_OUTFIT' : '/outfit/',
 };
 //Retrieves the list of products.
 let GET_PRODUCTS = () => {
@@ -151,6 +153,18 @@ body ->
 let POST_INTERACTION = (BODY) => {
     return axios.post(`${endpoints['POST_INTERACTIONS']}`, BODY);
 }
+//pulls the outfit from our /outfit endpoint. this grabs the data from redis
+let GET_OUTFIT = () => {
+    return axios.get(`${axios.defaults.baseURL.replace('/api', '')}${endpoints['GET_OUTFIT']}`);
+}
+//posts a outfit to redis.
+let POST_OUTFIT = (BODY) => {
+    return axios.post(`${axios.defaults.baseURL.replace('/api', '')}${endpoints['POST_OUTFIT']}`, BODY);
+}
+//update the outfit. (removal!)
+let PUT_OUTFIT = (BODY) => {
+    return axios.put(`${axios.defaults.baseURL.replace('/api', '')}${endpoints['POST_OUTFIT']}`, BODY);
+}
 export default {
     GET_PRODUCTS,
     GET_PRODUCT,
@@ -171,6 +185,9 @@ export default {
     PUT_QA_ANSWER_REPORT,
     GET_CART,
     POST_CART,
-    POST_INTERACTION
+    POST_INTERACTION,
+    GET_OUTFIT,
+    POST_OUTFIT,
+    PUT_OUTFIT
 };
 
