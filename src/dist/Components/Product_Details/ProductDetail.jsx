@@ -92,9 +92,21 @@ export default function ProductDetail({ product }) {
           <p>{state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
           <Stack direction="horizontal" gap={3}>
-            {state.styles.map((style) => {
-              return(<Style oneStyle={style} state={state} setState={setState}/>)
-            })}
+            {/*state.styles.map((style) => {
+              return(
+                <Fragment>
+                  <Ratio aspectRatio={70}>
+                    {oneStyle.photos[0].length > 0 &&
+                      <Image>
+                        src={oneStyle.photos[0].thumbnail_url}
+                        roundedCircle
+                        style={{height: '100%', width: '100%'}}
+                      </Image>
+                    }
+                  </Ratio>
+                </Fragment>
+              )
+            })*/}
           </Stack>
         </Col>
 
