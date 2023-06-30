@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Dial from './Dial.jsx';
 const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
     },
   });
   

@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { Box, Card, CardContent, Typography, IconButton, Rating } from '@mui/material';
-import { ChevronLeft, ChevronRight, Star } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, Star, Close } from '@mui/icons-material';
 
-const Carousel = ({styles, products, updateProduct}) => { 
+const Carousel = ({styles, products, updateProduct, identity}) => { 
+  console.log(products);
   const carouselRef = useRef(null);
   const scrollToNextCard = () => {
     carouselRef.current.scrollBy({
@@ -19,6 +20,9 @@ const Carousel = ({styles, products, updateProduct}) => {
   };
   let chooseDefault = (productId) => {
     let productStyle = styles[productId];
+    if(!styles[productId]){
+      return 'https://cdn.dribbble.com/users/47195/screenshots/524523/media/e7e8bc8f4f2ced9334d4a439118a5fb4.jpg';
+    }
     let active = '';
     for(let style of productStyle){
         for(let pic of style.photos){
@@ -54,10 +58,12 @@ const Carousel = ({styles, products, updateProduct}) => {
         }}
         ref={carouselRef}
       >
-        {products.map((product, index) => (
+        {products !== undefined && products.map((product, index) => (
+          
           <Card key={index} sx={{ minWidth: 200, flex: '0 0 calc(33.3333% - 10px)' }}>
+            {console.log(product)}
             <Box sx={{ position: 'relative' }}>
-              <img src={chooseDefault(product.id)} alt={product.name} style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} />
+              <img src={chooseDefault(product.id ? product.id : -1)} alt={product.name ? product.name : '!!'} style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} />
               <Box
                 sx={{
                   position: 'absolute',
@@ -75,20 +81,20 @@ const Carousel = ({styles, products, updateProduct}) => {
                         }}
                         >
                         <IconButton style={{background:'white'}}>
-                            <Star />
+                            {identity ? <Star /> : < Close/>}
                         </IconButton>
                         </Box>
               </Box>
             </Box>
             <CardContent>
               <Typography variant="subtitle2" color="textSecondary">
-                {product.category}
+                {product.category ? product.category : '!!'}
               </Typography>
               <Typography variant="h6" component="h2">
-                {product.name}
+                {product.name ? product.name : '!!'}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                ${product.default_price}
+                ${product.default_price ? product.default_price : '!!'}
               </Typography>
               <Box display="flex" alignItems="center" mt={1}>
                 <Rating name={`rating-${index}`} value={0} readOnly size="small" />

@@ -3,6 +3,7 @@ import API from '../../helpers/API.js';
 import Product from './Product.jsx';
 import { Grid } from '@mui/material';
 import Carousel from './Carousel.jsx';
+import YourOutfits from './YourOutfits.jsx';
 
 let RelatedProducts = ({product, updateProduct}) => {
     const [related, setRelated] = React.useState([]);
@@ -17,7 +18,6 @@ let RelatedProducts = ({product, updateProduct}) => {
         });
 
     }, []);
-    console.log('RELATED HAS TO RENDER AGAIN!');
     React.useEffect(() => {
         let promised = related.map((product) => API.GET_PRODUCT(product));
         Promise.all(promised).then((resolution) => {
@@ -39,8 +39,8 @@ let RelatedProducts = ({product, updateProduct}) => {
     return (<div className='container'>
             <h2 class="text-left">RELATED PRODUCTS</h2>
             <hr/>
-            {relatedDetailed.length > 0 && Object.keys(styles).length > 0 && <Carousel updateProduct={updateProduct} styles={styles} products={relatedDetailed}/>}
-            {console.log('carousel render!')}
+            {relatedDetailed.length > 0 && Object.keys(styles).length > 0 && <Carousel identity={true} updateProduct={updateProduct} styles={styles} products={relatedDetailed}/>}
+            {relatedDetailed.length> 0 && Object.keys(styles).length > 0 && <YourOutfits identity={false} updateProduct={updateProduct} styles={styles} products={relatedDetailed}/>}
             </div>);
 };
 
