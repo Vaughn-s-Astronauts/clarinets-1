@@ -11,7 +11,7 @@ let RelatedProducts = ({product, updateProduct}) => {
     React.useEffect(() => {
         //load related products
         API.GET_PRODUCT_RELATED(product.id).then((response) => {
-            setRelated(response.data);//updating related products list
+            setRelated(response.data.filter((relatedId, index) => response.data.indexOf(relatedId) === index));//updating related products list
         }).catch((error) => {
             console.log(error);
         });
@@ -36,8 +36,8 @@ let RelatedProducts = ({product, updateProduct}) => {
             console.log(error);
         });
     }, [related]);
-    return (<div className='container' style={{border:'solid black 1px'}}>
-            <h2>Related Items for {product.name}</h2>
+    return (<div className='container'>
+            <h2 class="text-left">RELATED PRODUCTS</h2>
             <hr/>
             {relatedDetailed.length > 0 && Object.keys(styles).length > 0 && <Carousel updateProduct={updateProduct} styles={styles} products={relatedDetailed}/>}
             {console.log('carousel render!')}
