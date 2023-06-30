@@ -7,6 +7,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image'
 import Stack from 'react-bootstrap/Stack';
 import Ratio from 'react-bootstrap/Ratio';
+import Style from './Style.jsx';
 
 export default function ProductDetail({ product }) {
 
@@ -49,11 +50,13 @@ export default function ProductDetail({ product }) {
           <Stack gap={3}>
             {state.photos.map((pic) => {
               return(
-                <Image
-                  src={pic.thumbnail_url}
-                  rounded
-                  width="48"
-                />
+                <Ratio aspectRatio={70}>
+                  <Image
+                    src={pic.thumbnail_url}
+                    thumbnail
+                    style={{height: '100%', width: '100%'}}
+                  />
+                </Ratio>
               )
             })}
           </Stack>
@@ -64,12 +67,12 @@ export default function ProductDetail({ product }) {
             {state.photos.map((pic) => {
               return(
                 <Carousel.Item>
-                  <Ratio aspectRatio={80}>
+                  <Ratio aspectRatio={90}>
                     <Image
                       className="d-block w-100"
                       src={pic.url}
                       rounded
-                      style={{height: '100%'}}
+                      style={{height: '100%', width: '100%'}}
                     />
                   </Ratio>
                 <Carousel.Caption>
@@ -88,6 +91,11 @@ export default function ProductDetail({ product }) {
           <p>{state.currentProduct.category}</p>
           <p>{state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
+          <Stack direction="horizontal" gap={3}>
+            {state.styles.map((style) => {
+              return(<Style oneStyle={style} state={state} setState={setState}/>)
+            })}
+          </Stack>
         </Col>
 
       </Row>
