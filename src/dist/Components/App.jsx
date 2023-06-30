@@ -51,7 +51,7 @@ let App = () => {
                 })}
                 </div>
             </div>
-            
+        <Dial />
         </ThemeProvider>
     );
 };
