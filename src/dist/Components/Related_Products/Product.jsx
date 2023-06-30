@@ -1,44 +1,46 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import API from '../../helpers/API.js';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 
 
 let Product = ({styles, product, updateProduct}) => {
     const [productStyles, setProductStyles] = React.useState([]);
     const [defaultStyle, setDefaultStyle] = React.useState({});
     console.log(styles);
+    let chooseDefault = () => {
+      let active = '';
+      for(let style of styles){
+          for(let pic of style.photos){
+            if(style['default?'] && pic.thumbnail_url !== null){
+              return pic.thumbnail_url;
+            }
+            if(pic.thumbnail_url !== null){
+              active = pic.thumbnail_url;
+            }          
+        }
+      }
+      return (active !== '') ? active : 'https://cdn.dribbble.com/users/47195/screenshots/524523/media/e7e8bc8f4f2ced9334d4a439118a5fb4.jpg';
+    }
     return (
-      <div style={{cursor:'pointer', height:'400px'}} onClick={() => updateProduct(product)}>
-        <Card style={{height:'100%', width:'100%'}}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={styles[0].photos[0].thumbnail_url !== null ? styles[0].photos[0].thumbnail_url : 'https://cdn.dribbble.com/users/47195/screenshots/524523/media/e7e8bc8f4f2ced9334d4a439118a5fb4.jpg'}
-                title="product image"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {product.name}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                ${product.default_price}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {product.description}
-                </Typography>
-              </CardContent>
-            </Card>
-      </div>
+      <div class="container"> 
+        <div class="card mb-3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src={chooseDefault()} class="img-fluid rounded-start" alt="..." />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-header bg-transparent">
+                      <div class="float-start"><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i><i class="bi-star"></i></div>
+                      <div class="float-end" style={{cursor:'pointer'}}><i class="bi-star"></i></div><br/>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{product.name} <span class="badge bg-success">${product.default_price}</span><span class="badge bg-primary">{product.category}</span></h4>
+                    <p class="card-text">{product.description}</p>
+                  </div>
+                </div>
+                
+              </div>
+          </div>
+          </div>
+      
     );
 };
 
