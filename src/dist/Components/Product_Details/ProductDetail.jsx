@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import API from '../../helpers/API.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,7 +7,6 @@ import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image'
 import Stack from 'react-bootstrap/Stack';
 import Ratio from 'react-bootstrap/Ratio';
-import Style from './Style.jsx';
 
 export default function ProductDetail({ product }) {
 
@@ -91,23 +90,25 @@ export default function ProductDetail({ product }) {
           <p>{state.currentProduct.category}</p>
           <p>{state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
-          <Stack direction="horizontal" gap={3}>
-            {/*state.styles.map((style) => {
-              return(
-                <Fragment>
-                  <Ratio aspectRatio={70}>
-                    {oneStyle.photos[0].length > 0 &&
-                      <Image>
+          <Fragment>
+            <Stack direction="horizontal" gap={3}>
+              {state.styles.map((oneStyle, index) => {
+                console.log('oneStyle: ', oneStyle.photos[0].thumbnail_url);
+                return(
+                  <Fragment>
+                    <Ratio aspectRatio={100}>
+                      <Image
                         src={oneStyle.photos[0].thumbnail_url}
                         roundedCircle
                         style={{height: '100%', width: '100%'}}
-                      </Image>
-                    }
-                  </Ratio>
-                </Fragment>
-              )
-            })*/}
-          </Stack>
+                      />
+                    </Ratio>
+                    {(index+1) %4 === 0 && <div style={{}}></div>}
+                  </Fragment>
+                )
+              })}
+            </Stack>
+          </Fragment>
         </Col>
 
       </Row>
