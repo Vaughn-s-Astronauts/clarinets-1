@@ -5,29 +5,33 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-let descObj = {
-  1: '1',
-  2: '2',
-  3: '3',
-  4: '4',
-  5: '5'
-}
 
-let CharReviewEntry = ({char}) => {
+
+let CharReviewEntry = ({char, updateCharObj, charID}) => {
   const [currentSelected, setCurrentSelected] = useState('none selected');
-  
-  if (char === 'Quality') {
-    descObj[1] = 'Poor';
-    descObj[2] = 'Below average';
-    descObj[3] = 'What I expected';
-    descObj[4] = 'Pretty great';
-    descObj[5] = 'Perfect';
-  } else if (char === 'Size') {
+
+  let descObj = {
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5'
+  }
+
+
+
+  if (char === 'Size') {
     descObj[1] = 'A size too small';
     descObj[2] = '½ a size too small';
     descObj[3] = 'Perfect';
     descObj[4] = '½ a size too big';
     descObj[5] = 'A size too wide';
+  } else if (char === 'Quality') {
+    descObj[1] = 'Poor';
+    descObj[2] = 'Below average';
+    descObj[3] = 'What I expected';
+    descObj[4] = 'Pretty great';
+    descObj[5] = 'Perfect';
   } else if (char === 'Width') {
     descObj[1] = 'Too narrow';
     descObj[2] = 'Slightly narrow';
@@ -52,21 +56,28 @@ let CharReviewEntry = ({char}) => {
     descObj[3] = 'Perfect';
     descObj[4] = 'Runs slightly long';
     descObj[5] = 'Runs long';
+  } else {
+    descObj[1] = 'error 1';
+    descObj[2] = 'error2';
+    descObj[3] = 'error3';
+    descObj[4] = 'error4';
+    descObj[5] = 'error5';
   }
 
   const handleChange = (e) => {
-    setCurrentSelected(descObj[e.target.value])
+    setCurrentSelected(descObj[e.target.value]);
+    updateCharObj(e);
   }
 
   return (
     <div>
       <FormControl>
-        <FormLabel id="char-label">{char}*</FormLabel>
+        <FormLabel id={`${char}-label`}>{char}*</FormLabel>
         <div style={{textAlign: 'center'}}>{currentSelected}</div>
         <RadioGroup
         row
-        aria-labelledby="char-label"
-        name="comfort"
+        aria-labelledby={`${char}-label`}
+        name={`${charID}`}
         onChange={handleChange}
         >
           <FormControlLabel value="1" control={<Radio />} label={descObj[1]} labelPlacement="bottom" />
