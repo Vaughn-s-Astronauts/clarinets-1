@@ -1,20 +1,57 @@
 import React, {useState} from 'react';
+import Stack from '@mui/material/Stack';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-let SortOptions = ({sortBy, changeSortOrder}) => {
 
-  const handleChange = (event) => {
-    changeSortOrder(event.target.value);
+let SortOptions = ({sortBy, changeSortOrder, search}) => {
+
+  const [searchWord, setSearchWord] = useState('');
+
+  const handleChange = (e) => {
+    changeSortOrder(e.target.value);
   };
 
+  const updateSearch = (e) => {
+    setSearchWord(e.target.value);
+  }
+
+  const handleClick = () => {
+    search(searchWord);
+  }
+
   return (
-    <div>
-      Sort by: 
-      <select onChange={handleChange}>
-        <option value="relevant">Relevant</option>
-        <option value="helpful">Helpful</option>
-        <option value="newest">Newest</option>
-      </select>
-    </div>
+    <Stack direction="row" spacing={1} sx={{p:'4'}}>
+      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <InputLabel id="sort-label">Sort by</InputLabel>
+        <Select
+          value={sortBy}
+          label="Sort by"
+          onChange={handleChange}
+          displayEmpty
+          labelId="sort-label"
+        >
+          <MenuItem value="relevant">Relevant</MenuItem>
+          <MenuItem value="helpful">Helpful</MenuItem>
+          <MenuItem value="newest">Newest</MenuItem>
+        </Select>
+      </FormControl>
+
+
+
+
+
+      <Stack direction="row" sx={{p: 1}} spacing={2}>
+        <TextField id="search-bar" label="Search" variant="outlined" type="search" size="small" value={searchWord} onChange={updateSearch}/>
+        <Button variant="contained" onClick={handleClick}>Search</Button>
+      </Stack>
+    </Stack>
   )
 }
 

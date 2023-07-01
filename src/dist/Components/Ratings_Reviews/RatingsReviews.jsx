@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 let RatingsReviews = ({product}) => {
   const [allReviews, setAllReviews] = useState([]);
   const [shownReviews, setShownReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
   const [ratings, setRatings] = useState({});
@@ -25,6 +26,7 @@ let RatingsReviews = ({product}) => {
         reviews = reviews.filter(review => filter.includes(review.rating));
       }
       setAllReviews(reviews);
+      setFilteredReviews(reviews);
       setShownReviews(reviews.slice(0, reviewAmount));
     }).catch((error) => {
       console.log(error);
@@ -66,6 +68,15 @@ let RatingsReviews = ({product}) => {
     }
   }
 
+  const search = (word) => {
+    console.log('searching for: ', word);
+    console.log('current reviews: ', allReviews);
+    let filtered = allReviews.filter(review => review.body.includes(word));
+    console.log('found: ', filtered);
+    setFilteredReviews(filtered);
+
+  }
+
   useEffect(() => {
     getRatings();
   }, [product]);
@@ -75,17 +86,11 @@ let RatingsReviews = ({product}) => {
   }, [sortBy, filter, product]);
 
   useEffect(() => {
-    setShownReviews(allReviews.slice(0, reviewAmount));
-  }, [reviewAmount]);
-
-  // console.log('reviews parent', allReviews);
-
-  // console.log('ratings parent',ratings);
+    setShownReviews(filteredReviews.slice(0, reviewAmount));
+  }, [reviewAmount, allReviews, filteredReviews]);
 
   return (
-    <div>
-      <h1>Ratings & Reviews</h1>
-
+    <div style={{marginTop: '20px'}}>
       <Stack direction="row" spacing={2}>
         <div>
       <Stack spacing={2} alignItems="stretch">
@@ -97,10 +102,10 @@ let RatingsReviews = ({product}) => {
         </div>
         <div style={{width: "100%"}}>
       <h3>Reviews for {product.name}</h3>
-      <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} />
+      <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} search={search}/>
       <ReviewsList shownReviews={shownReviews}/>
 
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} sx={{p:2}}>
       {(allReviews && reviewAmount < allReviews.length && allReviews.length > 2) ?
       <Button variant="outlined" onClick={showMoreReviews}>MORE REVIEWS</Button>
       : <div> All reviews displayed </div>}
