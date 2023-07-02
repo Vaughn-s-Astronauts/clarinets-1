@@ -1,22 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
+import Col from 'react-bootstrap/Col';
 import Ratio from 'react-bootstrap/Ratio';
-import Image from 'react-bootstrap/Carousel';
-import Fragment from 'react';
+import Image from 'react-bootstrap/Image';
 
-export default function Style({oneStyle, state, setState}) {
-  console.log('oneStyle: ', oneStyle.photos[0]);
+export default function Style({oneStyle, index, state, setState}) {
+
+  let handleStyleClick = (state, setState) => {
+
+  }
+
   return (
-    <Fragment>
-      <Ratio aspectRatio={70}>
-        {oneStyle.photos[0].length > 0 &&
-          <Image>
-            src={oneStyle.photos[0].thumbnail_url}
-            roundedCircle
-            style={{height: '100%', width: '100%'}}
-          </Image>
-        }
+    <Col xs={3}>
+      <Ratio aspectRatio={100}>
+        <Image
+          src={oneStyle.photos[0].thumbnail_url}
+          roundedCircle
+          style={{ height: '70%', width: '70%' }}
+          onClick={handleStyleClick}
+        />
       </Ratio>
-    </Fragment>
+      {/*{(index + 1) % 4 === 0 && <div class="w-100" style={{ width: '100%' }}></div>}*/}
+    </Col>
   )
 }

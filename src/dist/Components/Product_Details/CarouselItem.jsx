@@ -1,19 +1,21 @@
 import React from 'react';
 import { useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+import Ratio from 'react-bootstrap/Ratio';
+import Image from 'react-bootstrap/Image';
 
-export default function CarouselItem({ image }) {
+export default function CarouselItem({ pic }) {
   return (
-      <Carousel.Item>
-      <img
+
+    <Ratio aspectRatio={120}>
+      <Image
         className="d-block w-100"
-        src={image.url}
+        src={pic.url}
+        rounded
+        fluid
+        style={{ height: 'auto', width: '100%' }}
       />
-      <Carousel.Caption>
-        <h3>Picture label</h3>
-        <p>Some description</p>
-      </Carousel.Caption>
-    </Carousel.Item>
+    </Ratio>
+
   )
 }
 
