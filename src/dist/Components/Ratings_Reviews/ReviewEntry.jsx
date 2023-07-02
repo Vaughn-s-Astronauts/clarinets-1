@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
 import API from '../../helpers/API.js';
 
 let ReviewEntry = ({review}) => {
@@ -39,7 +40,7 @@ let ReviewEntry = ({review}) => {
   }
 
   return (
-    <div style={{border: "solid black"}}>
+    <Box sx={reviewStyle}>
       <Rating name="read-only" value={review.rating} precision={0.25} readOnly />
       <div>Posted on {date.toDateString().slice(4)}</div>
       <div><b>{review.summary.slice(0, 60)}</b></div>
@@ -49,7 +50,7 @@ let ReviewEntry = ({review}) => {
       {(review.body.length > 250 && !fullReviewShown) && 
       <div>
         <div>{review.body.slice(0, 250)}</div>
-        <button onClick={showFullReview}>Show more</button>
+        <Button onClick={showFullReview}>Show more</Button>
       </div>}
       {review.photos.map((photo, i) => {
         return <span key={i}>
@@ -74,7 +75,7 @@ let ReviewEntry = ({review}) => {
         </Box>
       </Modal>
 
-    </div>
+    </Box>
   )
 }
 
@@ -89,5 +90,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+const reviewStyle = {
+  border: "solid grey",
+  margin: "8px",
+  padding: "4px",
+  backgroundColor: "whitesmoke",
+  borderRadius: '4px',
+}
 
 export default ReviewEntry;

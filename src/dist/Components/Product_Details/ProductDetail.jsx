@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import API from '../../helpers/API.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,6 +7,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image'
 import Stack from 'react-bootstrap/Stack';
 import Ratio from 'react-bootstrap/Ratio';
+import Dropdown from 'react-bootstrap/Dropdown'
+import SearchBar from './SearchBar.jsx'
 
 export default function ProductDetail({ product }) {
 
@@ -20,40 +22,41 @@ export default function ProductDetail({ product }) {
 
   useEffect(() => {
     API.GET_PRODUCT_STYLES(product.id)
-    .then((response) => {
-      console.log(response.data);
-      setState({
-        ...state,
-        styles: response.data.results,
-        currentStyle: response.data.results[0],
-        photos: response.data.results[0].photos,
-        currentPhoto: response.data.results[0].photos[0].url
+      .then((response) => {
+        setState({
+          ...state,
+          styles: response.data.results,
+          currentStyle: response.data.results[0],
+          photos: response.data.results[0].photos,
+          currentPhoto: response.data.results[0].photos[0].url
+        })
       })
-    })
   }, [])
 
   return (
     <Container fluid>
 
       <Row>
-        <Col>logo</Col>
-        <Col>search bar</Col>
+        <Col><h1>logo</h1></Col>
+        <Col><SearchBar/></Col>
       </Row>
 
       <Row>
-      SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT
+        <h5>SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT</h5>
       </Row>
 
       <Row>
         <Col xs={1}>
           <Stack gap={3}>
             {state.photos.map((pic) => {
-              return(
-                <Image
-                  src={pic.thumbnail_url}
-                  rounded
-                  width="48"
-                />
+              return (
+                <Ratio aspectRatio={90}>
+                  <Image
+                    src={pic.thumbnail_url}
+                    thumbnail
+                    style={{ height: 'auto', width: '100%' }}
+                  />
+                </Ratio>
               )
             })}
           </Stack>
@@ -62,21 +65,22 @@ export default function ProductDetail({ product }) {
         <Col xs={5}>
           <Carousel fade>
             {state.photos.map((pic) => {
-              return(
+              return (
                 <Carousel.Item>
-                  <Ratio aspectRatio={80}>
+                  <Ratio aspectRatio={120}>
                     <Image
                       className="d-block w-100"
                       src={pic.url}
                       rounded
-                      style={{height: '100%'}}
+                      fluid
+                      style={{ height: 'auto', width: '100%' }}
                     />
                   </Ratio>
-                <Carousel.Caption>
-                  <h3>Picture label</h3>
-                  <p>Some description</p>
-                </Carousel.Caption>
-              </Carousel.Item>
+                  <Carousel.Caption>
+                    <h3>Picture label</h3>
+                    <p>Some description</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
               )
             })}
           </Carousel>
@@ -85,9 +89,54 @@ export default function ProductDetail({ product }) {
         <Col xs={5}>
           <p>star ratings</p>
           <p>Category</p>
-          <p>{state.currentProduct.category}</p>
-          <p>{state.currentProduct.default_price}</p>
+          <h5>{state.currentProduct.category}</h5>
+          <p>${state.currentProduct.default_price}</p>
           <p>STYLE {'>'} SELECTED STYLE</p>
+          <Row>
+            {state.styles.map((oneStyle, index) => {
+              return (
+                <Col xs={3}>
+                  <Ratio aspectRatio={100}>
+                    <Image
+                      src={oneStyle.photos[0].thumbnail_url}
+                      roundedCircle
+                      style={{ height: '70%', width: '70%' }}
+                    />
+                  </Ratio>
+                  {/*{(index + 1) % 4 === 0 && <div class="w-100" style={{ width: '100%' }}></div>}*/}
+                </Col>
+              )
+            })}
+          </Row>
+
+          <Row>
+            <div>
+            <Dropdown className="d-inline mx-2">
+              <Dropdown.Toggle id="dropdown-autoclose-true">
+                Default Dropdown
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown className="d-inline mx-2">
+              <Dropdown.Toggle id="dropdown-autoclose-true">
+                Default Dropdown
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            </div>
+          </Row>
+
         </Col>
 
       </Row>

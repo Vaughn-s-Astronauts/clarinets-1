@@ -11,6 +11,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import AddPhoto from './AddPhoto.jsx';
+import API from '../../helpers/API.js';
 
 const style = {
   position: 'absolute',
@@ -26,33 +29,112 @@ const style = {
   overflow: 'scroll'
 };
 
-let AddReview = ({productName, chars}) => {
+let AddReview = ({productID, productName, chars}) => {
 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
-  const [recommend, setRecommend] = useState('');
+  const [recommend, setRecommend] = useState('blank');
   const [charObj, setCharObj] = useState({});
   const [summary, setSummary] = useState('');
+  const [minText, setMinText] = useState('Minimum required characters left: 50');
+  const [body, setBody] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChange = (e) => {
+  const updateRecommend = (e) => {
+    console.log(typeof e.target.value);
+    {e.target.value === 'yes' ? setRecommend(true) :
+    setRecommend(false)}
+  }
+
+  const updateCharObj = (e) => {
     let value = e.target.value;
     setCharObj({...charObj,
-      [e.target.name]: value
+      [e.target.name.toString()]: parseInt(value)
     });
   }
 
   const updateSummary = (e) => {
-    setSummary(e.target.value);
+    if (summary.length < 60) {
+      setSummary(e.target.value);
+    }
+  }
+
+  const updateNickname = (e) => {
+    if (nickname.length < 60) {
+      setNickname(e.target.value);
+    }
+  }
+
+  const updateEmail = (e) => {
+    if (email.length < 60) {
+      setEmail(e.target.value);
+    }
+  }
+
+  const updateBody = (e) => {
+    let currentBody = e.target.value;
+    if (body.length < 1000) {
+      setBody(currentBody);
+      if (currentBody.length < 50) {
+        setMinText(`Minimum required characters left: ${50 - currentBody.length}`);
+      } else {
+        setMinText("Minimum reached");
+      }
+    }
+  }
+
+  const addPhotoURL = (url) => {
+    setPhotos([...photos, url]);
+  }
+
+  const checker = () => {
+    if (rating === 0) {
+      alert('Please select a rating.');
+    } else if (recommend === 'blank') {
+      alert('Please select a recommendation.');
+    } else if (!Object.keys(chars).every(char => Object.keys(charObj).includes(chars[char].id.toString()))) {
+      alert('Please select a rating for all characteristics.');
+      console.log('charObj keys', Object.keys(charObj));
+      console.log('chars', chars);
+    } else if (body.length < 50) {
+      alert('Review body too short.');
+    } else if(!nickname) {
+      alert('Please enter a name.');
+    } else if(!email) {
+      alert('Please enter an email.');
+    } else {
+      submit();
+    }
   }
 
   const submit = () => {
-    console.log('rating', rating);
-    console.log('recommend', recommend);
-    console.log('charObj', charObj);
-    console.log('summary', summary);
+    let reviewBody = {
+      product_id: parseInt(productID),
+      rating: rating,
+      summary: summary,
+      body: body,
+      recommend: recommend,
+      name: nickname,
+      email: email,
+      photos: photos,
+      characteristics: charObj
+    }
+
+    console.log('sending... ', reviewBody);
+    API.POST_REVIEWS(reviewBody)
+    .then((response) => {
+      console.log('review submitted', response);
+    }).catch((error) => {
+      console.log(error);
+    })
+    setOpen(false);
+    alert('Review submitted.');
   }
 
   return (
@@ -80,32 +162,70 @@ let AddReview = ({productName, chars}) => {
         }}/>
         {rating === 1 ? '"Poor"' : rating === 2 ? '"Fair"' : rating === 3 ? '"Average"' : rating === 4 ? '"Good"' : rating === 5 ? '"Great"' : ""}
         <br/><br/>
+        <Stack spacing={2}>
         <FormControl>
           <FormLabel id="recommend-label">Do you recommend this product?*</FormLabel>
           <RadioGroup
           row
           aria-labelledby="recommend-label"
           name="recommended"
-          onChange={handleChange}
-          >
+          onChange={updateRecommend}>
           <FormControlLabel value="yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="no" control={<Radio />} label="No" />
           </RadioGroup>
         </FormControl>
-        {chars && Object.keys(chars).map((char, i) => (<CharReviewEntry key={i} char={char} charObj={charObj} setCharObj={setCharObj}/>))}
+        {chars && Object.keys(chars).map((char, i) => (<CharReviewEntry key={i} char={char} updateCharObj={updateCharObj} charID={chars[char].id}/>))}
         <TextField
           id="review-summary"
           label="Review Summary"
           multiline
           fullWidth
-          rows={4}
+          rows={3}
           placeholder="Example: Best purchase ever!"
-          value={summary}
-          onChange={e => setSummary(e.target.value)}
+          onChange={updateSummary}
+        /><br/>
+        <TextField
+          id="review-body"
+          label="Review Body"
+          multiline
+          fullWidth
+          rows={6}
+          placeholder="Why did you like the product or not?"
+          value={body}
+          onChange={updateBody}
         />
-        <Button variant="contained" onClick={submit}>Submit</Button>
+        {minText}
+        <Stack direction="row" spacing={2}>
+        {photos.map((photo, i) => (<span key={i}>
+          <img src={photo} width="64" ></img>
+        </span>))}
+        </Stack>
+        <AddPhoto photos={photos} addPhotoURL={addPhotoURL}/>
+        <TextField
+          id="review-nickname"
+          label="Name*"
+          fullWidth
+          placeholder="Example: jackson11!"
+          value={nickname}
+          onChange={updateNickname}
+        />     
+        For privacy reasons, do not use your full name or email address   
+        <TextField
+          id="review-email"
+          label="Email*"
+          fullWidth
+          placeholder="Example: jackson11@email.com"
+          value={email}
+          onChange={updateEmail}
+        />
+        For authentication reasons, you will not be emailed
+
+        <Button variant="contained" onClick={checker}>Submit</Button>
+        </Stack>
         </Box>
       </Modal>
+
+
 
     </div>
   )
