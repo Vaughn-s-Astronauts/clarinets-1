@@ -18,13 +18,16 @@ let Question = ({product, question}) => {
     const [open, setOpen] = useState(false);
     const [openPics, setOpenPics] = useState(false);
     const [numPics, setNumPics] = useState(0);
+    const [individualUrl, setIndividualUrl] = useState('');
     const [ansFormData, setAnsFormData] = useState({
         body: '',
         name: '',
         email: '',
-        photos: ['http://res.cloudinary.com/joehan/image/upload/v1658093793/qj6sbcejvfke6v3kzjcs.gif', 'https://s.w-x.co/in-cat_in_glasses.jpg']
+        photos: []
     });
     let id = question.question_id;
+
+    // 'https://s.w-x.co/in-cat_in_glasses.jpg'
 
     // This handles submitting new answers to questions
     const handleSubmit = () => {
@@ -101,14 +104,20 @@ let Question = ({product, question}) => {
     }, []);
 
     // Handling adding a picture
+    const storeUrl = (e) => {
+        setIndividualUrl(e.target.value);
+        console.log(individualUrl);
+    }
+
     const addPic = (e) => {
-        setAnsFormData({...ansFormData, photos:[...ansFormData.photos, e.target.value]});
+        setAnsFormData({...ansFormData, photos:[...ansFormData.photos, individualUrl]});
         setNumPics(numPics + 1);
+        setIndividualUrl('');
         handleClosePics();
     }
 
     return (
-        <div style={{'border': '2px solid pink'}}>
+        <div>
             <div>
                 <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
                 <div style={{'display': 'flex', 'fontSize': '12px', 'float': 'right'}}>
@@ -203,6 +212,7 @@ let Question = ({product, question}) => {
                 <DialogTitle>Add Picture URL</DialogTitle>
                 <DialogContent>
                 <TextField
+                    onChange={storeUrl}
                     required
                     autoFocus
                     margin="dense"

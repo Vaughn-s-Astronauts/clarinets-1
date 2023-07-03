@@ -6,8 +6,6 @@ let Answer = ({answer}) => {
     const [voted, setVoted] = useState(false);
     const [reported, setReported] = useState(false);
 
-    console.log(answer, 'answer!!!')
-
     // Formats date to specs
     const date = new Date(answer.date);
     let editedDate = date.toDateString().slice(4).split('');
