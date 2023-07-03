@@ -21,35 +21,7 @@ let App = () => {
     //Make products clickable
     //onClick render the details for that product
     const [products, setProducts] = React.useState([]);
-    const [product, setProduct] = React.useState({
-    "id": 37319,
-    "campus": "hr-rfe",
-    "name": "Summer Shoes",
-    "slogan": "A risky call in the spring or fall",
-    "description": "Low-top panelled buffed leather and mesh sneakers. Sizing embroidered in black at round toe. Tonal lace-up closure. Pull-loop and rubberized style name at padded tongue. Padded collar. Pull-loop at heel collar. Logo embroidered in black at outer side. Tonal treaded rubber sole. Tonal stitching.",
-    "category": "Kicks",
-    "default_price": "59.00",
-    "created_at": "2021-08-13T14:37:33.145Z",
-    "updated_at": "2021-08-13T14:37:33.145Z",
-    "features": [
-        {
-            "feature": "Sole",
-            "value": "Rubber"
-        },
-        {
-            "feature": "Material",
-            "value": "FullControlSkin"
-        },
-        {
-            "feature": "Mid-Sole",
-            "value": "ControlSupport Arch Bridge"
-        },
-        {
-            "feature": "Stitching",
-            "value": "Double Stitch"
-        }
-    ]
-});
+    const [product, setProduct] = React.useState({});
     const [support, setSupport] = React.useState(false);
     const [page, setPage] = React.useState(1);
 
