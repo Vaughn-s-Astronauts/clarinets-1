@@ -68,9 +68,10 @@ let ReviewEntry = ({review}) => {
       <div>Was this review helpful?  
         <span onClick={addHelpful}> <u style={{cursor: "pointer"}}>Yes</u> </span>({helpful})
       </div>
+      <hr/>
 
       <Modal open={open} onClose={closeModal}>
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <img src={currentImg} height="100%"></img>
         </Box>
       </Modal>
@@ -79,7 +80,7 @@ let ReviewEntry = ({review}) => {
   )
 }
 
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -92,11 +93,8 @@ const style = {
 };
 
 const reviewStyle = {
-  border: "solid grey",
-  margin: "8px",
+  marginBottom: "8px",
   padding: "4px",
-  backgroundColor: "whitesmoke",
-  borderRadius: '4px',
 }
 
 export default ReviewEntry;

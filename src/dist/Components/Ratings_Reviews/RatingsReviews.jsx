@@ -107,7 +107,7 @@ let RatingsReviews = ({product}) => {
 
         </div>
         <div style={{width: "100%"}}>
-      <h3>Reviews for {product.name}</h3>
+      <div style={{display:'flex'}}><h3>Reviews for {product.name}</h3> <span style={{marginTop: '6px'}}>&ensp;({totalRatings} reviews)</span></div>
       <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} updateSearch={updateSearch}/>
       <ReviewsList shownReviews={shownReviews}/>
 

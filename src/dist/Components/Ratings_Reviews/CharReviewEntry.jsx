@@ -71,6 +71,7 @@ let CharReviewEntry = ({char, updateCharObj, charID}) => {
 
   return (
     <div>
+      <hr/>
       <FormControl>
         <FormLabel id={`${char}-label`}>{char}*</FormLabel>
         <div style={{textAlign: 'center'}}>{currentSelected}</div>
@@ -87,7 +88,7 @@ let CharReviewEntry = ({char, updateCharObj, charID}) => {
           <FormControlLabel value="5" control={<Radio />} label={descObj[5]} labelPlacement="bottom" />
         </RadioGroup>
       </FormControl>
-      <br/><br/>
+      <br/>
     </div>
   )
 }

@@ -52,11 +52,11 @@ let Characteristic = ({char, score}) => {
 
   return (
     <div>
+      <hr/>
       <Stack alignItems="center">
       <Typography id="input-slider" gutterBottom>{char}</Typography>
-      <Slider sx={{width: 150, mb: 4}} disabled defaultValue={score*20} aria-label="Disabled slider" align="center" step={25} marks={marks} track={false}/>
+      <Slider sx={{width: 170}} disabled defaultValue={score*20} aria-label="Disabled slider" align="center" step={25} marks={marks} track={false}/>
       </Stack>
-      
     </div>
   )
 }

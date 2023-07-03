@@ -32,8 +32,7 @@ let RatingBreakdown = ({ratings, addFilter, removeFilter, filter}) => {
         <h1 style={{fontWeight: 'bolder'}}>{avgRating.toFixed(1)}</h1>
         <Rating name="read-only" value={avgRating} precision={0.25} readOnly />
       </Stack>
-      ({totalRatings} reviews)
-      <br/>Rating Breakdown:<br/>
+      Rating Breakdown:
 
       {ratings.ratings && Object.values(ratings.ratings).reverse().map((rating, i) => (
         <RatingEntry key={i} i={5-i} rating={rating} totalRatings={totalRatings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/>
