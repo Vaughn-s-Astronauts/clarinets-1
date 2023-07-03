@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 
-let SortOptions = ({sortBy, changeSortOrder, search}) => {
+let SortOptions = ({sortBy, changeSortOrder, updateSearch}) => {
 
   const [searchWord, setSearchWord] = useState('');
 
@@ -18,12 +18,12 @@ let SortOptions = ({sortBy, changeSortOrder, search}) => {
     changeSortOrder(e.target.value);
   };
 
-  const updateSearch = (e) => {
+  const updateSearchWord = (e) => {
     setSearchWord(e.target.value);
   }
 
   const handleClick = () => {
-    search(searchWord);
+    updateSearch(searchWord);
   }
 
   return (
@@ -43,12 +43,8 @@ let SortOptions = ({sortBy, changeSortOrder, search}) => {
         </Select>
       </FormControl>
 
-
-
-
-
       <Stack direction="row" sx={{p: 1}} spacing={2}>
-        <TextField id="search-bar" label="Search" variant="outlined" type="search" size="small" value={searchWord} onChange={updateSearch}/>
+        <TextField id="search-bar" label="Search" variant="outlined" type="search" size="small" value={searchWord} onChange={updateSearchWord}/>
         <Button variant="contained" onClick={handleClick}>Search</Button>
       </Stack>
     </Stack>
