@@ -7,11 +7,14 @@ import Image from 'react-bootstrap/Image';
 export default function Style({oneStyle, index, state, setState}) {
 
   let handleStyleClick = (evt) => {
+    document.getElementById('cartForm').reset();
     setState({
       ...state,
       currentStyle: JSON.parse(evt.currentTarget.getAttribute('data-style')),
       currentStyleId: JSON.parse(evt.currentTarget.getAttribute('data-style')).style_id,
-      currentStylePhotos: JSON.parse(evt.currentTarget.getAttribute('data-style')).photos
+      currentStylePhotos: JSON.parse(evt.currentTarget.getAttribute('data-style')).photos,
+      currentSize: '',
+      currentQuantity: [1]
     })
   }
 
