@@ -13,11 +13,19 @@ import Button from '@mui/material/Button';
 let RatingsReviews = ({product}) => {
   const [allReviews, setAllReviews] = useState([]);
   const [shownReviews, setShownReviews] = useState([]);
-  const [filteredReviews, setFilteredReviews] = useState([]);
   const [reviewAmount, setReviewAmount] = useState(2);
   const [sortBy, setSortBy] = useState('relevant');
   const [ratings, setRatings] = useState({});
   const [filter, setFilter] = useState([]);
+  const [searchWord, setSearchWord] = useState('');
+
+  let totalRatings = 0;
+
+  if (ratings.ratings) {
+    for (let i in ratings.ratings) {
+      totalRatings += parseInt(ratings.ratings[i]);
+    }
+  }
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
@@ -25,8 +33,11 @@ let RatingsReviews = ({product}) => {
       if (filter.length > 0) {
         reviews = reviews.filter(review => filter.includes(review.rating));
       }
+      if (searchWord.length > 0) {
+        reviews = reviews.filter(review => 
+          (review.body.includes(searchWord) || review.summary.includes(searchWord)));
+      }
       setAllReviews(reviews);
-      setFilteredReviews(reviews);
       setShownReviews(reviews.slice(0, reviewAmount));
     }).catch((error) => {
       console.log(error);
@@ -59,7 +70,7 @@ let RatingsReviews = ({product}) => {
     if (star === -1) {
       setFilter([]);
     } else if (filter.includes(star)) {
-      let array = [...filter]; // make a separate copy of the array
+      let array = [...filter];
       let index = array.indexOf(star)
       if (index !== -1) {
         array.splice(index, 1);
@@ -68,13 +79,8 @@ let RatingsReviews = ({product}) => {
     }
   }
 
-  const search = (word) => {
-    console.log('searching for: ', word);
-    console.log('current reviews: ', allReviews);
-    let filtered = allReviews.filter(review => review.body.includes(word));
-    console.log('found: ', filtered);
-    setFilteredReviews(filtered);
-
+  const updateSearch = (word) => {
+    setSearchWord(word);
   }
 
   useEffect(() => {
@@ -83,11 +89,11 @@ let RatingsReviews = ({product}) => {
 
   useEffect(() => {
     getReviews();
-  }, [sortBy, filter, product]);
+  }, [sortBy, filter, product, searchWord]);
 
   useEffect(() => {
-    setShownReviews(filteredReviews.slice(0, reviewAmount));
-  }, [reviewAmount, allReviews, filteredReviews]);
+    setShownReviews(allReviews.slice(0, reviewAmount));
+  }, [reviewAmount, allReviews]);
 
   return (
     <div style={{marginTop: '20px'}}>
@@ -101,8 +107,8 @@ let RatingsReviews = ({product}) => {
 
         </div>
         <div style={{width: "100%"}}>
-      <h3>Reviews for {product.name}</h3>
-      <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} search={search}/>
+      <div style={{display:'flex'}}><h3>Reviews for {product.name}</h3> <span style={{marginTop: '6px'}}>&ensp;({totalRatings} reviews)</span></div>
+      <SortOptions sortBy={sortBy} changeSortOrder={changeSortOrder} updateSearch={updateSearch}/>
       <ReviewsList shownReviews={shownReviews}/>
 
       <Stack direction="row" spacing={2} sx={{p:2}}>
