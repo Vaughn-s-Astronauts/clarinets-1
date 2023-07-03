@@ -11,6 +11,7 @@ import CarouselItem from './CarouselItem.jsx';
 import SearchBar from './SearchBar.jsx';
 import Style from './Style.jsx';
 import AddToCart from './AddToCart.jsx';
+import Form from 'react-bootstrap/Form';
 
 export default function ProductDetail({ product, setProduct }) {
 
@@ -20,6 +21,9 @@ export default function ProductDetail({ product, setProduct }) {
     currentStyle: {},
     currentStyleID: '',
     currentStylePhotos: [],
+    currentSku: '',
+    currentSize: '',
+    currentQuantity: [1]
   })
 
   useEffect(() => {
@@ -105,6 +109,7 @@ export default function ProductDetail({ product, setProduct }) {
           <p>CATEGORY</p>
           <h3>{state.currentProduct.category}</h3>
           {state.currentStyle.sale_price ? <p>${state.currentStyle.sale_price} <s style={{color: 'red'}}>${state.currentStyle.original_price}</s></p> : <p>${state.currentStyle.original_price}</p>}
+          {state.currentProduct.slogan && <h4>{state.currentProduct.slogan}</h4>}
           <p>STYLE {'>'} {state.currentStyle.name}</p>
           <Row>
             {state.styles.map((oneStyle, index) => {
@@ -114,9 +119,9 @@ export default function ProductDetail({ product, setProduct }) {
             })}
           </Row>
 
-          <Row>
-            <AddToCart/>
-          </Row>
+          <Form id='cartForm'>
+            {(Object.keys(state.currentStyle).length !== 0) && <AddToCart state={state} setState={setState}/>}
+          </Form>
 
         </Col>
 
