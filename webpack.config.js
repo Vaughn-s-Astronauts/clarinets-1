@@ -10,7 +10,11 @@ module.exports = {
     path: path.join(__dirname, '/src/dist'),
     filename: 'bundle.js'
   },
-
+  resolve: {
+        alias: {
+          '@mui/styled-engine': '@mui/styled-engine-sc'
+        },
+      },
   //Setup loaders
   module: {
     rules: [
