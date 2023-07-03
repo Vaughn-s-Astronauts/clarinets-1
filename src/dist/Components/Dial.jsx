@@ -9,7 +9,7 @@ const actions = [
   { icon: <SmartToyIcon />, name: 'Customer Service' }
 ];
 
-export default function Dial() {
+export default function Dial({setSupport}) {
     return (
       <div style={{  position: 'fixed', bottom: '20px', right: '20px'}}>
         <SpeedDial
@@ -22,7 +22,7 @@ export default function Dial() {
           }}
         >
           {actions.map((action) => (
-            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
+            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} onClick={() => setSupport(true)} />
           ))}
         </SpeedDial>
       </div>

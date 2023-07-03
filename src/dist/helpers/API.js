@@ -17,10 +17,11 @@ let endpoints = {
     'POST_INTERACTIONS' : '/interactions/',
     'GET_OUTFIT' : '/outfit/',
     'POST_OUTFIT' : '/outfit/',
+    'GET_SUPPORT' : '/service/'
 };
 //Retrieves the list of products.
-let GET_PRODUCTS = () => {
-    return axios.get(`${endpoints['GET_PRODUCTS']}`);
+let GET_PRODUCTS = (PAGE=1, COUNT=5) => {
+    return axios.get(`${endpoints['GET_PRODUCTS']}?page=${PAGE}&count=${COUNT}`);
 };
 
 //Returns all product level information for a specified product id.
@@ -165,6 +166,10 @@ let POST_OUTFIT = (BODY) => {
 let PUT_OUTFIT = (BODY) => {
     return axios.put(`${axios.defaults.baseURL.replace('/api', '')}${endpoints['POST_OUTFIT']}`, BODY);
 }
+
+let GET_SUPPORT = (QUESTION) => {
+    return axios.get(`${axios.defaults.baseURL.replace('/api', '')}${endpoints['GET_SUPPORT']}?question=${QUESTION}`);
+};
 export default {
     GET_PRODUCTS,
     GET_PRODUCT,
@@ -188,6 +193,7 @@ export default {
     POST_INTERACTION,
     GET_OUTFIT,
     POST_OUTFIT,
-    PUT_OUTFIT
+    PUT_OUTFIT,
+    GET_SUPPORT
 };
 
