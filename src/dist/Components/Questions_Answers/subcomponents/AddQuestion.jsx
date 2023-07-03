@@ -26,6 +26,7 @@ let AddQuestion = ({ product, handleSubmitQues }) => {
     setOpen(false);
   };
 
+  // Handling adding a question via post to server
   const addQuestion = () => {
     if (!formData.body || !formData.name || !formData.email || !formData.email.includes('@') || !formData.email.includes('.')) {
       alert('Error submitting, please recheck entries');

@@ -10,8 +10,15 @@ let QuestionsAnswers = ({product}) => {
     const [shownQuestions, setShownQuestions] = useState([]);
     const [questionAmount, setQuestionAmount] = useState(2);
 
-
-    console.log('HERE ARE YOUR QUESTIONS', questions);
+    console.log(questions);
+    // Filters questions according to search params
+    const search = (chars) => {
+        console.log('searching: ', chars);
+        // let searched = questions.filter((question) => {
+        //     question.question_body.includes(chars);
+        // });
+        // setSearchedQuestions(searched);
+      }
 
     // Handle submitting a question, posting to server
     const handleSubmitQues = (formData) => {
@@ -40,17 +47,18 @@ let QuestionsAnswers = ({product}) => {
 
     React.useEffect(() => {
         setShownQuestions(questions.slice(0, questionAmount));
-    }, [questionAmount]);
+    }, [questionAmount, questions]);
 
     // This handles the initial get and set on load
     React.useEffect(() => {
         getAndSet();
     }, []);
 
+
     return (
-        <div style={{border: '2px solid blue'}}>
+        <div>
             <h1>Questions & Answers</h1>
-            <Search />
+            <Search search={search}/>
             <Questions product={product} shownQuestions={shownQuestions}/>
             {(questionAmount < questions.length && questions.length > 2) ?
                 <button onClick={seeMoreQuestions}>See more questions</button> :

@@ -6,10 +6,12 @@ let Answer = ({answer}) => {
     const [voted, setVoted] = useState(false);
     const [reported, setReported] = useState(false);
 
+    // Formats date to specs
     const date = new Date(answer.date);
     let editedDate = date.toDateString().slice(4).split('');
     let moreEditedDate = editedDate.splice(-5, 0, ',');
 
+    // Sends put request to increment helpful counter when clicked
     const handleHelpful = () => {
         if (!voted) {
             API.PUT_QA_ANSWER_HELPFUL(answer.answer_id).then((response) => {
@@ -21,6 +23,7 @@ let Answer = ({answer}) => {
         }
     };
 
+    // Sends a put request to flag the answer as reported
     const handleReported = () => {
         if (!reported) {
             API.PUT_QA_ANSWER_REPORT(answer.answer_id).then((response) => {
@@ -53,6 +56,13 @@ let Answer = ({answer}) => {
                     <u style={{'cursor': 'pointer'}} onClick={handleReported}>Report</u>
                     }
                 </>
+            </div>
+            <div>
+                {answer.photos.map((photo, i) => {
+                    return <span key={i}>
+                    <img src={photo.url} width="64"></img>
+                    </span>
+                })}
             </div>
         </div>
     )

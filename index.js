@@ -40,7 +40,7 @@ app.all('/api*', (req, res) => {
                 headers:{
                     'Authorization' : token
                 }
-            }).then((response) => {                
+            }).then((response) => {
                 if(req.method === 'GET' && targetUrl.startsWith('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products')){
                     client.set(targetUrl, JSON.stringify(response.data)).then((error) => {
                         console.log('Added data to cache!');
@@ -58,7 +58,7 @@ app.all('/api*', (req, res) => {
         res.send([]);
     });
 });
-    
+
 
 app.get('/outfit', (req, res) => {
     client.get('outfit').then((response) => {

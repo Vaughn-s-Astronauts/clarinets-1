@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import UploadPic from './UploadPic.jsx';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -19,6 +18,7 @@ let Question = ({product, question}) => {
     const [open, setOpen] = useState(false);
     const [openPics, setOpenPics] = useState(false);
     const [numPics, setNumPics] = useState(0);
+    const [individualUrl, setIndividualUrl] = useState('');
     const [ansFormData, setAnsFormData] = useState({
         body: '',
         name: '',
@@ -27,7 +27,7 @@ let Question = ({product, question}) => {
     });
     let id = question.question_id;
 
-    console.log('PHOTOS: ', ansFormData.photos);
+    // 'https://s.w-x.co/in-cat_in_glasses.jpg'
 
     // This handles submitting new answers to questions
     const handleSubmit = () => {
@@ -104,17 +104,20 @@ let Question = ({product, question}) => {
     }, []);
 
     // Handling adding a picture
-    const addPic = () => {
-        if (numPics > 5) {
-            alert('You can only upload five (5) photos');
-        } else {
-            setAnsFormData({...ansFormData, name: e.target.value})
-            setNumPics(numPics + 1);
-        }
+    const storeUrl = (e) => {
+        setIndividualUrl(e.target.value);
+        console.log(individualUrl);
+    }
+
+    const addPic = (e) => {
+        setAnsFormData({...ansFormData, photos:[...ansFormData.photos, individualUrl]});
+        setNumPics(numPics + 1);
+        setIndividualUrl('');
+        handleClosePics();
     }
 
     return (
-        <div style={{'border': '2px solid pink'}}>
+        <div>
             <div>
                 <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
                 <div style={{'display': 'flex', 'fontSize': '12px', 'float': 'right'}}>
@@ -190,7 +193,15 @@ let Question = ({product, question}) => {
                 <DialogContentText>
                 <i style={{'fontSize': '12px'}}> For authentication reasons, you will not be emailed. </i>
                 </DialogContentText>
-                <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button>
+                {numPics < 5 ?
+                    <button style={{'cursor': 'pointer'}} onClick={handleOpenPics} >Upload photos</button> :
+                    null
+                }
+                {ansFormData.photos.map((photo, i) => {
+                    return <span key={i}>
+                    <img src={photo} width="64"></img>
+                    </span>
+                })}
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
@@ -201,6 +212,7 @@ let Question = ({product, question}) => {
                 <DialogTitle>Add Picture URL</DialogTitle>
                 <DialogContent>
                 <TextField
+                    onChange={storeUrl}
                     required
                     autoFocus
                     margin="dense"
