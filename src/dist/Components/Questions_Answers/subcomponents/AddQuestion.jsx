@@ -38,9 +38,9 @@ let AddQuestion = ({ product, handleSubmitQues }) => {
 
   return (
     <div>
-      <button onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen}>
         Add Question
-      </button>
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Ask Your Question about the {product.name}</DialogTitle>
         <DialogContent>

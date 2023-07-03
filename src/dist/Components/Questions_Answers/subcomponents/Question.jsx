@@ -27,8 +27,6 @@ let Question = ({product, question}) => {
     });
     let id = question.question_id;
 
-    // 'https://s.w-x.co/in-cat_in_glasses.jpg'
-
     // This handles submitting new answers to questions
     const handleSubmit = () => {
         if (!ansFormData.body || !ansFormData.name || !ansFormData.email || !ansFormData.email.includes('@') || !ansFormData.email.includes('.')) {
@@ -138,10 +136,10 @@ let Question = ({product, question}) => {
                         return <Answer key={i} answer={answer} />
                     })}
                     {(answerAmount < answers.length) ?
-                        <button onClick={seeMoreAnswers}>See more answers</button> :
+                        <Button variant="text" onClick={seeMoreAnswers}>See more answers</Button> :
                         answers.length < 2 ?
                         null :
-                        <button onClick={collapseAnswers}>Collapse answers</button>
+                        <Button variant="text" onClick={collapseAnswers}>Collapse answers</Button>
                     }
                 </div>
             </div>
