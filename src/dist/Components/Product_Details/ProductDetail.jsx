@@ -18,8 +18,8 @@ export default function ProductDetail({ product, setProduct }) {
     currentProduct: product,
     styles: [],
     currentStyle: {},
-    photos: [],
-    currentPhoto: ''
+    currentStyleID: '',
+    currentStylePhotos: [],
   })
 
   useEffect(() => {
@@ -29,7 +29,8 @@ export default function ProductDetail({ product, setProduct }) {
           ...state,
           styles: response.data.results,
           currentStyle: response.data.results[0],
-          photos: response.data.results[0].photos,
+          currentStyleId: response.data.results[0].style_id,
+          currentStylePhotos: response.data.results[0].photos,
           currentPhoto: response.data.results[0].photos[0].url
         })
       })
@@ -54,13 +55,13 @@ export default function ProductDetail({ product, setProduct }) {
       </Row>
 
       <Row>
-        <h5 style={{'text-align': 'center'}}>SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT</h5>
+        <h5 style={{textAlign: 'center'}}>SITE-WIDE ANNOUNCEMENT MESSAGE! -- SALE / DISCOUNT OFFER -- NEW PRODUCT HIGHLIGHT</h5>
       </Row>
 
       <Row>
         <Col xs={1}>
           <Stack gap={3}>
-            {state.photos.map((pic, index) => {
+            {state.currentStylePhotos.map((pic, index) => {
               return (
                 <Ratio aspectRatio={90}>
                   <Image
@@ -78,7 +79,7 @@ export default function ProductDetail({ product, setProduct }) {
 
         <Col xs={5}>
           <Carousel activeIndex={index} onSelect={handleSelect} pause='hover' slide={true}>
-            {state.photos.map((pic) => {
+            {state.currentStylePhotos.map((pic) => {
               return (
                 <Carousel.Item>
                   <CarouselItem pic={pic} />
@@ -94,17 +95,17 @@ export default function ProductDetail({ product, setProduct }) {
 
         <Col xs={5}>
           <Stack direction='horizontal' gap={1}>
-            <i class="bi bi-star"></i>
-            <i class="bi bi-star"></i>
-            <i class="bi bi-star"></i>
-            <i class="bi bi-star"></i>
-            <i class="bi bi-star"></i>
+            <i className="bi bi-star"></i>
+            <i className="bi bi-star"></i>
+            <i className="bi bi-star"></i>
+            <i className="bi bi-star"></i>
+            <i className="bi bi-star"></i>
           </Stack>
           <br></br>
           <p>CATEGORY</p>
           <h3>{state.currentProduct.category}</h3>
-          <p>${state.currentProduct.default_price}</p>
-          <p>STYLE {'>'} SELECTED STYLE</p>
+          {state.currentStyle.sale_price ? <p>${state.currentStyle.sale_price} <s style={{color: 'red'}}>${state.currentStyle.original_price}</s></p> : <p>${state.currentStyle.original_price}</p>}
+          <p>STYLE {'>'} {state.currentStyle.name}</p>
           <Row>
             {state.styles.map((oneStyle, index) => {
               return (
