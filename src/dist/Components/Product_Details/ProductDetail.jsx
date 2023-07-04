@@ -31,6 +31,7 @@ export default function ProductDetail({ product, setProduct }) {
       .then((response) => {
         setState({
           ...state,
+          currentProduct: product,
           styles: response.data.results,
           currentStyle: response.data.results[0],
           currentStyleId: response.data.results[0].style_id,
@@ -38,7 +39,7 @@ export default function ProductDetail({ product, setProduct }) {
           currentPhoto: response.data.results[0].photos[0].url
         })
       })
-  }, [])
+  }, [product])
 
   const [index, setIndex] = useState(0);
 
@@ -106,8 +107,8 @@ export default function ProductDetail({ product, setProduct }) {
             <i className="bi bi-star"></i>
           </Stack>
           <br></br>
-          <p>CATEGORY</p>
           <h3>{state.currentProduct.category}</h3>
+          <h2>{state.currentProduct.name}</h2>
           {state.currentStyle.sale_price ? <p>${state.currentStyle.sale_price} <s style={{color: 'red'}}>${state.currentStyle.original_price}</s></p> : <p>${state.currentStyle.original_price}</p>}
           {state.currentProduct.slogan && <h4>{state.currentProduct.slogan}</h4>}
           <p>STYLE {'>'} {state.currentStyle.name}</p>
