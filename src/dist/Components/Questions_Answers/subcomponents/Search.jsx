@@ -1,24 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import TextField from '@mui/material/TextField';
 
-let Search = ({search}) => {
-    const [searchChars, setSearchChars] = useState('');
-
-    const updateSearch = (e) => {
-      console.log('search chars', searchChars);
-      setSearchChars(e.target.value);
-      if (searchChars.length > 2) {
-          search(searchChars);
-      }
-    }
+let Search = ({search, updateSearch}) => {
 
     return (
-        <div>
-            <input
-                onChange={updateSearch}
-                placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
-            >
-            </input>
-        </div>
+        <TextField id="search-bar"
+        fullWidth
+        label="HAVE A QUESTION? SEARCH FOR ANSWERS..."
+        variant="outlined"
+        type="search"
+        size="small"
+        margin="dense"
+        onChange={updateSearch}
+        />
     )
 
 };

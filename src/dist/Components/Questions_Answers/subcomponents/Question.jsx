@@ -27,8 +27,6 @@ let Question = ({product, question}) => {
     });
     let id = question.question_id;
 
-    // 'https://s.w-x.co/in-cat_in_glasses.jpg'
-
     // This handles submitting new answers to questions
     const handleSubmit = () => {
         if (!ansFormData.body || !ansFormData.name || !ansFormData.email || !ansFormData.email.includes('@') || !ansFormData.email.includes('.')) {
@@ -119,29 +117,29 @@ let Question = ({product, question}) => {
     return (
         <div>
             <div>
-                <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</p>
-                <div style={{'display': 'flex', 'fontSize': '12px', 'float': 'right'}}>
+                <span style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</span>
+                <span style={{'display': 'flex', 'fontSize': '12px', 'float': 'right', 'paddingTop': '7px'}}>
                     <p style={{'marginRight': '3px'}}>Helpful?</p>
                     <u style={{'cursor': 'pointer'}} onClick={handleHelpfulQ}>Yes</u>
                     <p style={{'marginRight': '15px'}}>({helpfulQ})</p>
                     <p style={{'marginRight': '15px'}}>|</p>
                     <u style={{'cursor': 'pointer'}} onClick={handleOpen}>Add Answer</u>
-                </div>
+                </span>
             </div>
             <div style={{'display': 'flex', 'maxHeight': '50%', 'overflow': 'auto'}}>
                 {shownAnswers.length > 0 ?
                     <p style={{'fontSize': '18px', 'fontWeight': 'bold'}}>A: </p> :
                     <i style={{'fontSize': '12px', 'float': 'right'}}>No answers to display</i>
                 }
-                <div>
+                <div style={{'paddingTop': '3px'}}>
                     {shownAnswers.map((answer, i) => {
                         return <Answer key={i} answer={answer} />
                     })}
                     {(answerAmount < answers.length) ?
-                        <button onClick={seeMoreAnswers}>See more answers</button> :
-                        answers.length < 2 ?
+                        <Button variant="text" onClick={seeMoreAnswers}>See more answers</Button> :
+                        answers.length <= 2 ?
                         null :
-                        <button onClick={collapseAnswers}>Collapse answers</button>
+                        <Button variant="text" onClick={collapseAnswers}>Collapse answers</Button>
                     }
                 </div>
             </div>

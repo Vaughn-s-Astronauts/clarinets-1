@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Search from './subcomponents/Search.jsx';
 import Questions from './subcomponents/Questions.jsx';
 import AddQuestion from './subcomponents/AddQuestion.jsx';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import API from '../../helpers/API.js';
 
 
@@ -9,15 +11,28 @@ let QuestionsAnswers = ({product}) => {
     const [questions, setQuestions] = useState([]);
     const [shownQuestions, setShownQuestions] = useState([]);
     const [questionAmount, setQuestionAmount] = useState(2);
+    const [filteredQuestions, setFilteredQuestions] = useState([]);
+    const [searchChars, setSearchChars] = useState('');
 
-    console.log(questions);
+    console.log(filteredQuestions);
+
+    // Breakpoint between engaging search and displaying all answers
+    const updateSearch = (e) => {
+      setSearchChars(e.target.value);
+      if (searchChars.length >= 3) {
+          search(searchChars);
+      } else {
+        setShownQuestions(questions.slice(0, questionAmount));
+      }
+    }
+
     // Filters questions according to search params
     const search = (chars) => {
-        console.log('searching: ', chars);
-        // let searched = questions.filter((question) => {
-        //     question.question_body.includes(chars);
-        // });
-        // setSearchedQuestions(searched);
+        let searched = questions.filter((question) => {
+            return question.question_body.includes(chars);
+        });
+        setFilteredQuestions(searched);
+        setShownQuestions(filteredQuestions);
       }
 
     // Handle submitting a question, posting to server
@@ -32,9 +47,10 @@ let QuestionsAnswers = ({product}) => {
 
     // This is used to get questions from server and set them as state
     const getAndSet = () => {
-        API.GET_QA_QUESTIONS(product.id).then((response) => {
+        API.GET_QA_QUESTIONS(product.id, 1, 1000).then((response) => {
             setQuestions(response.data.results);
-            setShownQuestions(response.data.results.slice(0, questionAmount));
+            setFilteredQuestions(questions);
+            setShownQuestions(questions.slice(0, questionAmount));
         }).catch((error) => {
             console.log(error);
         });
@@ -58,13 +74,17 @@ let QuestionsAnswers = ({product}) => {
     return (
         <div>
             <h1>Questions & Answers</h1>
-            <Search search={search}/>
+            <hr/>
+            <Search search={search} updateSearch={updateSearch}/>
             <Questions product={product} shownQuestions={shownQuestions}/>
-            {(questionAmount < questions.length && questions.length > 2) ?
-                <button onClick={seeMoreQuestions}>See more questions</button> :
-                null
-            }
-            <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
+            <Stack direction="row" spacing={1}>
+                {(questionAmount < questions.length && questions.length > 2) ?
+                    <Button variant="outlined" onClick={seeMoreQuestions}>See more questions</Button> :
+                    null
+                }
+                <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
+            </Stack>
+            <hr/>
         </div>
     )
 };
