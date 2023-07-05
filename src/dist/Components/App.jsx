@@ -8,12 +8,49 @@ import Stack from '@mui/material/Stack';
 import Dial from './Dial.jsx';
 import Support from './Support.jsx';
 import ProductContext from '../helpers/ProductContext.js';
+import Button from '@mui/material/Button';
+
+
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#9D695A',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+    text: {
+      primary: '#4a4e69',
+    },
+    background: {
+      default: '#f2e9e4',
+      paper: '#ede0d4',
+    },
+  },
+});
 
 const darkTheme = createTheme({
     palette: {
-      mode: 'light',
+        mode: 'dark',
+        primary: {
+            main: '#778da9',
+        },
+        secondary: {
+            main: '#525B76',
+        },
+        text: {
+            primary: '#669bbc',
+        },
+        background: {
+            default: '#0d1b2a',
+            paper: '#1b263b',
+          },
     },
-  });
+});
+
+
+
   
 
 
@@ -26,6 +63,7 @@ let App = () => {
     const [product, setProduct] = React.useState({});
     const [support, setSupport] = React.useState(false);
     const [page, setPage] = React.useState(1);
+    const [currentTheme, setCurrentTheme] = React.useState(lightTheme);
 
     React.useEffect(() => {
         console.log(page);
@@ -40,17 +78,26 @@ let App = () => {
     const goBack = () => {
         setProduct({});
     }
+
+    const setTheme = () => {
+        {currentTheme.palette.mode === 'light' ? setCurrentTheme(darkTheme) :
+         setCurrentTheme(lightTheme)}
+    }
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={currentTheme}>
         <CssBaseline />
             {product.id !== undefined &&
             <div>
-                <button onClick={goBack}>Back</button>
+                <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
+                <Button variant="contained" onClick={goBack}>Back</Button>
+                <Button variant="contained" onClick={setTheme}>Change theme</Button>
+                </div>
                 <ProductContext.Provider value={[product, setProduct]}>
                     <Detail />
                 </ProductContext.Provider>
             </div>
             }
+            
             <div className='container px-4'>
                 <div className="row">
                 {product.id === undefined && products.map((o) => {
