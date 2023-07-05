@@ -6,13 +6,12 @@ import Image from 'react-bootstrap/Image';
 export default function CarouselItem({ pic }) {
   return (
 
-    <Ratio aspectRatio={120}>
+    <Ratio>
       <Image
-        className="d-block w-100"
         src={pic.url}
         rounded
         fluid
-        style={{ height: 'auto', width: '100%' }}
+        style={{ objectFit: 'cover' }}
       />
     </Ratio>
 

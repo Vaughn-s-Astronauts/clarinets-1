@@ -30,10 +30,10 @@ export default function AddToCart({ state, setState }) {
       <Row>
         <Col xs={8}>
           <Form.Select variant='outline-info' style={{ borderColor: 'black' }} onChange={handleSizeChange}>
-            <option>SELECT SIZE</option>
+            {state.currentSize === '' && <option>SELECT SIZE</option>}
             {Object.keys(state.currentStyle.skus).map((sku) => {
               return (
-                <option value={sku}>{state.currentStyle.skus[sku].size}</option>
+                <option key={sku} value={sku}>{state.currentStyle.skus[sku].size}</option>
               )
             })}
           </Form.Select>
@@ -41,8 +41,9 @@ export default function AddToCart({ state, setState }) {
 
         <Col xs={4}>
           <Form.Select variant='outline-info' style={{ borderColor: 'black' }}>
+            {state.currentSize === '' && <option>-</option>}
             {state.currentQuantity.map((value) => {
-              return(<option>{value}</option>)
+              return(<option key={value}>{value}</option>)
             })}
           </Form.Select>
         </Col>

@@ -14,17 +14,18 @@ export default function Style({oneStyle, index, state, setState}) {
       currentStyleId: JSON.parse(evt.currentTarget.getAttribute('data-style')).style_id,
       currentStylePhotos: JSON.parse(evt.currentTarget.getAttribute('data-style')).photos,
       currentSize: '',
-      currentQuantity: [1]
+      currentQuantity: [0],
+      currentPhotoCount: JSON.parse(evt.currentTarget.getAttribute('data-style')).photos.length
     })
   }
 
   return (
     <Col xs={3}>
-      {oneStyle.style_id === state.currentStyleId && <i className="bi bi-check-circle" style={{}}></i>}
-      <Ratio aspectRatio={100}>
+      {oneStyle.style_id === state.currentStyleId && <i className="bi bi-check-circle"></i>}
+      <Ratio>
         <Image
           key={index}
-          src={oneStyle.photos[0].thumbnail_url}
+          src={oneStyle.photos[0].url}
           roundedCircle
           style={{ height: '70%', width: '70%'}}
           data-style={JSON.stringify(oneStyle)}
