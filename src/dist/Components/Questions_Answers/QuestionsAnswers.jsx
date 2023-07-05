@@ -3,6 +3,7 @@ import Search from './subcomponents/Search.jsx';
 import Questions from './subcomponents/Questions.jsx';
 import AddQuestion from './subcomponents/AddQuestion.jsx';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import API from '../../helpers/API.js';
 
 
@@ -76,11 +77,13 @@ let QuestionsAnswers = ({product}) => {
             <hr/>
             <Search search={search} updateSearch={updateSearch}/>
             <Questions product={product} shownQuestions={shownQuestions}/>
-            {(questionAmount < questions.length && questions.length > 2) ?
-                <Button variant="text" onClick={seeMoreQuestions}>See more questions</Button> :
-                null
-            }
-            <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
+            <Stack direction="row" spacing={1}>
+                {(questionAmount < questions.length && questions.length > 2) ?
+                    <Button variant="outlined" onClick={seeMoreQuestions}>See more questions</Button> :
+                    null
+                }
+                <AddQuestion product={product} handleSubmitQues={handleSubmitQues}/>
+            </Stack>
             <hr/>
         </div>
     )
