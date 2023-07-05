@@ -1,41 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import { Box, Card, CardContent, Typography, IconButton, Rating } from '@mui/material';
-import { ChevronLeft, ChevronRight, Star, Close, Add } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, Star, Add } from '@mui/icons-material';
 import API from '../../helpers/API.js';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Comparison from './Comparison.jsx';
+import ProductContext from '../../helpers/ProductContext.js';
 
 
 
-const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOutfit}) => { 
+const Carousel = ({products, identity, pullOutfit}) => { 
 
   const carouselRef = useRef(null);
+  const [product, setProduct] = React.useContext(ProductContext);
   const [ratings, setRatings] = React.useState({});
   const [styles, setStyles] = React.useState([]);
   const [compare, setCompare] = React.useState(false);
   const [compareRelated, setCompareRelated] = React.useState({});
   
 
-  
-  let pullOutfit = () => {
-    API.GET_OUTFIT().then((response) => {
-        setOutfit(response.data);
-    }).catch((error) => {
-        console.log(error);
-    });
-  };
-  React.useEffect(() => {
-    Promise.all(products.map((d) => API.GET_PRODUCT_STYLES(d.id))).then((resolve) => {
-      let storage = {};
-      resolve.map((r) => {
-          storage[r.data.product_id] = r.data.results;
-      });
-      setStyles(storage);
-    }).catch((error) => {
-        console.log(error);
-    });
-  }, [outfit]);
+
 
   let updateRatings = () => {
     if(products){
@@ -67,7 +50,7 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
     }).catch((error) => {
         console.log(error);
     });
-  },[pageProduct, products]);
+  },[product, products]);
 
 
   const scrollToNextCard = () => {
@@ -85,7 +68,7 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
   let checkOutfit = () => {
     if(products){
       for(let p of products) {
-        if(pageProduct.id === p.id){
+        if(product.id === p.id){
           return false;
         }
       }
@@ -95,8 +78,6 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
   let chooseDefault = (productId) => {
     let productStyle = styles[productId];
     if(!styles[productId]){
-      console.log('Styles info: | ', productId);
-      console.log(styles);
       return 'https://cdn.dribbble.com/users/47195/screenshots/524523/media/e7e8bc8f4f2ced9334d4a439118a5fb4.jpg';
     }
     let active = '';
@@ -114,22 +95,22 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
   }
 
   let addAndGrab = () => {
-    API.POST_OUTFIT(pageProduct).then((response) => {      
+    API.POST_OUTFIT(product).then((response) => {      
       pullOutfit();
     }).catch((error) => {
       console.log(error);
     })
   };
 
-  let cardClick = (product) => {
+  let cardClick = (currentProduct) => {
     if(!identity) {
-      API.PUT_OUTFIT(product).then((response) => {
+      API.PUT_OUTFIT(currentProduct).then((response) => {
         pullOutfit();
       }).catch((error) => {
         console.log(error);
       });
     }else{
-      setCompareRelated(product);
+      setCompareRelated(currentProduct);
       setCompare(true);
     }
   }
@@ -137,7 +118,7 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
 
   return (
     <Box display="flex" alignItems="center">
-      <Comparison opened={compare} setCompare={setCompare} pageProduct={pageProduct} relatedProduct={compareRelated}/>
+      <Comparison opened={compare} setCompare={setCompare} relatedProduct={compareRelated}/>
       <IconButton onClick={scrollToPreviousCard} aria-label="Previous">
         <ChevronLeft fontSize="large" />
       </IconButton>
@@ -184,7 +165,7 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
                         </Box>
               </Box>
             </Box>
-            <CardContent style={{cursor:'pointer'}} onClick={() => updateProduct(product)}>
+            <CardContent style={{cursor:'pointer'}} onClick={() => setProduct(product)}>
               <Typography variant="subtitle2" color="textSecondary">
                 {product.category}
               </Typography>
@@ -216,4 +197,4 @@ const Carousel = ({pageProduct, products, updateProduct, identity, outfit, setOu
   );
 };
 
-export default Carousel;
+export default memo(Carousel);

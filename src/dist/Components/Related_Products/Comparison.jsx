@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import Modal from '@mui/material/Modal';
+import ProductContext from '../../helpers/ProductContext.js';
 
 const style = {
   position: 'absolute',
@@ -20,8 +20,9 @@ const style = {
 
 
 
-export default function Comparison({opened, setCompare, pageProduct, relatedProduct}) {
-
+export default function Comparison({opened, setCompare, relatedProduct}) {
+  
+    const [product] = React.useContext(ProductContext);
     const products = [
         {
           id: 1,
@@ -42,7 +43,7 @@ export default function Comparison({opened, setCompare, pageProduct, relatedProd
         return null;
       };
     
-  if(relatedProduct.name && pageProduct.name){
+  if(relatedProduct.name && product.name){
     console.log(relatedProduct);
     return (
         <div>
@@ -65,7 +66,7 @@ export default function Comparison({opened, setCompare, pageProduct, relatedProd
               </Box>
               <Box display="flex" justifyContent="space-between">
                 <Typography align="center" variant="h6">
-                  {pageProduct.name}
+                  {product.name}
                 </Typography>
                 <Typography align="right" variant="subtitle1">
                   {relatedProduct.name}

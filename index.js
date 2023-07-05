@@ -145,7 +145,7 @@ app.get('/service', (req, res) => {
             model: 'gpt-3.5-turbo',
             messages: [{
                 role:'user',
-                content:`Using this the dataset below, please act as a customer service representative for my store Squidward-inc. 
+                content:`Using this dataset below, please act as a customer service representative for my store Squidward-inc. 
                 I want the response to be a JSON object, with your response within the object. 
                 Also, if the customer requests a certain product, please list that product's id within the JSON response as well under a key named productIds. 
                 This should be an array of relevant productIds. Any questions asked unrelated to the contents of my store should be responded to with a default message. 
