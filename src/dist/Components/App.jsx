@@ -7,6 +7,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Dial from './Dial.jsx';
 import Support from './Support.jsx';
+import ProductContext from '../helpers/ProductContext.js';
 
 const darkTheme = createTheme({
     palette: {
@@ -14,6 +15,7 @@ const darkTheme = createTheme({
     },
   });
   
+
 
 let App = () => {
     //Pull the products from the API
@@ -44,7 +46,9 @@ let App = () => {
             {product.id !== undefined &&
             <div>
                 <button onClick={goBack}>Back</button>
-                <Detail product={product} updateProduct={setProduct}/>
+                <ProductContext.Provider value={[product, setProduct]}>
+                    <Detail />
+                </ProductContext.Provider>
             </div>
             }
             <div className='container px-4'>

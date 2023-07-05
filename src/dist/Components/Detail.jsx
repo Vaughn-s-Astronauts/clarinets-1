@@ -4,9 +4,10 @@ import RelatedProducts from './Related_Products/RelatedProducts.jsx';
 import QuestionsAnswers from './Questions_Answers/QuestionsAnswers.jsx';
 import RatingsReviews from './Ratings_Reviews/RatingsReviews.jsx';
 import API from '../helpers/API.js';
+import ProductContext from '../helpers/ProductContext.js';
 
-
-let Detail = ({product, updateProduct}) => {
+let Detail = () => {
+    const [product, setProduct] = React.useContext(ProductContext);
     const [details, setDetails] = React.useState(product);//defaulted to the 'basic' details
 
     React.useEffect(() => {
@@ -29,7 +30,7 @@ let Detail = ({product, updateProduct}) => {
     return (
         <div className='container'>
             <ProductDetail product={details}/>
-            <RelatedProducts product={details} updateProduct={updateProduct}/>
+            <RelatedProducts />
             <QuestionsAnswers product={details}/>
             <RatingsReviews product={details}/>
         </div>
