@@ -137,7 +137,7 @@ let Question = ({product, question}) => {
                     })}
                     {(answerAmount < answers.length) ?
                         <Button variant="text" onClick={seeMoreAnswers}>See more answers</Button> :
-                        answers.length < 2 ?
+                        answers.length <= 2 ?
                         null :
                         <Button variant="text" onClick={collapseAnswers}>Collapse answers</Button>
                     }

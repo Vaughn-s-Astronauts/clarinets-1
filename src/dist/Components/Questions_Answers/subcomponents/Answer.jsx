@@ -38,7 +38,7 @@ let Answer = ({answer}) => {
     return (
         <div>
             <div>
-                <p style={{'fontSize': '15px', 'marginLeft': '5px'}} >{answer.body}</p>
+                <p style={{'fontSize': '16px', 'marginLeft': '5px'}} >{answer.body}</p>
             </div>
             <div style={{'display': 'flex', 'fontSize': '12px', 'marginLeft': '5px'}}>
                 {answer.answerer_name === 'Seller' ?
