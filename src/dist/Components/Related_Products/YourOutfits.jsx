@@ -2,12 +2,12 @@ import React from 'react';
 import API from '../../helpers/API.js';
 import Carousel from './Carousel.jsx';
 
-let YourOutfits = ({updateProduct, styles, relatedDetailed}) => {
+let YourOutfits = ({updateProduct, pageProduct}) => {
     const [outfit, setOutfit] = React.useState({});
-
     React.useEffect(() => {
         API.GET_OUTFIT().then((response) => {
             setOutfit(response.data);
+            console.log(outfit);
         }).catch((error) => {
             console.log(error);
         });
@@ -15,9 +15,9 @@ let YourOutfits = ({updateProduct, styles, relatedDetailed}) => {
 
     
     return (<div className='container'>
-            {Object.keys(outfit).length > 0 && <h2 class="text-left">YOUR OUTFIT</h2>}
-            <hr/>
-            {Object.keys(outfit).length > 0 && <Carousel updateProduct={updateProduct} styles={styles} products={outfit.outfit} identity={false}/>}
+                {<h2 className="text-left">YOUR OUTFIT</h2>}
+                <hr/>
+                {<Carousel updateProduct={updateProduct} pageProduct={pageProduct} products={outfit.outfit || []} identity={false} outfit={outfit} setOutfit={setOutfit}/>}
             </div>);
 };
 

@@ -6,7 +6,7 @@ let ReviewsList = ({shownReviews}) => {
   //console.log('reviews', shownReviews);
 
   return (
-  <Box sx={{maxHeight: '65vh', overflow: 'auto', borderRadius: '4px'}}>
+  <Box sx={{maxHeight: '75vh', overflow: 'auto'}}>
     {shownReviews.map((review, i) => (
       <ReviewEntry key={i} review={review}/>
     ))}

@@ -21,7 +21,7 @@ let RatingEntry = ({i, rating, totalRatings, addFilter, removeFilter, filter}) =
   }, [filter]);
   
   return (
-    <div style={{display: 'flex', backgroundColor: filter.includes(i) || hovering ? 'whitesmoke' : 'white', cursor: 'pointer'}} onClick={handleClick} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)}>{i} stars <LinearProgress variant="determinate" value={rating/totalRatings*100} sx={{width:'50%', height: '10', mt: '7', borderRadius: '4px'}} />
+    <div style={{display: 'flex', backgroundColor: filter.includes(i) || hovering ? 'whitesmoke' : null, cursor: 'pointer', borderRadius: '3px', alignItems: 'center', width: '100%'}} onClick={handleClick} onMouseLeave={() => setHovering(false)} onMouseEnter={() => setHovering(true)}>{i} stars <LinearProgress variant="determinate" value={rating/totalRatings*100} sx={{width:'50%', height: '10', mt: '7', borderRadius: '4px'}} />
       ({rating})
     </div>
   )
