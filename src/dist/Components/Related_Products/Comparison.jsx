@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import Modal from '@mui/material/Modal';
 import ProductContext from '../../helpers/ProductContext.js';
 
@@ -23,8 +24,6 @@ const style = {
 export default function Comparison({opened, setCompare, relatedProduct}) {
   
     const [product] = React.useContext(ProductContext);
-    console.log(product);
-    console.log(relatedProduct);
     const products = [
         {
           id: 1,
@@ -38,14 +37,25 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
         },
       ];
     
-      const renderCheckmark = (product, feature) => {
+      let renderCheckmark = (product, feature) => {
         if (product.features.includes(feature)) {
           return <CheckIcon align="right"/>;
         }
         return null;
       };
+
+      let findFeature = (p, f) => {
+        for(let i of p.features){
+          if(i.feature === f){
+            return i.value;
+          }
+        }
+        return 'undefined';
+      }
     
   if(relatedProduct.name && product.name){
+    let relatedFeatures = relatedProduct.features.map((f) => f.feature);
+    let productFeatures = product.features.map((f) => f.feature);
     return (
         <div>
         <Modal
@@ -66,8 +76,11 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
                 </Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <Typography align="center" variant="h6">
+                <Typography align="left" variant="h6">
                   {product.name}
+                </Typography>
+                <Typography align="center" variant="h6">
+                  FEATURES
                 </Typography>
                 <Typography align="right" variant="subtitle1">
                   {relatedProduct.name}
@@ -77,13 +90,28 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products[0].features.map((feature) => (
-            <TableRow key={feature}>
-              <TableCell colSpan={2}>{renderCheckmark(products[0], feature)}</TableCell>
-              <TableCell>{feature}</TableCell>
-              <TableCell colSpan={2}>{renderCheckmark(products[1], feature)}</TableCell>
+          {product.features && product.features.map((feature, i) => (
+            <TableRow key={`${feature}${i}`}>
+              <TableCell colSpan={2}>{feature.value}</TableCell>
+              <TableCell style={{border:'2px solid black'}}>{feature.feature}</TableCell>
+              <TableCell colSpan={2}>{relatedFeatures.includes(feature.feature) ? findFeature(relatedProduct, feature.feature) : <CloseIcon/>}</TableCell>
             </TableRow>
           ))}
+          {relatedProduct.features && relatedProduct.features.map((feature, i) => {
+              if (!productFeatures.includes(feature.feature)) {
+                return (
+                  <TableRow key={`${feature}${i}`}>
+                    <TableCell colSpan={2}>
+                      <CloseIcon/>
+                    </TableCell>
+                    <TableCell style={{border:'2px solid black'}}>{feature.feature}</TableCell>
+                    <TableCell colSpan={2}>
+                      {feature.value}
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+          })}
         </TableBody>
       </Table>
     </TableContainer>

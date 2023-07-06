@@ -93,15 +93,16 @@ let App = () => {
     return (
         <ThemeProvider theme={currentTheme}>
         <CssBaseline />
+        <ProductContext.Provider value={[product, setProduct]}>
             {product.id !== undefined && product.features !== undefined &&
             <div>
                 <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
                 <Button variant="contained" onClick={goBack}>Back</Button>
                 <Button variant="contained" onClick={setTheme}>Change theme</Button>
                 </div>
-                <ProductContext.Provider value={[product, setProduct]}>
-                    <Detail />
-                </ProductContext.Provider>
+                
+                <Detail />
+                
             </div>
             }
             
@@ -119,8 +120,9 @@ let App = () => {
                 </Stack>}
                 </div>
             </div>
-        <Support setSupport={setSupport} support={support}/>
-        <Dial setSupport={setSupport}/>
+            <Support setSupport={setSupport} support={support}/>
+            <Dial setSupport={setSupport}/>
+        </ProductContext.Provider>
         </ThemeProvider>
     );
 };

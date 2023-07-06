@@ -6,7 +6,7 @@ import RatingsReviews from './Ratings_Reviews/RatingsReviews.jsx';
 import ProductContext from '../helpers/ProductContext.js';
 
 let Detail = () => {
-    const [product, setProduct] = React.useContext(ProductContext);
+    const [product] = React.useContext(ProductContext);
     return (
         <div className='container'>
             <ProductDetail product={product}/>
