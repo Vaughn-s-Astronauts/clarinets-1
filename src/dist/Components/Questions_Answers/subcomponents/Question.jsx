@@ -116,7 +116,7 @@ let Question = ({product, question}) => {
 
     return (
         <div>
-            <div>
+            <div style={{'paddingTop': '10px'}}>
                 <span style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</span>
                 <span style={{'display': 'flex', 'fontSize': '12px', 'float': 'right', 'paddingTop': '7px'}}>
                     <p style={{'marginRight': '3px'}}>Helpful?</p>
