@@ -23,6 +23,8 @@ const style = {
 export default function Comparison({opened, setCompare, relatedProduct}) {
   
     const [product] = React.useContext(ProductContext);
+    console.log(product);
+    console.log(relatedProduct);
     const products = [
         {
           id: 1,
@@ -44,7 +46,6 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
       };
     
   if(relatedProduct.name && product.name){
-    console.log(relatedProduct);
     return (
         <div>
         <Modal

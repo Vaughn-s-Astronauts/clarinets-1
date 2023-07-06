@@ -78,6 +78,13 @@ let App = () => {
     const goBack = () => {
         setProduct({});
     }
+    const updateProduct = (productId) => {
+        API.GET_PRODUCT(productId).then((response) => {
+            setProduct(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     const setTheme = () => {
         {currentTheme.palette.mode === 'light' ? setCurrentTheme(darkTheme) :
@@ -86,7 +93,7 @@ let App = () => {
     return (
         <ThemeProvider theme={currentTheme}>
         <CssBaseline />
-            {product.id !== undefined &&
+            {product.id !== undefined && product.features !== undefined &&
             <div>
                 <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
                 <Button variant="contained" onClick={goBack}>Back</Button>
@@ -101,7 +108,7 @@ let App = () => {
             <div className='container px-4'>
                 <div className="row">
                 {product.id === undefined && products.map((o) => {
-                    return <div className="col text-center p-3" key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px', cursor:'pointer'}}>
+                    return <div className="col text-center p-3" key={o.id} onClick={(e) => updateProduct(o.id)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px', cursor:'pointer'}}>
                             {o.name}
                             </div>
                             ;
