@@ -95,7 +95,11 @@ export default function ProductDetail({ product, setProduct }) {
 
       <Row>
         <Col><h1>logo</h1></Col>
-        <Col><SearchBar/></Col>
+        <Col>
+          <input type='text' style={{ color: 'black', borderColor: 'black', borderRadius: '5px', borderWidth: 'thin', backgroundColor: 'white'}}></input>
+
+          <button type="input" style={{ color: 'black', borderColor: 'black', borderRadius: '5px', borderWidth: 'thin', backgroundColor: 'white'}}>Search</button>
+        </Col>
       </Row>
 
       <Row>
