@@ -63,7 +63,7 @@ export default function ({support, setSupport}) {
                     console.log(error);
                 });
             }
-            setResponse(parsed.response || parsed.message || 'Error parsing this response.');
+            setResponse(parsed.response || parsed.message || 'Enjoy!');
 
         }).catch((error) => {
             setResponse('Error talking to support!');
