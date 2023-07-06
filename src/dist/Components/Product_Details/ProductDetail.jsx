@@ -9,17 +9,22 @@ import Stack from 'react-bootstrap/Stack';
 import Ratio from 'react-bootstrap/Ratio';
 import CarouselItem from './CarouselItem.jsx';
 import SearchBar from './SearchBar.jsx';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import Style from './Style.jsx';
 import AddToCart from './AddToCart.jsx';
 import Form from 'react-bootstrap/Form';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import FilledInput from '@mui/material/FilledInput';
 import { FacebookShareButton, FacebookIcon } from 'react-share'
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import { PinterestShareButton, PinterestIcon } from 'react-share';
-import ProductRating from './ProductRating.jsx'
+import ProductRating from './ProductRating.jsx';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
 
-export default function ProductDetail({ product, setProduct }) {
+
+export default function ProductDetail({ product, setProduct, theme }) {
 
   const [state, setState] = useState({
     styles: [],
@@ -77,11 +82,32 @@ export default function ProductDetail({ product, setProduct }) {
     <Container fluid>
 
       <Row>
-        <Col><h1>logo</h1></Col>
+      <Col style={{marginBottom:'15px'}}>                      
+            <Image
+              src={`${theme.palette.mode === 'light' ? 'https://cdn.discordapp.com/attachments/246777011572310016/1126618960243195954/squidward-inc-high-resolution-logo-black-on-transparent-background201.png': 'https://cdn.discordapp.com/attachments/246777011572310016/1126623388148973598/squidward-inc-high-resolution-logo-white-on-transparent-background.png'}`}
+              height={"128px"}
+              width={"450px"}
+              rounded
+            />
+        </Col>
         <Col>
-          <input type='text' style={{ color: 'black', borderColor: 'black', borderRadius: '5px', borderWidth: 'thin', backgroundColor: 'white'}}></input>
-
-          <button type="input" style={{ color: 'black', borderColor: 'black', borderRadius: '5px', borderWidth: 'thin', backgroundColor: 'white'}}>Search</button>
+        <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+          <InputLabel htmlFor="filled-adornment-search">Search</InputLabel>
+            <FilledInput
+              id="filled-adornment-search"
+              type='text'
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="search for product"
+                    edge="end"
+                  >
+                    <ManageSearchIcon/>
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            </FormControl>
         </Col>
       </Row>
 
@@ -100,7 +126,7 @@ export default function ProductDetail({ product, setProduct }) {
                       <Image
                         src={pic.url}
                         thumbnail
-                        style={{objectFit: 'cover' }}
+                        style={{objectFit: 'cover', cursor:'pointer' }}
                         data-index={index}
                         onClick={handleThumbnailClick}
                       />

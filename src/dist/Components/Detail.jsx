@@ -5,11 +5,11 @@ import QuestionsAnswers from './Questions_Answers/QuestionsAnswers.jsx';
 import RatingsReviews from './Ratings_Reviews/RatingsReviews.jsx';
 import ProductContext from '../helpers/ProductContext.js';
 
-let Detail = () => {
+let Detail = ({theme}) => {
     const [product] = React.useContext(ProductContext);
     return (
         <div className='container'>
-            <ProductDetail product={product}/>
+            <ProductDetail theme={theme} product={product}/>
             <RelatedProducts />
             <QuestionsAnswers product={product}/>
             <RatingsReviews product={product}/>

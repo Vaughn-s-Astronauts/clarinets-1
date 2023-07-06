@@ -40,7 +40,7 @@ const darkTheme = createTheme({
             main: '#525B76',
         },
         text: {
-            primary: '#669bbc',
+            primary: '#FFFFFFFF',
         },
         background: {
             default: '#0d1b2a',
@@ -101,7 +101,7 @@ let App = () => {
                 <Button variant="contained" onClick={setTheme}>Change theme</Button>
                 </div>
                 
-                <Detail />
+                <Detail theme={currentTheme} />
                 
             </div>
             }
