@@ -13,16 +13,15 @@ import Style from './Style.jsx';
 import AddToCart from './AddToCart.jsx';
 import Form from 'react-bootstrap/Form';
 import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { FacebookShareButton, FacebookIcon } from 'react-share'
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import { PinterestShareButton, PinterestIcon } from 'react-share';
+import ProductRating from './ProductRating.jsx'
 
 export default function ProductDetail({ product, setProduct }) {
 
   const [state, setState] = useState({
-    currentProduct: product,
     styles: [],
     currentStyle: {},
     currentStyleID: '',
@@ -30,8 +29,6 @@ export default function ProductDetail({ product, setProduct }) {
     currentSku: '',
     currentSize: '',
     currentQuantity: [1],
-    currentReviews: [],
-    currentAvgReview: 0,
     currentPhotoIndex: 0,
     currentPhotoCount: 0
   })
@@ -41,7 +38,6 @@ export default function ProductDetail({ product, setProduct }) {
       .then((response) => {
         setState({
           ...state,
-          currentProduct: product,
           styles: response.data.results,
           currentStyle: response.data.results[0],
           currentStyleId: response.data.results[0].style_id,
@@ -50,21 +46,8 @@ export default function ProductDetail({ product, setProduct }) {
           currentPhotoCount: response.data.results[0].photos.length
         })
       })
-    API.GET_REVIEWS(product.id, 1, 1000)
-      .then((response) => {
-        let reviewCount = response.data.results.length;
-        let startCount = 0;
-        response.data.results.map(({rating}) => {
-          startCount += rating;
-        })
-        setState({
-          ...state,
-          currentReviews: response.data.results,
-          currentAvgReview: startCount/reviewCount
-        })
-      })
-
   }, [product])
+
 
   const [index, setIndex] = useState(0);
 
@@ -142,15 +125,12 @@ export default function ProductDetail({ product, setProduct }) {
         </Col>
 
         <Col xs={5}>
-          <Stack direction='horizontal' gap={1}>
-            <Rating name="half-rating-read" value={(state.currentAvgReview)} precision={0.25} readOnly/>
-            {state.currentReviews.length > 0 && <a href="#jumpToRatings">Read all {state.currentReviews.length} reviews</a>}
-          </Stack>
+          <ProductRating product={product}/>
           <br></br>
-          <h3>{state.currentProduct.category}</h3>
-          <h2>{state.currentProduct.name}</h2>
+          <h3>{product.category}</h3>
+          <h2>{product.name}</h2>
           {state.currentStyle.sale_price ? <p>${state.currentStyle.sale_price} <s style={{color: 'red'}}>${state.currentStyle.original_price}</s></p> : <p>${state.currentStyle.original_price}</p>}
-          {state.currentProduct.slogan && <h4>{state.currentProduct.slogan}</h4>}
+          {product.slogan && <h4>{product.slogan}</h4>}
           <p>STYLE {'>'} {state.currentStyle.name}</p>
 
           <Stack direction='horizontal' gap={3}>
@@ -158,7 +138,7 @@ export default function ProductDetail({ product, setProduct }) {
             <FacebookShareButton
               url={'https://www.example.com'}
               quote={'You should purchase this!'}
-              hashtag={`#${state.currentProduct.name}`}
+              hashtag={`#${product.name}`}
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
@@ -166,7 +146,7 @@ export default function ProductDetail({ product, setProduct }) {
             <TwitterShareButton
               url={'https://www.example.com'}
               quote={'You should purchase this!'}
-              hashtag={`#${state.currentProduct.name}`}
+              hashtag={`#${product.name}`}
             >
               <TwitterIcon size={32} round />
             </TwitterShareButton>
@@ -174,7 +154,7 @@ export default function ProductDetail({ product, setProduct }) {
             <PinterestShareButton
               url={'https://www.example.com'}
               media={'https://www.galvanize.com/'}
-              description={`#${state.currentProduct.name}`}
+              description={`#${product.name}`}
             >
               <PinterestIcon size={32} round />
             </PinterestShareButton>
