@@ -96,7 +96,7 @@ let RatingsReviews = ({product}) => {
   }, [reviewAmount, allReviews]);
 
   return (
-    <div style={{marginTop: '20px'}}>
+    <div id='jumpToRatings'style={{marginTop: '20px'}}>
       <Stack direction="row" spacing={2}>
         <div>
       <Stack spacing={2} alignItems="stretch">
