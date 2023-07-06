@@ -10,3 +10,19 @@ exports[`displays a list of review entries 1`] = `
   }
 />
 `;
+
+exports[`renders component when given an array 1`] = `
+[
+  <style
+    dangerouslySetInnerHTML={
+      {
+        "__html": ".css-17bk85d{max-height:75vh;overflow:auto;}",
+      }
+    }
+    data-emotion="css 17bk85d"
+  />,
+  <div
+    className="MuiBox-root css-17bk85d"
+  />,
+]
+`;

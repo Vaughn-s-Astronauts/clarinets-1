@@ -78,6 +78,13 @@ let App = () => {
     const goBack = () => {
         setProduct({});
     }
+    const updateProduct = (productId) => {
+        API.GET_PRODUCT(productId).then((response) => {
+            setProduct(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     const setTheme = () => {
         {currentTheme.palette.mode === 'light' ? setCurrentTheme(darkTheme) :
@@ -86,22 +93,23 @@ let App = () => {
     return (
         <ThemeProvider theme={currentTheme}>
         <CssBaseline />
-            {product.id !== undefined &&
+        <ProductContext.Provider value={[product, setProduct]}>
+            {product.id !== undefined && product.features !== undefined &&
             <div>
                 <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
                 <Button variant="contained" onClick={goBack}>Back</Button>
                 <Button variant="contained" onClick={setTheme}>Change theme</Button>
                 </div>
-                <ProductContext.Provider value={[product, setProduct]}>
-                    <Detail />
-                </ProductContext.Provider>
+                
+                <Detail />
+                
             </div>
             }
             
             <div className='container px-4'>
                 <div className="row">
                 {product.id === undefined && products.map((o) => {
-                    return <div className="col text-center p-3" key={o.id} onClick={(e) => setProduct(o)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px', cursor:'pointer'}}>
+                    return <div className="col text-center p-3" key={o.id} onClick={(e) => updateProduct(o.id)}style={{height:'150px', width:'150px', border:'solid black 1px', margin:'20px', cursor:'pointer'}}>
                             {o.name}
                             </div>
                             ;
@@ -112,8 +120,9 @@ let App = () => {
                 </Stack>}
                 </div>
             </div>
-        <Support setSupport={setSupport} support={support}/>
-        <Dial setSupport={setSupport}/>
+            <Support setSupport={setSupport} support={support}/>
+            <Dial setSupport={setSupport}/>
+        </ProductContext.Provider>
         </ThemeProvider>
     );
 };
