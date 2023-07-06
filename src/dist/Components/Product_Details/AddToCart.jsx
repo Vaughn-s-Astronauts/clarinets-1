@@ -51,10 +51,10 @@ export default function AddToCart({ state, setState }) {
       <p></p>
       <Row>
         <Col xs={10}>
-          <Button xs={8} variant='outline-info' type='submit' style={{ color: 'black', borderColor: 'black', width: '100%', textAlign: 'left' }}>ADD TO BAG +</Button>
+          <button xs={8} type='submit' style={{ color: 'black', borderColor: 'black', width: '100%', textAlign: 'left', borderRadius: '5px', borderWidth: 'thin', backgroundColor: 'white' }}>ADD TO BAG +</button>
         </Col>
         <Col xs={2}>
-          <Button xs={4} variant='outline-info' type='button' style={{ color: 'black', borderColor: 'black', width: '100%', height: '100%' }}><i className="bi bi-star"></i></Button>
+          <button xs={4} type='button' style={{ color: 'black', borderColor: 'black', width: '100%', height: '100%', borderRadius: '10%', borderWidth: 'thin', backgroundColor: 'white'}}><i className="bi bi-star" style={{borderColor: 'yellow' }}></i></button>
         </Col>
       </Row>
     </>

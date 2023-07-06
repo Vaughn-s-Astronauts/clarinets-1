@@ -73,11 +73,11 @@ let QuestionsAnswers = ({product}) => {
 
     return (
         <div>
-            <h1>Questions & Answers</h1>
+            <h2 style={{'paddingTop': '25px'}}>QUESTIONS & ANSWERS</h2>
             <hr/>
             <Search search={search} updateSearch={updateSearch}/>
             <Questions product={product} shownQuestions={shownQuestions}/>
-            <Stack direction="row" spacing={1}>
+            <Stack style={{'paddingTop': '10px'}} direction="row" spacing={1}>
                 {(questionAmount < questions.length && questions.length > 2) ?
                     <Button variant="outlined" onClick={seeMoreQuestions}>See more questions</Button> :
                     null
