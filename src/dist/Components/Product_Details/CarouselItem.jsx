@@ -13,7 +13,6 @@ export default function CarouselItem({ pic }) {
 
   const handleClose = () => setShow(false);
   const handleShow = (evt) => {
-    console.log(evt.target.src);
     setSelectedPic(evt.target.src);
     setShow(true);
   }

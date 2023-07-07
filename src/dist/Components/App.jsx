@@ -66,7 +66,6 @@ let App = () => {
     const [currentTheme, setCurrentTheme] = React.useState(lightTheme);
 
     React.useEffect(() => {
-        console.log(page);
         API.GET_PRODUCTS(page).then((response) => {
             setProducts(response.data);
         }).catch((error) => {

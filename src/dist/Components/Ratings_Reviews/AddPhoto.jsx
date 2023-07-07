@@ -28,7 +28,6 @@ let AddPhoto = ({photos, addPhotoURL}) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = (e) => {
-    console.log(e.target.name);
     if (e.target.name === 'add') {
       addPhotoURL(currentPhoto);
     }
