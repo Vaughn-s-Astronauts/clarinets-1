@@ -47,7 +47,6 @@ let AddReview = ({productID, productName, chars}) => {
   const handleClose = () => setOpen(false);
 
   const updateRecommend = (e) => {
-    console.log(typeof e.target.value);
     {e.target.value === 'yes' ? setRecommend(true) :
     setRecommend(false)}
   }
@@ -100,8 +99,6 @@ let AddReview = ({productID, productName, chars}) => {
       alert('Please select a recommendation.');
     } else if (!Object.keys(chars).every(char => Object.keys(charObj).includes(chars[char].id.toString()))) {
       alert('Please select a rating for all characteristics.');
-      console.log('charObj keys', Object.keys(charObj));
-      console.log('chars', chars);
     } else if (body.length < 50) {
       alert('Review body too short.');
     } else if(!nickname) {
@@ -134,7 +131,7 @@ let AddReview = ({productID, productName, chars}) => {
       console.log(error);
     })
     setOpen(false);
-    alert('Review submitted.');
+    //alert('Review submitted.');
   }
 
   return (
