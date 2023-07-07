@@ -27,7 +27,7 @@ export default function Style({oneStyle, index, state, setState}) {
           key={index}
           src={oneStyle.photos[0].url}
           roundedCircle
-          style={{ height: '70%', width: '70%'}}
+          style={{ height: '70%', width: '70%', cursor: 'pointer'}}
           data-style={JSON.stringify(oneStyle)}
           onClick={handleStyleClick}
         />
