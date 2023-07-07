@@ -33,7 +33,7 @@ let Question = ({product, question}) => {
           alert('Error submitting, please recheck entries');
         } else {
           API.POST_QA_QUESTION_ANSWER(id, ansFormData).then((response) => {
-              console.log('Answer submitted!', response);
+              //console.log('Answer submitted!', response);
               getAndSetAns();
           }).catch((error) => {
               console.log(error);
@@ -104,7 +104,6 @@ let Question = ({product, question}) => {
     // Handling adding a picture
     const storeUrl = (e) => {
         setIndividualUrl(e.target.value);
-        console.log(individualUrl);
     }
 
     const addPic = (e) => {

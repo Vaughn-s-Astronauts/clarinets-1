@@ -14,7 +14,6 @@ let QuestionsAnswers = ({product}) => {
     const [filteredQuestions, setFilteredQuestions] = useState([]);
     const [searchChars, setSearchChars] = useState('');
 
-    console.log(filteredQuestions);
 
     // Breakpoint between engaging search and displaying all answers
     const updateSearch = (e) => {
@@ -38,7 +37,7 @@ let QuestionsAnswers = ({product}) => {
     // Handle submitting a question, posting to server
     const handleSubmitQues = (formData) => {
         API.POST_QA_QUESTION(formData).then((response) => {
-            console.log('Question submitted!', response);
+            //console.log('Question submitted!', response);
             getAndSet();
         }).catch((error) => {
             console.log(error);
