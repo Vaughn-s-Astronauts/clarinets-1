@@ -12,7 +12,7 @@ export default function ProductRating ({product}) {
   useEffect(() => {
     API.GET_REVIEWS(product.id, 1, 1000)
       .then((response) => {
-        let reviewCount = response.data.results.length;
+        let reviewCount = response.data.results.length || 0;
         let startCount = 0;
         response.data.results.map(({rating}) => {
           startCount += rating;
