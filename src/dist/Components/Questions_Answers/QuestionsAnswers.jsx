@@ -48,7 +48,7 @@ let QuestionsAnswers = ({product}) => {
     // This is used to get questions from server and set them as state
     const getAndSet = () => {
         API.GET_QA_QUESTIONS(product.id, 1, 1000).then((response) => {
-            setQuestions(response.data.results);
+            setQuestions(response.data.results || []);
             setFilteredQuestions(questions);
             setShownQuestions(questions.slice(0, questionAmount));
         }).catch((error) => {
