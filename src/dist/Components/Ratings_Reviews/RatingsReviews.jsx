@@ -34,8 +34,9 @@ let RatingsReviews = ({product}) => {
         reviews = reviews.filter(review => filter.includes(review.rating));
       }
       if (searchWord.length > 0) {
+        let lowerSearchWord = searchWord.replaceAll(' ', '').toLowerCase();
         reviews = reviews.filter(review => 
-          (review.body.includes(searchWord) || review.summary.includes(searchWord)));
+          (review.body.replaceAll(' ', '').toLowerCase().includes(lowerSearchWord) || review.summary.replaceAll(' ', '').toLowerCase().includes(lowerSearchWord)));
       }
       setAllReviews(reviews);
       setShownReviews(reviews.slice(0, reviewAmount));
