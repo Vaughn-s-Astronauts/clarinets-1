@@ -29,12 +29,12 @@ let RatingsReviews = ({product}) => {
 
   const getReviews = () => {
     API.GET_REVIEWS(product.id, 1, 1000, sortBy).then((response) => {
-      let reviews = response.data.results;
+      let reviews = response.data.results || [];
       if (filter.length > 0) {
         reviews = reviews.filter(review => filter.includes(review.rating));
       }
       if (searchWord.length > 0) {
-        reviews = reviews.filter(review => 
+        reviews = reviews.filter(review =>
           (review.body.includes(searchWord) || review.summary.includes(searchWord)));
       }
       setAllReviews(reviews);
@@ -46,7 +46,7 @@ let RatingsReviews = ({product}) => {
 
   const getRatings = () => {
     API.GET_REVIEWS_META(product.id).then((response) => {
-      setRatings(response.data);
+      setRatings(response.data || {});
     }).catch((error) => {
       console.log(error);
     })
@@ -100,7 +100,7 @@ let RatingsReviews = ({product}) => {
       <Stack direction="row" spacing={2}>
         <div>
       <Stack spacing={2} alignItems="stretch">
-      {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/> 
+      {ratings ? <RatingBreakdown ratings={ratings} addFilter={addFilter} removeFilter={removeFilter} filter={filter}/>
       : <div></div>}
       <ProductBreakdown chars={ratings.characteristics}/>
       </Stack>
