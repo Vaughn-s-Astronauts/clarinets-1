@@ -22,7 +22,7 @@ const style = {
 
 
 export default function Comparison({opened, setCompare, relatedProduct}) {
-  
+
     const [product] = React.useContext(ProductContext);
     const products = [
         {
@@ -36,7 +36,7 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
           features: ['Feature 1', 'Feature 2', 'Feature 5', 'Feature 6'],
         },
       ];
-    
+
       let renderCheckmark = (product, feature) => {
         if (product.features.includes(feature)) {
           return <CheckIcon align="right"/>;
@@ -52,7 +52,7 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
         }
         return 'undefined';
       }
-    
+
   if(relatedProduct.name && product.name){
     let relatedFeatures = relatedProduct.features.map((f) => f.feature);
     let productFeatures = product.features.map((f) => f.feature);
@@ -93,7 +93,7 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
           {product.features && product.features.map((feature, i) => (
             <TableRow key={`${feature}${i}`}>
               <TableCell colSpan={2}>{feature.value}</TableCell>
-              <TableCell style={{border:'2px solid black'}}>{feature.feature}</TableCell>
+              <TableCell>{feature.feature}</TableCell>
               <TableCell colSpan={2}>{relatedFeatures.includes(feature.feature) ? findFeature(relatedProduct, feature.feature) : <CloseIcon/>}</TableCell>
             </TableRow>
           ))}
@@ -104,7 +104,7 @@ export default function Comparison({opened, setCompare, relatedProduct}) {
                     <TableCell colSpan={2}>
                       <CloseIcon/>
                     </TableCell>
-                    <TableCell style={{border:'2px solid black'}}>{feature.feature}</TableCell>
+                    <TableCell>{feature.feature}</TableCell>
                     <TableCell colSpan={2}>
                       {feature.value}
                     </TableCell>

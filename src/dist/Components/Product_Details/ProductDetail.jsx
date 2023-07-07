@@ -22,6 +22,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
+import ExpandedImage from './ExpandedImage.jsx'
 
 
 export default function ProductDetail({ product, setProduct, theme }) {
@@ -82,7 +83,7 @@ export default function ProductDetail({ product, setProduct, theme }) {
     <Container fluid>
 
       <Row>
-      <Col style={{marginBottom:'15px'}}>                      
+      <Col style={{marginBottom:'15px'}}>
             <Image
               src={`${theme.palette.mode === 'light' ? 'https://cdn.discordapp.com/attachments/246777011572310016/1126618960243195954/squidward-inc-high-resolution-logo-black-on-transparent-background201.png': 'https://cdn.discordapp.com/attachments/246777011572310016/1126623388148973598/squidward-inc-high-resolution-logo-white-on-transparent-background.png'}`}
               height={"128px"}
