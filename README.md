@@ -1,30 +1,14 @@
 # clarinets
 
-### Git Workflow:
-Start with the main branch:
-```
-git checkout main
-git fetch origin
-git reset --hard origin/main
-```
+Getting started:
+Copy config_example copy.js and rename config.js.  Edit config.js to include your personal tokens.
 
-Create a new-branch:
-```
-git checkout -b new-feature
-```
-Update, add, commit, and push changes:
-```
-git status
-git add <some-file>
-git commit
-```
+NPM install
 
-Push feature branch to remote:
-```
-git push -u origin new-feature
-```
+NPM install react-image-magnify --force //forced install is required due to reliance on early version of react
 
-Merge your pull request
+This product utilizes redis which will need to be installed separately.  Installation instructions are located at https://redis.io/docs/getting-started/.  Once installed, ensure redis is running.
 
+NPM run build
 
-//bas
+NPM run server-dev
