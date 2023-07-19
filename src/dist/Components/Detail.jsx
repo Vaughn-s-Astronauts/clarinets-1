@@ -9,10 +9,10 @@ let Detail = ({theme}) => {
     const [product] = React.useContext(ProductContext);
     return (
         <div className='container'>
-            <ProductDetail theme={theme} product={product}/>
-            <RelatedProducts />
+            ${/*<ProductDetail theme={theme} product={product}/>*/}
+            ${/*<RelatedProducts />*/}
             <QuestionsAnswers product={product}/>
-            <RatingsReviews product={product}/>
+            ${/*<RatingsReviews product={product}/>*/}
         </div>
     );
 };

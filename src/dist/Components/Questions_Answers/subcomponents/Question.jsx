@@ -45,8 +45,7 @@ let Question = ({product, question}) => {
     // Function for getting and setting answers
     const getAndSetAns = () => {
         API.GET_QA_QUESTION_ANSWERS(id).then((response) => {
-            setAnswers(response.data.results);
-            setShownAnswers(response.data.results.slice(0, 2));
+            setShownAnswers(response.data.slice(0, 2));
         }).catch((error) => {
             console.log(error);
         });
@@ -116,7 +115,7 @@ let Question = ({product, question}) => {
     return (
         <div>
             <div style={{'paddingTop': '10px'}}>
-                <span style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.question_body}</span>
+                <span style={{'fontSize': '18px', 'fontWeight': 'bold'}}>Q: {question.body}</span>
                 <span style={{'display': 'flex', 'fontSize': '12px', 'float': 'right', 'paddingTop': '7px'}}>
                     <p style={{'marginRight': '3px'}}>Helpful?</p>
                     <u style={{'cursor': 'pointer'}} onClick={handleHelpfulQ}>Yes</u>
@@ -146,7 +145,7 @@ let Question = ({product, question}) => {
                 <DialogTitle>Submit Your Answer</DialogTitle>
                 <DialogContent>
                 <DialogContentText margin="dense">
-                    {product.name}: {question.question_body}
+                    {product.name}: {question.body}
                 </DialogContentText>
                 <TextField
                     required

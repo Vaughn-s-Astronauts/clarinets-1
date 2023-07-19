@@ -58,11 +58,11 @@ let Answer = ({answer}) => {
                 </>
             </div>
             <div>
-                {answer.photos.map((photo, i) => {
+                ${/*{answer.photos.map((photo, i) => {
                     return <span key={i}>
                     <img src={photo.url} width="64"></img>
                     </span>
-                })}
+                })}*/}
             </div>
         </div>
     )

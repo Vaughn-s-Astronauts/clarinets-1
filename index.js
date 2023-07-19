@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.all('/api*', (req, res) => {
     //https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe
-    let targetUrl = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe${req.url.replace('/api', '')}`;
+    let targetUrl = `http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com${req.url.replace('/api', '')}`;
     client.get(targetUrl).then((redisResponse) => {
         if(redisResponse !== null){
             console.log('loaded from the cache!');
@@ -43,8 +43,9 @@ app.all('/api*', (req, res) => {
                 headers:{
                     'Authorization' : token
                 }
-            }).then((response) => {                
-                if(req.method === 'GET' && targetUrl.startsWith('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products')){
+            })
+            .then((response) => {
+                if(req.method === 'GET' && targetUrl.startsWith('http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com/products/')){
                     client.set(targetUrl, JSON.stringify(response.data)).then((error) => {
                         console.log('Added data to cache!');
                     }).catch((error) => {
@@ -61,7 +62,7 @@ app.all('/api*', (req, res) => {
         res.send([]);
     });
 });
-    
+
 
 app.get('/outfit', (req, res) => {
     console.log('hit!');
@@ -139,16 +140,16 @@ app.put('/outfit', (req, res) => {
 //Customer service?
 
 app.get('/service', (req, res) => {
-    let question = req.query.question;    
+    let question = req.query.question;
     if(question) {
         chatter.createChatCompletion({
             model: 'gpt-3.5-turbo',
             messages: [{
                 role:'user',
-                content:`Using this dataset below, please act as a customer service representative for my store Squidward-inc. 
-                I want the response to be a JSON object, with your response within the object. 
-                Also, if the customer requests a certain product, please list that product's id within the JSON response as well under a key named productIds. 
-                This should be an array of relevant productIds. Any questions asked unrelated to the contents of my store should be responded to with a default message. 
+                content:`Using this dataset below, please act as a customer service representative for my store Squidward-inc.
+                I want the response to be a JSON object, with your response within the object.
+                Also, if the customer requests a certain product, please list that product's id within the JSON response as well under a key named productIds.
+                This should be an array of relevant productIds. Any questions asked unrelated to the contents of my store should be responded to with a default message.
                 This message is "Squidward aint got time for that kinda stuff."
                 My dataset is :
 
@@ -234,8 +235,8 @@ app.get('/service', (req, res) => {
                         "default_price": "50000000.00"
                     }
                 ]
-                
-                My customer has a question. Please respond politely and only respond with an answer related to the contents of my store as provided in the dataset above.                
+
+                My customer has a question. Please respond politely and only respond with an answer related to the contents of my store as provided in the dataset above.
                 My customer's question is :${question}
                 `
             }]
@@ -247,7 +248,7 @@ app.get('/service', (req, res) => {
     }else{
         res.send('Provide a question to use this endpoint');
     }
-    
+
 });
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));
