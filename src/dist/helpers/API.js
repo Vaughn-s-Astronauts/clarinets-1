@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 
-axios.defaults.baseURL = `http://localhost:3000/api`;
+axios.defaults.baseURL = `http://ec2-3-138-204-85.us-east-2.compute.amazonaws.com`;
 let endpoints = {
     'GET_PRODUCTS' : '/products/',
     'GET_REVIEWS' : '/reviews/',
