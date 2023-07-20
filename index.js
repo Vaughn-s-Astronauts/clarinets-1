@@ -13,7 +13,7 @@ const compression = require('compression');
 
 
 const app = express();
-const port = configPort || 80;
+const port = configPort || 3000;
 // const client = createClient();
 // client.connect().then((response) => {
 //     console.log('Connected to redis.');
@@ -23,48 +23,48 @@ const port = configPort || 80;
 
 app.use(express.static(path.join(__dirname, './src/dist')));
 app.use(express.json());
-app.use(compression());
-app.use(express.urlencoded({ extended: true }));
+// app.use(compression());
+// app.use(express.urlencoded({ extended: true }));
 
 
 
-app.all('/api*', (req, res) => {
-    console.log('got here');
-    //https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe
-    let targetUrl = `http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com${req.url.replace('/api', '')}`;
-    // client.get(targetUrl).then((redisResponse) => {
-    //     if(redisResponse !== null){
-    //         console.log('loaded from the cache!');
-    //         res.send(JSON.parse(redisResponse));
-    //     }else{
-      console.log(targetUrl);
-            axios({
-                method: req.method,
-                url: targetUrl,
-                data: req.body,
-                headers:{
-                    'Authorization' : token
-                }
-            })
-            .then((response) => {
-                // if(req.method === 'GET' && targetUrl.startsWith('http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com/products/')){
-                //     client.set(targetUrl, JSON.stringify(response.data)).then((error) => {
-                //         console.log('Added data to cache!');
-                //     }).catch((error) => {
-                //         console.log('Error storing data in cache');
-                //     });
-                // }
-                console.log('response: ', response);
-                res.send(response.data);
-            }).catch((error) => {
-                //sending the error back contains the git token 0_0
-                res.send('error!!');
-            });
-        })
-    // }).catch((error) => {
-    //     res.send([]);
-    // });
-// });
+// app.all('/api*', (req, res) => {
+//     console.log('got here');
+//     //https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe
+//     let targetUrl = `http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com${req.url.replace('/api', '')}`;
+//     // client.get(targetUrl).then((redisResponse) => {
+//     //     if(redisResponse !== null){
+//     //         console.log('loaded from the cache!');
+//     //         res.send(JSON.parse(redisResponse));
+//     //     }else{
+//       console.log(targetUrl);
+//             axios({
+//                 method: req.method,
+//                 url: targetUrl,
+//                 data: req.body,
+//                 headers:{
+//                     'Authorization' : token
+//                 }
+//             })
+//             .then((response) => {
+//                 // if(req.method === 'GET' && targetUrl.startsWith('http://ec2-13-59-15-36.us-east-2.compute.amazonaws.com/products/')){
+//                 //     client.set(targetUrl, JSON.stringify(response.data)).then((error) => {
+//                 //         console.log('Added data to cache!');
+//                 //     }).catch((error) => {
+//                 //         console.log('Error storing data in cache');
+//                 //     });
+//                 // }
+//                 console.log('response: ', response);
+//                 res.send(response.data);
+//             }).catch((error) => {
+//                 //sending the error back contains the git token 0_0
+//                 res.send('error!!');
+//             });
+//         })
+//     // }).catch((error) => {
+//     //     res.send([]);
+//     // });
+// // });
 
 
 app.get('/outfit', (req, res) => {
