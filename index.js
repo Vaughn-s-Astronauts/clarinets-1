@@ -66,6 +66,10 @@ app.use(express.json());
 //     // });
 // // });
 
+app.get('/loaderio-f60a9a27bab3dfa0c85e88d78a00877c*', (req, res) => {
+  res.send('loaderio-f60a9a27bab3dfa0c85e88d78a00877c')
+  res.status(200).end();
+})
 
 app.get('/outfit', (req, res) => {
     console.log('hit!');
